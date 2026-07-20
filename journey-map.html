@@ -1,0 +1,330 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>AI Career Agent &#8212; Customer Journey Map</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
+
+:root {
+  --bg: #f7f5f3;
+  --surface: #ffffff;
+  --surface-alt: #f0eeeb;
+  --fg: #1a1a2e;
+  --fg-secondary: #4a4a5a;
+  --fg-muted: #7a7a8a;
+  --border: #e8e5e1;
+  --border-light: #eae7e3;
+  --accent: #4a3aaa;
+  --accent-light: #6b5dd3;
+  --accent-soft: #f5f3ff;
+  --accent-bg: #eeedfa;
+  --green: #43a047;
+  --green-soft: #e8f5e9;
+  --blue: #1e88e5;
+  --blue-soft: #e8f0fe;
+  --warm: #f5a623;
+  --warm-soft: #fef5e7;
+  --coral: #e53935;
+  --coral-soft: #fce8e6;
+  --stage-1: #1a1a2e;
+  --stage-2: #4a3aaa;
+  --stage-3: #6b5dd3;
+  --stage-4: #4a3aaa;
+  --stage-5: #1e88e5;
+  --stage-6: #43a047;
+  --stage-7: #2e7d32;
+  --radius: 12px;
+  --font: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131320; --surface: #1c1c30; --surface-alt: #1e1e32;
+    --fg: #f0eeeb; --fg-secondary: #c0beb8; --fg-muted: #8a8898;
+    --border: #2a2a42; --border-light: #2e2e48;
+    --accent: #6b5dd3; --accent-light: #7b6de3;
+    --accent-soft: #2a2548; --accent-bg: #2a2548;
+    --green-soft: #1a3a1e; --blue-soft: #1a2a48; --warm-soft: #3a2a10;
+    --coral-soft: #3a1a1a;
+    --stage-1: #6b5dd3; --stage-2: #7b6de3; --stage-3: #8b7df3;
+    --stage-4: #7b6de3; --stage-5: #64b5f6; --stage-6: #66bb6a; --stage-7: #4caf50;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131320; --surface: #1c1c30; --surface-alt: #1e1e32;
+  --fg: #f0eeeb; --fg-secondary: #c0beb8; --fg-muted: #8a8898;
+  --border: #2a2a42; --border-light: #2e2e48;
+  --accent: #6b5dd3; --accent-light: #7b6de3;
+  --accent-soft: #2a2548; --accent-bg: #2a2548;
+  --green-soft: #1a3a1e; --blue-soft: #1a2a48; --warm-soft: #3a2a10;
+  --coral-soft: #3a1a1a;
+  --stage-1: #6b5dd3; --stage-2: #7b6de3; --stage-3: #8b7df3;
+  --stage-4: #7b6de3; --stage-5: #64b5f6; --stage-6: #66bb6a; --stage-7: #4caf50;
+}
+:root[data-theme="light"] {
+  --bg: #f7f5f3; --surface: #ffffff; --surface-alt: #f0eeeb;
+  --fg: #1a1a2e; --fg-secondary: #4a4a5a; --fg-muted: #7a7a8a;
+  --border: #e8e5e1; --border-light: #eae7e3;
+  --accent: #4a3aaa; --accent-light: #6b5dd3;
+  --accent-soft: #f5f3ff; --accent-bg: #eeedfa;
+  --green-soft: #e8f5e9; --blue-soft: #e8f0fe; --warm-soft: #fef5e7;
+  --coral-soft: #fce8e6;
+  --stage-1: #1a1a2e; --stage-2: #4a3aaa; --stage-3: #6b5dd3;
+  --stage-4: #4a3aaa; --stage-5: #1e88e5; --stage-6: #43a047; --stage-7: #2e7d32;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font); background: var(--bg); color: var(--fg);
+  line-height: 1.5; -webkit-font-smoothing: antialiased; font-size: 15px;
+}
+
+.page { max-width: 1480px; margin: 0 auto; padding: 48px 32px 64px; }
+
+.header { margin-bottom: 40px; }
+.brand { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.brand-mark {
+  width: 36px; height: 36px; background: var(--accent); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 16px;
+}
+.brand-name { font-size: 14px; font-weight: 600; color: var(--fg-muted); letter-spacing: 0.02em; }
+.header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 6px; }
+.header p { font-size: 15px; color: var(--fg-muted); max-width: 620px; }
+
+.journey-scroll {
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  margin: 0 -32px; padding: 0 32px 16px;
+}
+.journey {
+  display: grid; grid-template-columns: 140px repeat(7, minmax(190px, 1fr));
+  min-width: 1480px; border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; background: var(--border-light); gap: 1px;
+}
+
+.row-label {
+  background: var(--surface-alt); padding: 16px 18px; font-size: 11px;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--fg-muted); display: flex; align-items: flex-start;
+  border-right: 2px solid var(--border);
+}
+.row-label.v-center { align-items: center; }
+
+.cell {
+  background: var(--surface); padding: 14px 16px;
+  font-size: 13px; color: var(--fg-secondary); line-height: 1.55;
+}
+
+/* Stage pills — wider, text wraps */
+.stage-cell {
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px 8px; position: relative;
+}
+.stage-cell:not(:last-child)::after {
+  content: '\2192'; position: absolute; right: -6px; top: 50%;
+  transform: translateY(-50%); color: var(--fg-muted); font-size: 14px; z-index: 2;
+}
+.stage-pill {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  border-radius: 12px; color: #fff; width: 100%;
+}
+.stage-pill .si {
+  width: 28px; height: 28px; background: rgba(255,255,255,0.2);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.stage-pill .si svg { width: 14px; height: 14px; fill: #fff; }
+.stage-pill .st { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.stage-pill .sn { font-size: 13px; font-weight: 600; }
+.stage-pill .ss { font-size: 11px; font-weight: 400; opacity: 0.8; }
+.s1{background:var(--stage-1)}.s2{background:var(--stage-2)}.s3{background:var(--stage-3)}
+.s4{background:var(--stage-4)}.s5{background:var(--stage-5)}.s6{background:var(--stage-6)}.s7{background:var(--stage-7)}
+
+/* Icon-text */
+.it { display: flex; gap: 8px; align-items: flex-start; }
+.it .ic {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; margin-top: 1px;
+}
+.it .ic svg { width: 11px; height: 11px; }
+.ic-a { background: var(--accent-soft); }
+.ic-a svg { fill: var(--accent); }
+.ic-g { background: var(--accent-bg); }
+.ic-g svg { fill: var(--accent-light); }
+
+/* Emotions */
+.emo-cell {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center; gap: 8px; padding: 16px 10px;
+}
+.emo-face { font-size: 28px; line-height: 1; }
+.emo-text { font-size: 11.5px; color: var(--fg-muted); font-weight: 500; }
+
+/* Pain points */
+.pi { display: flex; gap: 7px; align-items: flex-start; margin-bottom: 6px; }
+.pi:last-child { margin-bottom: 0; }
+.pi-icon { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 8px solid var(--coral); margin-top: 4px; flex-shrink: 0; }
+
+/* Opportunities */
+.oi { display: flex; gap: 7px; align-items: flex-start; }
+.oi-icon {
+  flex-shrink: 0; width: 18px; height: 18px; background: var(--green-soft);
+  color: var(--green); border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; margin-top: 1px;
+}
+.oi-icon svg { width: 10px; height: 10px; fill: var(--green); }
+
+/* Outcome */
+.outcome {
+  display: grid; grid-template-columns: 140px repeat(6, 1fr);
+  margin-top: 20px; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--accent);
+}
+.outcome-label {
+  background: var(--accent); color: #fff; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.outcome-item {
+  background: var(--accent-soft); padding: 14px 16px; display: flex;
+  align-items: center; gap: 10px; border-left: 1px solid var(--border);
+  font-size: 12.5px; color: var(--fg-secondary); font-weight: 500;
+}
+.outcome-item:first-of-type { border-left: none; }
+.outcome-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+@media (max-width: 900px) {
+  .page { padding: 24px 16px 48px; }
+  .journey-scroll { margin: 0 -16px; padding: 0 16px 16px; }
+  .outcome { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="page">
+
+<div class="header">
+  <div class="brand">
+    <div class="brand-mark">A</div>
+    <div class="brand-name">ABC Staffing</div>
+  </div>
+  <h1>AI Career Agent &#8212; Customer Journey Map</h1>
+  <p>From discovery to application and beyond &#8212; building a long-term relationship with candidates.</p>
+</div>
+
+<div class="journey-scroll">
+<div class="journey">
+
+  <!-- ROW: Journey Stages -->
+  <div class="row-label v-center">Journey Stages</div>
+  <div class="cell stage-cell"><div class="stage-pill s1"><span class="si"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span><span class="st"><span class="sn">1. Discover</span><span class="ss">Find relevant jobs</span></span></div></div>
+  <div class="cell stage-cell"><div class="stage-pill s2"><span class="si"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></span><span class="st"><span class="sn">2. Explore &amp; Narrow</span><span class="ss">AI helps refine choices</span></span></div></div>
+  <div class="cell stage-cell"><div class="stage-pill s3"><span class="si"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg></span><span class="st"><span class="sn">3. Share &amp; Understand</span><span class="ss">Upload resume &amp; build profile</span></span></div></div>
+  <div class="cell stage-cell"><div class="stage-pill s4"><span class="si"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span><span class="st"><span class="sn">4. Evaluate Fit</span><span class="ss">AI explains match</span></span></div></div>
+  <div class="cell stage-cell"><div class="stage-pill s5"><span class="si"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span><span class="st"><span class="sn">5. Apply</span><span class="ss">Submit application</span></span></div></div>
+  <div class="cell stage-cell"><div class="stage-pill s6"><span class="si"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></span><span class="st"><span class="sn">6. After Apply</span><span class="ss">Stay engaged</span></span></div></div>
+  <div class="cell stage-cell"><div class="stage-pill s7"><span class="si"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></span><span class="st"><span class="sn">7. Grow Together</span><span class="ss">Continuous support</span></span></div></div>
+
+  <!-- ROW: Customer Actions -->
+  <div class="row-label">Customer Actions</div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><div>Lands on career site from LinkedIn / Google / Job Boards</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></div><div>Interacts with AI Career Concierge, answers a few questions to refine preferences</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg></div><div>Uploads resume and provides additional details to build complete profile</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div><div>Reviews AI match explanation, salary insights, and role details</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div><div>Tailors resume if needed and submits application</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg></div><div>Checks application status and explores recommended opportunities</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0020 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 004 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg></div><div>Provides feedback, updates preferences, receives alerts, applies again</div></div></div>
+
+  <!-- ROW: Goals -->
+  <div class="row-label">Goals</div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2C6.48 2 2 6.48 2 12h2c0-4.42 3.58-8 8-8V2zm0 4c-3.31 0-6 2.69-6 6h2c0-2.21 1.79-4 4-4V6zm0 12c3.31 0 6-2.69 6-6h-2c0 2.21-1.79 4-4 4v2zm0 4c4.42 0 8-3.58 8-8h-2c0 4.42-3.58 8-8 8v2z"/></svg></div><div>Find the right opportunities quickly</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2C6.48 2 2 6.48 2 12h2c0-4.42 3.58-8 8-8V2zm0 4c-3.31 0-6 2.69-6 6h2c0-2.21 1.79-4 4-4V6zm0 12c3.31 0 6-2.69 6-6h-2c0 2.21-1.79 4-4 4v2zm0 4c4.42 0 8-3.58 8-8h-2c0 4.42-3.58 8-8 8v2z"/></svg></div><div>Narrow down to roles that truly fit</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2C6.48 2 2 6.48 2 12h2c0-4.42 3.58-8 8-8V2zm0 4c-3.31 0-6 2.69-6 6h2c0-2.21 1.79-4 4-4V6zm0 12c3.31 0 6-2.69 6-6h-2c0 2.21-1.79 4-4 4v2zm0 4c4.42 0 8-3.58 8-8h-2c0 4.42-3.58 8-8 8v2z"/></svg></div><div>Get personalized matches worth applying to</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2C6.48 2 2 6.48 2 12h2c0-4.42 3.58-8 8-8V2zm0 4c-3.31 0-6 2.69-6 6h2c0-2.21 1.79-4 4-4V6zm0 12c3.31 0 6-2.69 6-6h-2c0 2.21-1.79 4-4 4v2zm0 4c4.42 0 8-3.58 8-8h-2c0 4.42-3.58 8-8 8v2z"/></svg></div><div>Understand why I'm a fit before I apply</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2C6.48 2 2 6.48 2 12h2c0-4.42 3.58-8 8-8V2zm0 4c-3.31 0-6 2.69-6 6h2c0-2.21 1.79-4 4-4V6zm0 12c3.31 0 6-2.69 6-6h-2c0 2.21-1.79 4-4 4v2zm0 4c4.42 0 8-3.58 8-8h-2c0 4.42-3.58 8-8 8v2z"/></svg></div><div>Apply with confidence and stand out</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2C6.48 2 2 6.48 2 12h2c0-4.42 3.58-8 8-8V2zm0 4c-3.31 0-6 2.69-6 6h2c0-2.21 1.79-4 4-4V6zm0 12c3.31 0 6-2.69 6-6h-2c0 2.21-1.79 4-4 4v2zm0 4c4.42 0 8-3.58 8-8h-2c0 4.42-3.58 8-8 8v2z"/></svg></div><div>Stay informed and find better matches</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2C6.48 2 2 6.48 2 12h2c0-4.42 3.58-8 8-8V2zm0 4c-3.31 0-6 2.69-6 6h2c0-2.21 1.79-4 4-4V6zm0 12c3.31 0 6-2.69 6-6h-2c0 2.21-1.79 4-4 4v2zm0 4c4.42 0 8-3.58 8-8h-2c0 4.42-3.58 8-8 8v2z"/></svg></div><div>Grow my career with ongoing support</div></div></div>
+
+  <!-- ROW: Touchpoints -->
+  <div class="row-label">Touchpoints</div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></div><div>Career site landing page</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></div><div>AI Concierge chat<br>Search &amp; filters</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></div><div>Resume upload<br>Profile builder</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></div><div>Job details<br>Match insights</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></div><div>Application form<br>Confirmation</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></div><div>Dashboard<br>Email / Alerts</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-a"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></div><div>Recommendations<br>Profile hub</div></div></div>
+
+  <!-- ROW: AI Agent Role -->
+  <div class="row-label">AI Agent Role</div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg></div><div>Greets and offers help to start the search</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg></div><div>Asks smart questions, understands intent, and narrows results</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg></div><div>Extracts skills, experience, and preferences from resume</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg></div><div>Explains match with evidence, missing info, and salary benchmark</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg></div><div>Suggests resume improvements and key points to highlight</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg></div><div>Recommends similar roles, shares insights, and keeps profile active</div></div></div>
+  <div class="cell"><div class="it"><div class="ic ic-g"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg></div><div>Learns from feedback, updates matches, and supports career growth</div></div></div>
+
+  <!-- ROW: Emotions -->
+  <div class="row-label v-center">Emotions</div>
+  <div class="cell emo-cell"><span class="emo-face">&#128528;</span><span class="emo-text">Curious but overwhelmed</span></div>
+  <div class="cell emo-cell"><span class="emo-face">&#128578;</span><span class="emo-text">Hopeful as results narrow down</span></div>
+  <div class="cell emo-cell"><span class="emo-face">&#128522;</span><span class="emo-text">Relieved to see relevant matches</span></div>
+  <div class="cell emo-cell"><span class="emo-face">&#128515;</span><span class="emo-text">Confident about applying</span></div>
+  <div class="cell emo-cell"><span class="emo-face">&#128516;</span><span class="emo-text">Excited after submitting</span></div>
+  <div class="cell emo-cell"><span class="emo-face">&#128522;</span><span class="emo-text">Reassured and engaged</span></div>
+  <div class="cell emo-cell"><span class="emo-face">&#129321;</span><span class="emo-text">Motivated and loyal</span></div>
+
+  <!-- ROW: Pain Points -->
+  <div class="row-label">Pain Points</div>
+  <div class="cell">
+    <div class="pi"><span class="pi-icon"></span><span>Too many jobs</span></div>
+    <div class="pi"><span class="pi-icon"></span><span>No idea where to start</span></div>
+    <div class="pi"><span class="pi-icon"></span><span>Filters are overwhelming</span></div>
+  </div>
+  <div class="cell">
+    <div class="pi"><span class="pi-icon"></span><span>Not sure which filters to use</span></div>
+    <div class="pi"><span class="pi-icon"></span><span>Hard to describe what I want</span></div>
+  </div>
+  <div class="cell">
+    <div class="pi"><span class="pi-icon"></span><span>Uploading feels like extra work</span></div>
+    <div class="pi"><span class="pi-icon"></span><span>Unsure if it will help</span></div>
+  </div>
+  <div class="cell">
+    <div class="pi"><span class="pi-icon"></span><span>Hard to know if I'm really qualified</span></div>
+    <div class="pi"><span class="pi-icon"></span><span>Lack of context</span></div>
+  </div>
+  <div class="cell">
+    <div class="pi"><span class="pi-icon"></span><span>Writing resumes and cover letters is time consuming</span></div>
+  </div>
+  <div class="cell">
+    <div class="pi"><span class="pi-icon"></span><span>No updates or communication</span></div>
+    <div class="pi"><span class="pi-icon"></span><span>Feel ignored</span></div>
+  </div>
+  <div class="cell">
+    <div class="pi"><span class="pi-icon"></span><span>Have to repeat the process for every job</span></div>
+    <div class="pi"><span class="pi-icon"></span><span>No long-term support</span></div>
+  </div>
+
+  <!-- ROW: Opportunities -->
+  <div class="row-label">Opportunities</div>
+  <div class="cell"><div class="oi"><span class="oi-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span><span>AI guidance reduces cognitive load</span></div></div>
+  <div class="cell"><div class="oi"><span class="oi-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span><span>Conversational search makes discovery easy and intuitive</span></div></div>
+  <div class="cell"><div class="oi"><span class="oi-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span><span>Show immediate value of a complete profile</span></div></div>
+  <div class="cell"><div class="oi"><span class="oi-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span><span>Transparent match building increases trust and confidence</span></div></div>
+  <div class="cell"><div class="oi"><span class="oi-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span><span>AI helps tailor application and highlight strengths</span></div></div>
+  <div class="cell"><div class="oi"><span class="oi-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span><span>Keep candidates warm with alerts and relevant recommendations</span></div></div>
+  <div class="cell"><div class="oi"><span class="oi-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span><span>Build a long-term relationship and career journey together</span></div></div>
+
+</div>
+</div>
+
+<!-- Outcome Bar -->
+<div class="outcome">
+  <div class="outcome-label">Outcome</div>
+  <div class="outcome-item"><svg viewBox="0 0 24 24" fill="var(--accent)"><circle cx="12" cy="12" r="3.5"/><path d="M12 2C6.48 2 2 6.48 2 12h2c0-4.42 3.58-8 8-8V2zm0 4c-3.31 0-6 2.69-6 6h2c0-2.21 1.79-4 4-4V6z"/></svg> Candidate finds relevant roles faster</div>
+  <div class="outcome-item"><svg viewBox="0 0 24 24" fill="var(--accent)"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z"/></svg> Higher resume uploads and profile completion</div>
+  <div class="outcome-item"><svg viewBox="0 0 24 24" fill="var(--accent)"><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3z"/></svg> Better matched applications</div>
+  <div class="outcome-item"><svg viewBox="0 0 24 24" fill="var(--accent)"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg> Increased engagement and return visits</div>
+  <div class="outcome-item"><svg viewBox="0 0 24 24" fill="var(--accent)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> Stronger candidate satisfaction &amp; loyalty</div>
+  <div class="outcome-item"><svg viewBox="0 0 24 24" fill="var(--accent)"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66l.01-.02 3.57-6.2C11.17 6.36 11.5 6 12.1 6H17l-2 4h3.49c.65 0 .57.52.38.78L11 21z"/></svg> Better quality pipeline for ABC Staffing</div>
+</div>
+
+</div>
