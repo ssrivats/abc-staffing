@@ -7,9 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   Plain Design Language — CSS Tokens
-   ═══════════════════════════════════════════ */
 :root {
   --green: #37B24D;
   --green-light: #E6F9ED;
@@ -43,11 +40,10 @@
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
   --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
   --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
-  --shadow-xl: 0 8px 32px rgba(0,0,0,0.16);
 
-  --sidebar-w: 260px;
   --detail-w: 300px;
   --icon-rail-w: 48px;
+  --nav-sidebar-w: 200px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -62,25 +58,23 @@ body {
   overflow: hidden;
 }
 
-/* ═══════════════════════════════════════════
-   View Switcher (top bar)
-   ═══════════════════════════════════════════ */
+/* ═══ View Switcher (top bar) ═══ */
 .view-switcher {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 44px;
+  height: 40px;
   background: var(--gray-900);
   display: flex; align-items: center; justify-content: center; gap: 8px;
   padding: 0 16px;
 }
 .view-switcher .label {
-  font-size: 12px; font-weight: 500; color: var(--gray-400);
+  font-size: 11px; font-weight: 500; color: var(--gray-500);
   margin-right: 8px; text-transform: uppercase; letter-spacing: 0.05em;
 }
 .view-btn {
-  padding: 6px 16px; border-radius: var(--radius-full);
+  padding: 5px 14px; border-radius: var(--radius-full);
   border: 1px solid rgba(255,255,255,0.15); background: transparent;
   color: rgba(255,255,255,0.6); font-family: var(--font);
-  font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+  font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.15s;
 }
 .view-btn:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); }
 .view-btn.active { background: var(--white); color: var(--gray-900); border-color: var(--white); }
@@ -89,34 +83,36 @@ body {
   display: flex; align-items: center; gap: 6px;
 }
 .story-step-label span { color: var(--green); font-weight: 600; }
-.story-nav {
-  display: flex; gap: 4px; margin-left: 8px;
-}
+.story-nav { display: flex; gap: 4px; margin-left: 8px; }
 .story-nav button {
-  width: 28px; height: 28px; border-radius: var(--radius-sm);
+  width: 26px; height: 26px; border-radius: var(--radius-sm);
   border: 1px solid rgba(255,255,255,0.2); background: transparent;
-  color: rgba(255,255,255,0.6); cursor: pointer; font-size: 14px;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
+  color: rgba(255,255,255,0.6); cursor: pointer; font-size: 13px;
+  display: flex; align-items: center; justify-content: center; transition: all 0.15s;
 }
 .story-nav button:hover { background: rgba(255,255,255,0.1); color: white; }
 .story-nav button:disabled { opacity: 0.3; cursor: default; }
+.step-dots { display: flex; gap: 3px; margin-left: 12px; }
+.step-dot {
+  width: 7px; height: 7px; border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.15); cursor: pointer; transition: all 0.15s;
+}
+.step-dot.active { background: var(--green); }
+.step-dot.done { background: rgba(255,255,255,0.4); }
 
-/* ═══════════════════════════════════════════
-   RECRUITER VIEW
-   ═══════════════════════════════════════════ */
+/* ═══ RECRUITER VIEW ═══ */
 .recruiter-view {
-  display: flex; height: calc(100vh - 44px); margin-top: 44px;
+  display: flex; height: calc(100vh - 40px); margin-top: 40px;
 }
 .recruiter-view.hidden { display: none; }
 
-/* Icon Rail */
+/* Icon Rail — matches Plain's 48px icon rail */
 .icon-rail {
   width: var(--icon-rail-w);
   background: var(--gray-50);
   border-right: 1px solid var(--gray-200);
   display: flex; flex-direction: column; align-items: center;
-  padding: 16px 0; gap: 4px;
+  padding: 12px 0; gap: 2px;
 }
 .rail-icon {
   width: 36px; height: 36px; border-radius: var(--radius-md);
@@ -139,125 +135,200 @@ body {
   width: 32px; height: 32px; border-radius: var(--radius-lg);
   background: var(--green); color: white;
   display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 13px; margin-bottom: 16px;
+  font-weight: 700; font-size: 13px; margin-bottom: 12px;
 }
 
-/* Thread List Sidebar */
+/* Navigation Sidebar — matches Plain's expandable sidebar */
+.nav-sidebar {
+  width: var(--nav-sidebar-w);
+  border-right: 1px solid var(--gray-200);
+  background: var(--white);
+  overflow-y: auto; padding: 12px 0;
+  display: flex; flex-direction: column;
+}
+.nav-workspace {
+  padding: 4px 12px 12px;
+  font-size: 14px; font-weight: 600; color: var(--gray-900);
+  border-bottom: 1px solid var(--gray-100);
+  margin-bottom: 8px;
+}
+.nav-workspace .sub { font-size: 11px; font-weight: 400; color: var(--gray-500); }
+.nav-section-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--gray-500);
+  padding: 12px 12px 4px; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-section-label .chevron { font-size: 10px; }
+.nav-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 12px; font-size: 13px; font-weight: 500;
+  color: var(--gray-700); cursor: pointer; transition: background 0.1s;
+  border-radius: 0;
+}
+.nav-item:hover { background: var(--gray-50); }
+.nav-item.active { background: var(--green-light); color: var(--green); }
+.nav-item .icon { width: 20px; text-align: center; font-size: 14px; flex-shrink: 0; }
+.nav-item .count {
+  margin-left: auto; font-size: 11px; font-weight: 600;
+  background: var(--green); color: white; border-radius: var(--radius-full);
+  padding: 0 6px; min-width: 18px; text-align: center; line-height: 18px;
+}
+.nav-item .count-muted {
+  margin-left: auto; font-size: 11px; color: var(--gray-500);
+}
+.nav-sub-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 12px 4px 32px; font-size: 12px; font-weight: 400;
+  color: var(--gray-500); cursor: pointer; transition: background 0.1s;
+}
+.nav-sub-item:hover { background: var(--gray-50); color: var(--gray-700); }
+.nav-sub-item .status-icon { width: 8px; height: 8px; border-radius: var(--radius-full); flex-shrink: 0; }
+.nav-sub-item .count-muted { margin-left: auto; font-size: 11px; color: var(--gray-400); }
+
+/* Thread List */
 .thread-sidebar {
-  width: 280px;
+  width: 300px;
   border-right: 1px solid var(--gray-200);
   display: flex; flex-direction: column;
   background: var(--white);
 }
 .thread-sidebar-header {
-  padding: 16px 16px 12px;
+  padding: 12px 16px 10px;
+  display: flex; align-items: center; justify-content: space-between;
   border-bottom: 1px solid var(--gray-100);
 }
 .thread-sidebar-header h2 {
-  font-size: 16px; font-weight: 700; color: var(--gray-900);
+  font-size: 14px; font-weight: 600; color: var(--gray-900);
   display: flex; align-items: center; gap: 8px;
 }
-.thread-sidebar-header h2 .count {
-  font-size: 11px; font-weight: 600; color: var(--white);
-  background: var(--green); border-radius: var(--radius-full);
-  padding: 1px 7px;
+.thread-header-controls {
+  display: flex; gap: 6px;
 }
+.thread-header-btn {
+  font-size: 12px; color: var(--gray-500); cursor: pointer;
+  padding: 4px 8px; border-radius: var(--radius-sm);
+  border: none; background: none; font-family: var(--font); font-weight: 500;
+  display: flex; align-items: center; gap: 4px;
+  transition: all 0.1s;
+}
+.thread-header-btn:hover { background: var(--gray-100); color: var(--gray-700); }
 .thread-tabs {
-  display: flex; gap: 2px; padding: 8px 16px 0;
+  display: flex; gap: 2px; padding: 6px 12px;
+  border-bottom: 1px solid var(--gray-100);
 }
 .thread-tab {
-  font-size: 12px; font-weight: 500; padding: 6px 12px;
+  font-size: 12px; font-weight: 500; padding: 4px 10px;
   border-radius: var(--radius-full); border: none; background: none;
   color: var(--gray-500); cursor: pointer; font-family: var(--font);
   transition: all 0.12s;
 }
 .thread-tab:hover { background: var(--gray-100); color: var(--gray-700); }
 .thread-tab.active { background: var(--gray-900); color: var(--white); }
-.thread-list {
-  flex: 1; overflow-y: auto; padding: 8px;
+.thread-tab .tab-count { font-size: 11px; margin-left: 3px; }
+.thread-list { flex: 1; overflow-y: auto; }
+.thread-status-header {
+  font-size: 11px; font-weight: 600; color: var(--gray-500);
+  padding: 10px 16px 4px;
+  text-transform: uppercase; letter-spacing: 0.03em;
 }
 .thread-item {
-  display: flex; gap: 10px; padding: 12px; border-radius: var(--radius-lg);
+  display: flex; gap: 10px; padding: 10px 16px;
   cursor: pointer; transition: background 0.1s; position: relative;
+  border-bottom: 1px solid var(--gray-100);
 }
 .thread-item:hover { background: var(--gray-50); }
 .thread-item.active { background: var(--blue-light); }
 .thread-avatar {
-  width: 36px; height: 36px; border-radius: var(--radius-full);
+  width: 32px; height: 32px; border-radius: var(--radius-full);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 600; font-size: 13px; color: var(--white); flex-shrink: 0;
+  font-weight: 600; font-size: 12px; color: var(--white); flex-shrink: 0;
 }
 .thread-item-content { flex: 1; min-width: 0; }
-.thread-item-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
-.thread-item-name { font-size: 13px; font-weight: 600; color: var(--gray-900); }
-.thread-item-time { font-size: 11px; color: var(--gray-500); }
-.thread-item-subject { font-size: 12px; color: var(--gray-700); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
-.thread-item-preview { font-size: 12px; color: var(--gray-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.thread-item-meta { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
-.thread-stage {
-  font-size: 10px; font-weight: 600; padding: 2px 8px;
-  border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.03em;
+.thread-item-top {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 1px;
 }
-.stage-outreach { background: var(--blue-light); color: var(--blue); }
-.stage-interview { background: var(--purple-light); color: var(--purple); }
-.stage-offer { background: var(--green-light); color: var(--green); }
-.stage-screen { background: #FFF3E0; color: #E65100; }
-.priority-dot { width: 6px; height: 6px; border-radius: var(--radius-full); }
-.priority-high { background: var(--amber); }
-.priority-normal { background: var(--gray-400); }
-.priority-urgent { background: var(--red); }
-.unread-dot {
-  position: absolute; top: 16px; left: 6px;
-  width: 6px; height: 6px; border-radius: var(--radius-full);
-  background: var(--blue);
+.thread-item-name { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+.thread-item-id { font-size: 11px; color: var(--gray-400); }
+.thread-item-time {
+  font-size: 11px; color: var(--gray-500); margin-left: auto; flex-shrink: 0;
+  display: flex; align-items: center; gap: 4px;
+}
+.thread-item-subject {
+  font-size: 13px; color: var(--gray-700);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 1px;
+}
+.thread-item-preview {
+  font-size: 12px; color: var(--gray-500);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.thread-item-meta {
+  display: flex; align-items: center; gap: 8px; margin-top: 3px;
+}
+.thread-priority {
+  font-size: 11px; display: flex; align-items: center; gap: 4px;
+}
+.priority-bar {
+  width: 12px; height: 3px; border-radius: 1px;
+}
+.thread-assignees {
+  margin-left: auto; display: flex; gap: -4px;
+}
+.thread-assignee-dot {
+  width: 20px; height: 20px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8px; font-weight: 700; color: white; flex-shrink: 0;
+  border: 2px solid white; margin-left: -4px;
+}
+.thread-vip {
+  font-size: 9px; font-weight: 700; color: var(--amber);
+  background: #FFF3D0; padding: 1px 5px; border-radius: var(--radius-sm);
 }
 
-/* ── Center: Conversation ── */
+/* ═══ Center: Conversation ═══ */
 .conversation-panel {
-  flex: 1; display: flex; flex-direction: column;
-  min-width: 0;
+  flex: 1; display: flex; flex-direction: column; min-width: 0;
 }
 .conv-header {
   display: flex; align-items: center; gap: 12px;
-  padding: 12px 20px;
+  padding: 10px 20px;
   border-bottom: 1px solid var(--gray-200);
   background: var(--white);
+  min-height: 52px;
 }
 .conv-header-info { flex: 1; }
-.conv-header-info h3 { font-size: 15px; font-weight: 600; }
+.conv-header-info h3 { font-size: 14px; font-weight: 600; line-height: 1.3; }
 .conv-header-info .sub {
-  font-size: 12px; color: var(--gray-500);
+  font-size: 11px; color: var(--gray-500);
   display: flex; align-items: center; gap: 6px;
 }
 .conv-header-info .sub .channel-badge {
-  font-size: 10px; font-weight: 600; padding: 2px 6px;
+  font-size: 10px; font-weight: 600; padding: 1px 6px;
   border-radius: var(--radius-sm); background: var(--gray-100); color: var(--gray-700);
 }
 .conv-header-actions { display: flex; gap: 4px; }
 .conv-header-actions button {
-  width: 32px; height: 32px; border-radius: var(--radius-md);
+  width: 30px; height: 30px; border-radius: var(--radius-md);
   border: 1px solid var(--gray-200); background: var(--white);
-  color: var(--gray-500); cursor: pointer; font-size: 16px;
+  color: var(--gray-500); cursor: pointer; font-size: 14px;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.12s;
 }
 .conv-header-actions button:hover { border-color: var(--gray-300); color: var(--gray-700); }
-
 .conv-body {
-  flex: 1; overflow-y: auto; padding: 20px 24px;
+  flex: 1; overflow-y: auto; padding: 16px 24px;
   display: flex; flex-direction: column; gap: 0;
 }
 
 /* Messages */
-.msg-group { margin-bottom: 20px; }
+.msg-group { margin-bottom: 16px; }
 .msg-sender {
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
 }
 .msg-sender-avatar {
   width: 28px; height: 28px; border-radius: var(--radius-full);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 600; font-size: 11px; color: var(--white); flex-shrink: 0;
+  font-weight: 600; font-size: 10px; color: var(--white); flex-shrink: 0;
 }
 .msg-sender-name { font-size: 13px; font-weight: 600; color: var(--gray-900); }
 .msg-sender-time { font-size: 11px; color: var(--gray-500); }
@@ -269,32 +340,36 @@ body {
 .badge-internal { background: var(--amber-bg); color: #BF6C00; }
 .msg-bubble {
   padding: 0 0 0 36px;
-  font-size: 14px; line-height: 1.6;
-  color: var(--gray-700);
+  font-size: 14px; line-height: 1.6; color: var(--gray-700);
 }
-.msg-bubble p { margin-bottom: 8px; }
+.msg-bubble p { margin-bottom: 6px; }
 .msg-bubble p:last-child { margin-bottom: 0; }
 
-/* Internal note */
+/* Internal note — matches Plain's amber note with red "Not visible to" warning */
 .msg-note {
   background: var(--amber-bg);
   border-left: 3px solid var(--amber);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
   padding: 10px 14px;
   margin: 4px 0 4px 36px;
-  font-size: 13px;
+  font-size: 13px; color: var(--gray-700); line-height: 1.5;
+}
+.msg-note-header {
+  font-size: 11px; color: var(--gray-500); margin-bottom: 4px;
+  display: flex; align-items: center; gap: 6px;
 }
 .msg-note .note-warning {
   font-size: 11px; font-weight: 600; color: var(--red);
-  display: flex; align-items: center; gap: 4px; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 4px; margin-top: 8px;
 }
+.msg-note .note-warning svg { width: 12px; height: 12px; }
 
-/* AI Summary card */
+/* AI Summary card — matches Plain's amber summary with sparkle icon */
 .ai-summary {
   background: var(--amber-bg);
   border-radius: var(--radius-lg);
-  padding: 14px 16px;
-  margin: 8px 0 8px 36px;
+  padding: 12px 16px;
+  margin: 8px 0 8px 0;
 }
 .ai-summary-label {
   font-size: 12px; font-weight: 600; color: #BF6C00;
@@ -302,47 +377,24 @@ body {
 }
 .ai-summary-label svg { width: 14px; height: 14px; }
 .ai-summary-text { font-size: 13px; color: var(--gray-700); line-height: 1.5; }
+.ai-summary-footer {
+  margin-top: 8px; font-size: 11px; color: var(--gray-500);
+  display: flex; align-items: center; gap: 12px;
+}
+.ai-summary-footer span { cursor: pointer; }
+.ai-summary-footer span:hover { color: var(--gray-700); }
 
-/* Status event */
+/* Status event — matches Plain's centered timeline events */
 .status-event {
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 8px 0; margin: 4px 0;
+  padding: 6px 0; margin: 4px 0;
   font-size: 12px; color: var(--gray-500);
 }
 .status-event .dot {
   width: 6px; height: 6px; border-radius: var(--radius-full);
 }
 
-/* Inline cards (job, schedule, doc) */
-.inline-card {
-  margin: 8px 0 8px 36px;
-  padding: 14px 16px;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-lg);
-  display: flex; align-items: center; gap: 12px;
-  background: var(--white);
-  transition: border-color 0.12s;
-  cursor: pointer;
-}
-.inline-card:hover { border-color: var(--gray-300); }
-.inline-card-icon {
-  width: 40px; height: 40px; border-radius: var(--radius-md);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; flex-shrink: 0;
-}
-.inline-card-content { flex: 1; }
-.inline-card-title { font-size: 13px; font-weight: 600; color: var(--gray-900); }
-.inline-card-desc { font-size: 12px; color: var(--gray-500); }
-.inline-card-action {
-  font-size: 12px; font-weight: 600; color: var(--green);
-  padding: 4px 12px; border: 1px solid var(--green);
-  border-radius: var(--radius-full); cursor: pointer;
-  background: transparent; font-family: var(--font);
-  transition: all 0.12s;
-}
-.inline-card-action:hover { background: var(--green-light); }
-
-/* Waiting indicator */
+/* Waiting indicator — matches Plain's green highlight bar */
 .waiting-bar {
   display: flex; align-items: center; gap: 8px;
   background: var(--green-light);
@@ -353,16 +405,61 @@ body {
 }
 .waiting-bar svg { width: 14px; height: 14px; }
 
-/* Action Bar */
+/* Inline cards */
+.inline-card {
+  margin: 6px 0 6px 36px;
+  padding: 12px 14px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  display: flex; align-items: center; gap: 12px;
+  background: var(--white);
+  transition: border-color 0.12s; cursor: pointer;
+}
+.inline-card:hover { border-color: var(--gray-300); }
+.inline-card-icon {
+  width: 36px; height: 36px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.inline-card-content { flex: 1; }
+.inline-card-title { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+.inline-card-desc { font-size: 12px; color: var(--gray-500); }
+.inline-card-action {
+  font-size: 12px; font-weight: 600; color: var(--green);
+  padding: 4px 12px; border: 1px solid var(--green);
+  border-radius: var(--radius-full); cursor: pointer;
+  background: transparent; font-family: var(--font); transition: all 0.12s;
+}
+.inline-card-action:hover { background: var(--green-light); }
+
+/* PDF attachment — matches Plain's file attachment cards */
+.file-attachment {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px; margin: 4px 0 4px 36px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+  background: var(--gray-50); font-size: 12px; color: var(--gray-700);
+  cursor: pointer; transition: border-color 0.1s;
+}
+.file-attachment:hover { border-color: var(--gray-300); }
+.file-attachment .file-icon {
+  width: 28px; height: 28px; border-radius: var(--radius-sm);
+  background: var(--red); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700;
+}
+.file-attachment .file-name { font-weight: 500; }
+.file-attachment .file-size { color: var(--gray-500); }
+
+/* Action Bar — matches Plain's bottom action bar */
 .action-bar {
-  display: flex; align-items: center; gap: 4px;
-  padding: 10px 20px;
+  display: flex; align-items: center; gap: 2px;
+  padding: 8px 16px;
   border-top: 1px solid var(--gray-200);
   background: var(--white);
 }
 .action-btn {
   display: flex; align-items: center; gap: 6px;
-  padding: 8px 14px; border-radius: var(--radius-md);
+  padding: 7px 12px; border-radius: var(--radius-md);
   border: none; background: none;
   font-family: var(--font); font-size: 13px; font-weight: 500;
   color: var(--gray-500); cursor: pointer; transition: all 0.12s;
@@ -377,81 +474,192 @@ body {
 .action-bar-spacer { flex: 1; }
 .action-btn-primary {
   display: flex; align-items: center; gap: 6px;
-  padding: 8px 18px; border-radius: var(--radius-md);
+  padding: 7px 16px; border-radius: var(--radius-md);
   border: none; background: var(--green);
   font-family: var(--font); font-size: 13px; font-weight: 600;
   color: var(--white); cursor: pointer; transition: all 0.12s;
 }
 .action-btn-primary:hover { background: var(--green-dark); }
+.action-btn-primary .dropdown-arrow {
+  margin-left: 4px; font-size: 10px;
+  border-left: 1px solid rgba(255,255,255,0.3);
+  padding-left: 8px;
+}
 
-/* ── Right: Detail Panel ── */
+/* ═══ Right: Detail Panel — matches Plain's key-value metadata ═══ */
 .detail-panel {
   width: var(--detail-w);
   border-left: 1px solid var(--gray-200);
-  overflow-y: auto; background: var(--white);
-  padding: 0;
+  overflow-y: auto; background: var(--white); padding: 0;
 }
 .detail-header {
-  padding: 16px 16px 12px;
+  padding: 14px 16px 10px;
   border-bottom: 1px solid var(--gray-100);
 }
 .detail-header h4 { font-size: 14px; font-weight: 600; color: var(--gray-900); line-height: 1.3; }
+.detail-header .sub { font-size: 11px; color: var(--gray-500); margin-top: 2px; }
 .detail-section {
-  padding: 12px 16px;
+  padding: 10px 16px;
   border-bottom: 1px solid var(--gray-100);
 }
 .detail-section-title {
-  font-size: 11px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.05em; color: var(--gray-500);
-  margin-bottom: 10px;
+  font-size: 12px; font-weight: 500; color: var(--gray-500);
+  margin-bottom: 8px;
   display: flex; align-items: center; justify-content: space-between;
 }
+.detail-section-title .count { font-size: 11px; color: var(--gray-400); }
 .detail-section-title .toggle {
-  font-size: 14px; color: var(--gray-400); cursor: pointer;
-  transform: rotate(0deg); transition: transform 0.15s;
+  font-size: 12px; color: var(--gray-400); cursor: pointer;
 }
+.detail-section-title .add-icon {
+  font-size: 14px; color: var(--gray-400); cursor: pointer;
+}
+.detail-section-title .add-icon:hover { color: var(--gray-700); }
 .detail-row {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 5px 0;
+  padding: 4px 0;
 }
-.detail-label { font-size: 12px; color: var(--gray-500); font-weight: 500; }
-.detail-value { font-size: 13px; color: var(--gray-900); font-weight: 400; display: flex; align-items: center; gap: 6px; }
-.detail-value .status-dot { width: 8px; height: 8px; border-radius: var(--radius-full); flex-shrink: 0; }
+.detail-label {
+  font-size: 12px; color: var(--gray-500); font-weight: 500;
+  min-width: 80px;
+}
+.detail-value {
+  font-size: 13px; color: var(--gray-900); font-weight: 400;
+  display: flex; align-items: center; gap: 6px;
+  text-align: right; flex: 1; justify-content: flex-end;
+}
+.detail-value .status-dot {
+  width: 8px; height: 8px; border-radius: var(--radius-full); flex-shrink: 0;
+}
+.detail-value .priority-icon {
+  width: 14px; height: 4px; border-radius: 1px; flex-shrink: 0;
+}
 .detail-value .add-btn {
   font-size: 12px; color: var(--gray-400); cursor: pointer;
   display: flex; align-items: center; gap: 2px;
 }
 .detail-value .add-btn:hover { color: var(--gray-700); }
 
-/* Team members */
+/* Team members in detail panel */
 .team-member {
-  display: flex; align-items: center; gap: 8px;
-  padding: 6px 0;
+  display: flex; align-items: center; gap: 8px; padding: 5px 0;
 }
 .team-member-avatar {
   width: 24px; height: 24px; border-radius: var(--radius-full);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 600; font-size: 10px; color: var(--white); flex-shrink: 0;
+  font-weight: 600; font-size: 9px; color: var(--white); flex-shrink: 0;
 }
 .team-member-info { flex: 1; }
 .team-member-name { font-size: 12px; font-weight: 500; color: var(--gray-900); }
 .team-member-role { font-size: 11px; color: var(--gray-500); }
-
-/* Similar threads */
-.similar-thread {
-  display: flex; align-items: center; gap: 8px;
-  padding: 6px 0; cursor: pointer;
+.team-member .more-btn {
+  font-size: 14px; color: var(--gray-400); cursor: pointer;
+  visibility: hidden;
 }
-.similar-thread:hover .sim-title { color: var(--green); }
-.sim-dot { width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--gray-300); flex-shrink: 0; }
-.sim-title { font-size: 12px; color: var(--gray-700); transition: color 0.1s; flex: 1; }
-.sim-time { font-size: 11px; color: var(--gray-500); }
+.team-member:hover .more-btn { visibility: visible; }
 
-/* ═══════════════════════════════════════════
-   CANDIDATE VIEW
-   ═══════════════════════════════════════════ */
+/* Customer info in detail */
+.customer-card {
+  padding: 10px 16px; border-bottom: 1px solid var(--gray-100);
+}
+.customer-card-header {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+}
+.customer-card-avatar {
+  width: 28px; height: 28px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 10px; color: var(--white); flex-shrink: 0;
+}
+.customer-card-name { font-size: 13px; font-weight: 600; }
+.customer-card-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 3px 0;
+}
+.customer-card-label { font-size: 12px; color: var(--gray-500); }
+.customer-card-val { font-size: 12px; color: var(--gray-900); }
+.customer-card-val a { color: var(--blue); text-decoration: none; }
+
+/* Agent Session Panel — matches Plain's agent session sidebar */
+.agent-panel {
+  width: var(--detail-w);
+  border-left: 1px solid var(--gray-200);
+  background: var(--white);
+  display: none; flex-direction: column;
+}
+.agent-panel.visible { display: flex; }
+.agent-panel-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gray-100);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.agent-panel-header h4 {
+  font-size: 13px; font-weight: 600; color: var(--purple);
+  display: flex; align-items: center; gap: 6px;
+}
+.agent-panel-header .close-btn {
+  font-size: 16px; color: var(--gray-400); cursor: pointer;
+  border: none; background: none; padding: 4px;
+}
+.agent-panel-header .close-btn:hover { color: var(--gray-700); }
+.agent-panel-header .time { font-size: 11px; color: var(--gray-500); font-weight: 400; }
+.agent-panel-body {
+  flex: 1; overflow-y: auto; padding: 16px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.agent-msg {
+  font-size: 13px; line-height: 1.5; color: var(--gray-700);
+  padding: 10px 12px; border-radius: var(--radius-lg);
+}
+.agent-msg.question {
+  background: var(--gray-50); border: 1px solid var(--gray-200);
+}
+.agent-msg.thinking {
+  color: var(--purple); font-style: italic;
+  display: flex; align-items: center; gap: 8px;
+}
+.agent-msg.response {
+  background: var(--purple-light); border: 1px solid rgba(124,58,237,0.15);
+}
+.agent-thinking-dots {
+  display: flex; gap: 3px;
+}
+.agent-thinking-dots span {
+  width: 5px; height: 5px; border-radius: var(--radius-full);
+  background: var(--purple); opacity: 0.4;
+  animation: dotPulse 1.2s ease-in-out infinite;
+}
+.agent-thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+.agent-thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+.agent-panel-input {
+  padding: 12px 16px; border-top: 1px solid var(--gray-100);
+  display: flex; gap: 8px;
+}
+.agent-panel-input input {
+  flex: 1; height: 36px; padding: 0 12px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+  font-family: var(--font); font-size: 13px; color: var(--gray-900);
+  outline: none; background: var(--gray-50);
+}
+.agent-panel-input input:focus { border-color: var(--purple); background: white; }
+.agent-panel-input input::placeholder { color: var(--gray-400); }
+
+/* Activity log */
+.activity-item {
+  display: flex; align-items: flex-start; gap: 8px; padding: 3px 0;
+}
+.activity-dot {
+  width: 6px; height: 6px; border-radius: var(--radius-full);
+  background: var(--gray-300); flex-shrink: 0; margin-top: 5px;
+}
+.activity-text { font-size: 12px; color: var(--gray-500); }
+
+/* ═══ CANDIDATE VIEW ═══ */
 .candidate-view {
-  margin-top: 44px; height: calc(100vh - 44px);
+  margin-top: 40px; height: calc(100vh - 40px);
   display: flex; flex-direction: column;
   max-width: 520px; margin-left: auto; margin-right: auto;
   background: var(--white);
@@ -459,10 +667,9 @@ body {
   border-right: 1px solid var(--gray-200);
 }
 .candidate-view.hidden { display: none; }
-
 .cand-header {
   display: flex; align-items: center; gap: 12px;
-  padding: 14px 20px;
+  padding: 12px 20px;
   border-bottom: 1px solid var(--gray-200);
 }
 .cand-header-avatar {
@@ -476,19 +683,16 @@ body {
 .cand-header-info .sub { font-size: 12px; color: var(--gray-500); }
 .cand-header-actions { display: flex; gap: 8px; }
 .cand-header-actions button {
-  width: 36px; height: 36px; border-radius: var(--radius-full);
+  width: 32px; height: 32px; border-radius: var(--radius-full);
   border: 1px solid var(--gray-200); background: var(--white);
-  color: var(--gray-500); cursor: pointer; font-size: 16px;
+  color: var(--gray-500); cursor: pointer; font-size: 14px;
   display: flex; align-items: center; justify-content: center;
 }
 .cand-header-actions button:hover { background: var(--gray-50); color: var(--gray-700); }
-
 .cand-body {
   flex: 1; overflow-y: auto; padding: 20px;
-  display: flex; flex-direction: column; gap: 16px;
+  display: flex; flex-direction: column; gap: 14px;
 }
-
-/* Candidate message bubbles */
 .cand-msg { display: flex; flex-direction: column; gap: 4px; }
 .cand-msg.sent { align-items: flex-end; }
 .cand-msg.received { align-items: flex-start; }
@@ -501,27 +705,17 @@ body {
 }
 .cand-bubble {
   padding: 10px 14px;
-  font-size: 14px; line-height: 1.5;
-  border-radius: 16px;
-  max-width: 100%;
+  font-size: 14px; line-height: 1.5; border-radius: 16px; max-width: 100%;
 }
 .cand-msg.received .cand-bubble {
-  background: var(--gray-100);
-  color: var(--gray-900);
-  border-bottom-left-radius: 4px;
+  background: var(--gray-100); color: var(--gray-900); border-bottom-left-radius: 4px;
 }
 .cand-msg.sent .cand-bubble {
-  background: var(--green);
-  color: var(--white);
-  border-bottom-right-radius: 4px;
+  background: var(--green); color: var(--white); border-bottom-right-radius: 4px;
 }
-.cand-msg-time {
-  font-size: 11px; color: var(--gray-500);
-  padding: 0 36px;
-}
+.cand-msg-time { font-size: 11px; color: var(--gray-500); padding: 0 36px; }
 .cand-msg-sender {
-  font-size: 11px; font-weight: 600; color: var(--gray-700);
-  padding: 0 36px;
+  font-size: 11px; font-weight: 600; color: var(--gray-700); padding: 0 36px;
   display: flex; align-items: center; gap: 4px;
 }
 .cand-msg-sender .ai-tag {
@@ -529,11 +723,9 @@ body {
   background: var(--purple-light); color: var(--purple);
   border-radius: var(--radius-sm); font-weight: 600;
 }
-
-/* Candidate inline cards */
 .cand-card {
   border: 1px solid var(--gray-200); border-radius: var(--radius-xl);
-  padding: 16px; background: var(--white); max-width: 85%;
+  padding: 14px; background: var(--white); max-width: 85%;
 }
 .cand-card-title {
   font-size: 14px; font-weight: 600; margin-bottom: 4px;
@@ -542,58 +734,45 @@ body {
 .cand-card-desc { font-size: 13px; color: var(--gray-500); margin-bottom: 10px; }
 .cand-card-actions { display: flex; gap: 8px; }
 .cand-card-btn {
-  padding: 8px 16px; border-radius: var(--radius-full);
+  padding: 7px 14px; border-radius: var(--radius-full);
   font-family: var(--font); font-size: 13px; font-weight: 600;
   cursor: pointer; transition: all 0.12s;
 }
-.cand-card-btn.primary {
-  background: var(--green); color: var(--white); border: none;
-}
+.cand-card-btn.primary { background: var(--green); color: var(--white); border: none; }
 .cand-card-btn.primary:hover { background: var(--green-dark); }
 .cand-card-btn.secondary {
   background: var(--white); color: var(--gray-700); border: 1px solid var(--gray-200);
 }
 .cand-card-btn.secondary:hover { background: var(--gray-50); }
-
-/* Candidate schedule card */
 .cand-schedule {
   border: 1px solid var(--green); border-radius: var(--radius-xl);
-  padding: 16px; background: var(--green-light);
+  padding: 14px; background: var(--green-light);
 }
 .cand-schedule-title {
   font-size: 13px; font-weight: 600; color: var(--green-dark);
   display: flex; align-items: center; gap: 6px; margin-bottom: 4px;
 }
-.cand-schedule-detail {
-  font-size: 14px; font-weight: 600; color: var(--gray-900);
-  margin-bottom: 2px;
-}
+.cand-schedule-detail { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
 .cand-schedule-sub { font-size: 12px; color: var(--gray-500); }
-
-/* Candidate input */
 .cand-input {
   display: flex; align-items: center; gap: 8px;
-  padding: 12px 16px;
-  border-top: 1px solid var(--gray-200);
-  background: var(--white);
+  padding: 10px 16px; border-top: 1px solid var(--gray-200); background: var(--white);
 }
 .cand-input-field {
-  flex: 1; height: 40px; padding: 0 16px;
+  flex: 1; height: 38px; padding: 0 14px;
   border: 1px solid var(--gray-200); border-radius: var(--radius-full);
   font-family: var(--font); font-size: 14px; color: var(--gray-900);
-  outline: none; transition: border-color 0.15s;
-  background: var(--gray-50);
+  outline: none; transition: border-color 0.15s; background: var(--gray-50);
 }
 .cand-input-field:focus { border-color: var(--green); background: var(--white); }
 .cand-input-btn {
-  width: 40px; height: 40px; border-radius: var(--radius-full);
+  width: 38px; height: 38px; border-radius: var(--radius-full);
   border: none; background: var(--green); color: var(--white);
   cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: background 0.12s;
 }
 .cand-input-btn:hover { background: var(--green-dark); }
 .cand-input-attach {
-  width: 40px; height: 40px; border-radius: var(--radius-full);
+  width: 38px; height: 38px; border-radius: var(--radius-full);
   border: 1px solid var(--gray-200); background: var(--white);
   color: var(--gray-500); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
@@ -603,38 +782,20 @@ body {
   font-size: 11px; color: var(--gray-400);
 }
 
-/* ═══════════════════════════════════════════
-   Animations
-   ═══════════════════════════════════════════ */
+/* ═══ Animations ═══ */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.fade-in {
+.msg-group, .cand-msg, .cand-card, .cand-schedule, .inline-card, .ai-summary,
+.status-event, .waiting-bar, .msg-note, .file-attachment {
   animation: fadeIn 0.25s ease-out both;
 }
-.msg-group, .cand-msg, .cand-card, .cand-schedule, .inline-card, .ai-summary, .status-event, .waiting-bar, .msg-note {
-  animation: fadeIn 0.3s ease-out both;
-}
-
-/* Story step indicator dots */
-.step-dots {
-  display: flex; gap: 3px; margin-left: 12px;
-}
-.step-dot {
-  width: 8px; height: 8px; border-radius: var(--radius-full);
-  background: rgba(255,255,255,0.15); cursor: pointer;
-  transition: all 0.15s;
-}
-.step-dot.active { background: var(--green); }
-.step-dot.done { background: rgba(255,255,255,0.4); }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════
-     VIEW SWITCHER
-     ═══════════════════════════════════════════ -->
+<!-- View Switcher -->
 <div class="view-switcher">
   <span class="label">View</span>
   <button class="view-btn active" onclick="showView('recruiter')">Recruiter</button>
@@ -645,25 +806,26 @@ body {
   </div>
   <div class="step-dots" id="step-dots"></div>
   <div class="story-nav">
-    <button id="prev-btn" onclick="prevStep()" disabled>&larr;</button>
-    <button id="next-btn" onclick="nextStep()">&rarr;</button>
+    <button id="prev-btn" onclick="prevStep()" disabled>&#8592;</button>
+    <button id="next-btn" onclick="nextStep()">&#8594;</button>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     RECRUITER VIEW
-     ═══════════════════════════════════════════ -->
+<!-- ═══ RECRUITER VIEW ═══ -->
 <div class="recruiter-view" id="recruiter-view">
 
   <!-- Icon Rail -->
   <div class="icon-rail">
     <div class="rail-logo">A</div>
-    <div class="rail-icon active" title="Threads">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      <div class="badge">4</div>
+    <div class="rail-icon" title="Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     </div>
     <div class="rail-icon" title="Search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    </div>
+    <div class="rail-icon active" title="Threads">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <div class="badge">4</div>
     </div>
     <div class="rail-icon" title="Candidates">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -677,75 +839,174 @@ body {
     </div>
   </div>
 
-  <!-- Thread List Sidebar -->
+  <!-- Navigation Sidebar -->
+  <div class="nav-sidebar">
+    <div class="nav-workspace">
+      Recruiting<br>
+      <span class="sub">ABC Staffing</span>
+    </div>
+
+    <div class="nav-item" style="font-weight:600; padding-top:8px;">
+      <span class="icon">&#128172;</span> My threads
+    </div>
+    <div class="nav-item">
+      <span class="icon">&#9745;</span> Tasks
+      <span class="count">2</span>
+    </div>
+    <div class="nav-item active">
+      <span class="icon">&#128196;</span> All threads
+      <span class="count">4</span>
+    </div>
+
+    <div class="nav-sub-item">
+      <span class="status-icon" style="background:var(--blue)"></span>
+      First response
+      <span class="count-muted">1</span>
+    </div>
+    <div class="nav-sub-item">
+      <span class="status-icon" style="background:var(--green)"></span>
+      Next response
+      <span class="count-muted">0</span>
+    </div>
+    <div class="nav-sub-item">
+      <span class="status-icon" style="background:var(--purple)"></span>
+      Investigating
+      <span class="count-muted">0</span>
+    </div>
+    <div class="nav-sub-item">
+      <span class="status-icon" style="background:var(--amber)"></span>
+      Waiting for candidate
+      <span class="count-muted">2</span>
+    </div>
+    <div class="nav-sub-item">
+      <span class="status-icon" style="background:var(--gray-400)"></span>
+      Paused
+      <span class="count-muted">0</span>
+    </div>
+    <div class="nav-sub-item">
+      <span class="status-icon" style="background:var(--green)"></span>
+      Done
+      <span class="count-muted">0</span>
+    </div>
+
+    <div class="nav-section-label">Favorites <span class="chevron">&#9662;</span></div>
+    <div class="nav-item">
+      <span class="icon">&#9733;</span> Product Design Hiring
+      <span class="count">4</span>
+    </div>
+
+    <div class="nav-section-label">Browse <span class="chevron">&#9662;</span></div>
+    <div class="nav-item"><span class="icon">&#127970;</span> Companies</div>
+    <div class="nav-item"><span class="icon">&#127991;</span> Labels <span class="count-muted">7</span></div>
+    <div class="nav-item"><span class="icon">&#9670;</span> Tiers <span class="count-muted">3</span></div>
+    <div class="nav-item"><span class="icon">&#128279;</span> Channels</div>
+  </div>
+
+  <!-- Thread List -->
   <div class="thread-sidebar">
     <div class="thread-sidebar-header">
-      <h2>Threads <span class="count">4</span></h2>
+      <h2>Threads</h2>
+      <div class="thread-header-controls">
+        <button class="thread-header-btn">&#9776; Filters</button>
+        <button class="thread-header-btn">&#9638; Display</button>
+      </div>
     </div>
     <div class="thread-tabs">
-      <button class="thread-tab active">Todo</button>
-      <button class="thread-tab">Snoozed</button>
+      <button class="thread-tab active">Todo <span class="tab-count">4</span></button>
+      <button class="thread-tab">Snoozed <span class="tab-count">0</span></button>
       <button class="thread-tab">Done</button>
     </div>
+
     <div class="thread-list">
+      <div class="thread-status-header">Needs first response &middot; 1</div>
+
       <div class="thread-item active" id="thread-sarah">
-        <div class="unread-dot"></div>
         <div class="thread-avatar" style="background:#4C6EF5">SC</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Sarah Chen</span>
+            <span class="thread-item-id">T-12</span>
             <span class="thread-item-time">Just now</span>
           </div>
-          <div class="thread-item-subject">Product Designer — Hyderabad</div>
+          <div class="thread-item-subject" id="thread-sarah-subject">Product Designer — Hyderabad</div>
           <div class="thread-item-preview" id="thread-sarah-preview">Thanks! I'd love to know more about the role.</div>
           <div class="thread-item-meta">
-            <span class="thread-stage stage-outreach" id="thread-sarah-stage">Outreach</span>
-            <span class="priority-dot priority-high"></span>
+            <div class="thread-priority" id="thread-sarah-priority">
+              <span class="priority-bar" style="background:var(--amber)"></span>
+              <span style="font-size:11px;color:var(--amber)">High</span>
+            </div>
+            <div class="thread-assignees">
+              <div class="thread-assignee-dot" style="background:var(--green)" title="You">Y</div>
+            </div>
           </div>
         </div>
       </div>
+
+      <div class="thread-status-header">Active &middot; 3</div>
+
       <div class="thread-item">
         <div class="thread-avatar" style="background:#37B24D">AK</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Arjun Kumar</span>
+            <span class="thread-item-id">T-15</span>
             <span class="thread-item-time">2h ago</span>
           </div>
           <div class="thread-item-subject">Frontend Engineer — Bangalore</div>
           <div class="thread-item-preview">When is the technical round?</div>
           <div class="thread-item-meta">
-            <span class="thread-stage stage-interview">Interview</span>
-            <span class="priority-dot priority-normal"></span>
+            <div class="thread-priority">
+              <span class="priority-bar" style="background:var(--gray-400)"></span>
+              <span style="font-size:11px;color:var(--gray-500)">Normal</span>
+            </div>
+            <div class="thread-assignees">
+              <div class="thread-assignee-dot" style="background:var(--green)" title="You">Y</div>
+              <div class="thread-assignee-dot" style="background:var(--purple)" title="AI">&#10024;</div>
+            </div>
           </div>
         </div>
       </div>
+
       <div class="thread-item">
         <div class="thread-avatar" style="background:#7C3AED">PM</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Priya Mehta</span>
+            <span class="thread-item-id">T-8</span>
             <span class="thread-item-time">5h ago</span>
           </div>
           <div class="thread-item-subject">Engineering Manager — Remote</div>
           <div class="thread-item-preview">I've accepted! Looking forward to starting.</div>
           <div class="thread-item-meta">
-            <span class="thread-stage stage-offer">Offer</span>
-            <span class="priority-dot priority-normal"></span>
+            <div class="thread-priority">
+              <span class="priority-bar" style="background:var(--gray-400)"></span>
+              <span style="font-size:11px;color:var(--gray-500)">Normal</span>
+            </div>
+            <div class="thread-assignees">
+              <div class="thread-assignee-dot" style="background:var(--green)" title="You">Y</div>
+            </div>
           </div>
         </div>
       </div>
+
       <div class="thread-item">
         <div class="thread-avatar" style="background:#E03131">RV</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Rahul Verma</span>
+            <span class="thread-item-id">T-3</span>
             <span class="thread-item-time">1d ago</span>
           </div>
           <div class="thread-item-subject">Data Analyst — Pune</div>
           <div class="thread-item-preview">Could you share the compensation details?</div>
           <div class="thread-item-meta">
-            <span class="thread-stage stage-screen">Screening</span>
-            <span class="priority-dot priority-urgent"></span>
+            <div class="thread-priority">
+              <span class="priority-bar" style="background:var(--red)"></span>
+              <span style="font-size:11px;color:var(--red)">Urgent</span>
+            </div>
+            <div class="thread-assignees">
+              <div class="thread-assignee-dot" style="background:#E65100" title="Sachin">SP</div>
+            </div>
           </div>
         </div>
       </div>
@@ -755,23 +1016,21 @@ body {
   <!-- Conversation Panel -->
   <div class="conversation-panel">
     <div class="conv-header">
-      <div class="thread-avatar" style="background:#4C6EF5; width:32px; height:32px; font-size:12px;">SC</div>
       <div class="conv-header-info">
-        <h3>Sarah Chen</h3>
+        <h3>Product Designer — Hyderabad</h3>
         <div class="sub">
+          T-12 &middot;
           <span class="channel-badge">Email</span>
-          T-12 &middot; Product Designer &middot; Hyderabad
+          sarah.chen@gmail.com &middot; 5min ago
         </div>
       </div>
       <div class="conv-header-actions">
+        <button title="Expand">&#8599;</button>
         <button title="Pin">&#128204;</button>
-        <button title="Snooze">&#9203;</button>
         <button title="More">&middot;&middot;&middot;</button>
       </div>
     </div>
-    <div class="conv-body" id="conv-body">
-      <!-- Messages injected by JS -->
-    </div>
+    <div class="conv-body" id="conv-body"></div>
     <div class="action-bar">
       <button class="action-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
@@ -781,78 +1040,90 @@ body {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
         Note <span class="action-key">N</span>
       </button>
-      <button class="action-btn">
-        &middot;&middot;&middot; More
-      </button>
-      <button class="action-btn">
+      <button class="action-btn">&middot;&middot;&middot; More</button>
+      <button class="action-btn" onclick="toggleAgent()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-        Agent <span class="action-key">A</span>
+        Sidekick <span class="action-key">$</span>
       </button>
       <div class="action-bar-spacer"></div>
       <button class="action-btn-primary" id="reply-wait-btn">
-        Reply &amp; wait &#8594;
+        Reply &amp; wait
+        <span class="dropdown-arrow">&#9662;</span>
       </button>
     </div>
   </div>
 
   <!-- Detail Panel -->
-  <div class="detail-panel">
+  <div class="detail-panel" id="detail-panel">
     <div class="detail-header">
-      <h4>Sarah Chen — Product Designer</h4>
+      <h4>Product Designer — Hyderabad</h4>
+      <div class="sub">No preview</div>
     </div>
 
     <div class="detail-section">
-      <div class="detail-section-title">Information <span class="toggle">&#9662;</span></div>
       <div class="detail-row">
         <span class="detail-label">Status</span>
         <span class="detail-value"><span class="status-dot" style="background:var(--blue)" id="detail-status-dot"></span> <span id="detail-status">Needs first response</span></span>
       </div>
       <div class="detail-row">
         <span class="detail-label">Assignee</span>
-        <span class="detail-value" id="detail-assignee">You (Recruiter)</span>
+        <span class="detail-value" id="detail-assignee">You</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">Priority</span>
-        <span class="detail-value"><span class="status-dot" style="background:var(--amber)"></span> High</span>
+        <span class="detail-value"><span class="priority-icon" style="background:var(--amber)"></span> High</span>
       </div>
-      <div class="detail-row">
+      <div class="detail-row" id="detail-stage-row">
         <span class="detail-label">Stage</span>
         <span class="detail-value" id="detail-stage">Outreach</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">Labels</span>
-        <span class="detail-value"><span class="add-btn">Labels +</span></span>
+        <span class="detail-value"><span class="add-btn">+ Labels</span></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Thread tier</span>
+        <span class="detail-value"><span class="add-btn">+ Tier</span></span>
       </div>
     </div>
 
     <div class="detail-section">
-      <div class="detail-section-title">Job <span class="toggle">&#9662;</span></div>
-      <div class="detail-row">
-        <span class="detail-label">Role</span>
-        <span class="detail-value">Product Designer</span>
+      <div class="detail-section-title">Links <span class="count">(0)</span> <span class="add-icon">+</span></div>
+      <div class="detail-section-title">Discussions <span class="count">(0)</span> <span class="add-icon">+</span></div>
+    </div>
+
+    <div class="customer-card">
+      <div class="customer-card-header">
+        <div class="customer-card-avatar" style="background:#4C6EF5">SC</div>
+        <span class="customer-card-name">Sarah Chen</span>
       </div>
-      <div class="detail-row">
-        <span class="detail-label">Location</span>
-        <span class="detail-value">Hyderabad</span>
+      <div class="customer-card-row">
+        <span class="customer-card-label">Email</span>
+        <span class="customer-card-val"><a href="#">sarah.chen@gmail.com</a></span>
       </div>
-      <div class="detail-row">
-        <span class="detail-label">Department</span>
-        <span class="detail-value">Design</span>
+      <div class="customer-card-row">
+        <span class="customer-card-label">Phone</span>
+        <span class="customer-card-val">+91 98765 43210</span>
       </div>
-      <div class="detail-row">
-        <span class="detail-label">Hiring Manager</span>
-        <span class="detail-value">Sachin Patel</span>
+      <div class="customer-card-row">
+        <span class="customer-card-label">Location</span>
+        <span class="customer-card-val">Hyderabad, India</span>
+      </div>
+      <div class="customer-card-row">
+        <span class="customer-card-label">Source</span>
+        <span class="customer-card-val">LinkedIn</span>
       </div>
     </div>
 
     <div class="detail-section">
-      <div class="detail-section-title">Team <span class="toggle">&#9662;</span></div>
+      <div class="detail-section-title">Team <span class="add-icon">+</span></div>
       <div class="team-member">
         <div class="team-member-avatar" style="background:#E65100">SP</div>
         <div class="team-member-info">
           <div class="team-member-name">Sachin Patel</div>
           <div class="team-member-role">Hiring Manager</div>
         </div>
+        <span class="more-btn">&middot;&middot;&middot;</span>
       </div>
       <div class="team-member">
         <div class="team-member-avatar" style="background:#7C3AED">PG</div>
@@ -860,54 +1131,51 @@ body {
           <div class="team-member-name">Priya Gupta</div>
           <div class="team-member-role">Interviewer</div>
         </div>
+        <span class="more-btn">&middot;&middot;&middot;</span>
       </div>
       <div class="team-member">
-        <div class="team-member-avatar" style="background:var(--green)">AI</div>
+        <div class="team-member-avatar" style="background:var(--purple)">&#10024;</div>
         <div class="team-member-info">
           <div class="team-member-name">Recruiting Agent</div>
           <div class="team-member-role">AI Assistant</div>
         </div>
+        <span class="more-btn">&middot;&middot;&middot;</span>
       </div>
     </div>
 
     <div class="detail-section">
       <div class="detail-section-title">Documents <span class="toggle">&#9662;</span></div>
       <div id="detail-docs">
-        <div class="detail-row">
-          <span class="detail-label">&#128196;</span>
-          <span class="detail-value">Resume_SarahChen.pdf</span>
-        </div>
+        <div class="detail-row"><span class="detail-label">&#128196;</span><span class="detail-value">Resume_SarahChen.pdf</span></div>
       </div>
     </div>
 
-    <div class="detail-section">
-      <div class="detail-section-title">Actions <span class="toggle">&#9662;</span></div>
-      <div class="detail-row">
-        <span class="detail-label">&#10024;</span>
-        <span class="detail-value" style="color:var(--purple)">Ask Agent</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">&#128172;</span>
-        <span class="detail-value">Discuss internally</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">&#9881;</span>
-        <span class="detail-value">Run workflow</span>
-      </div>
-    </div>
-
-    <div class="detail-section" id="similar-threads-section">
-      <div class="detail-section-title">Activity Log <span class="toggle">&#9662;</span></div>
+    <div class="detail-section" id="recent-threads-section">
+      <div class="detail-section-title">Recent threads <span class="toggle">&#9662;</span></div>
       <div id="activity-log">
-        <div style="font-size:12px; color:var(--gray-500); padding:4px 0;">No activity yet</div>
+        <div class="activity-item"><span class="activity-dot"></span><span class="activity-text">No activity yet</span></div>
       </div>
+    </div>
+  </div>
+
+  <!-- Agent Session Panel -->
+  <div class="agent-panel" id="agent-panel">
+    <div class="agent-panel-header">
+      <h4>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+        Agent session
+        <span class="time">Just now</span>
+      </h4>
+      <button class="close-btn" onclick="toggleAgent()">&times;</button>
+    </div>
+    <div class="agent-panel-body" id="agent-body"></div>
+    <div class="agent-panel-input">
+      <input type="text" placeholder="Type your message...">
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     CANDIDATE VIEW
-     ═══════════════════════════════════════════ -->
+<!-- ═══ CANDIDATE VIEW ═══ -->
 <div class="candidate-view hidden" id="candidate-view">
   <div class="cand-header">
     <div class="cand-header-avatar">A</div>
@@ -920,9 +1188,7 @@ body {
       <button title="Call">&#128222;</button>
     </div>
   </div>
-  <div class="cand-body" id="cand-body">
-    <!-- Messages injected by JS -->
-  </div>
+  <div class="cand-body" id="cand-body"></div>
   <div class="cand-input">
     <button class="cand-input-attach" title="Attach">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
@@ -936,9 +1202,6 @@ body {
 </div>
 
 <script>
-/* ═══════════════════════════════════════════
-   STORY DATA — 12 Acts
-   ═══════════════════════════════════════════ */
 const STEPS = [
   { name: "Discover", num: 1 },
   { name: "Reach Out", num: 2 },
@@ -956,8 +1219,8 @@ const STEPS = [
 
 let currentStep = 0;
 let currentView = 'recruiter';
+let agentVisible = false;
 
-// Build step dots
 const dotsEl = document.getElementById('step-dots');
 STEPS.forEach((s, i) => {
   const d = document.createElement('div');
@@ -967,34 +1230,29 @@ STEPS.forEach((s, i) => {
   dotsEl.appendChild(d);
 });
 
-/* ═══════════════════════════════════════════
-   RECRUITER CONVERSATION CONTENT PER STEP
-   ═══════════════════════════════════════════ */
-
+/* ═══ RECRUITER CONVERSATION CONTENT ═══ */
 function recruiterHTML(step) {
   let html = '';
 
-  // Step 1: Discover — recruiter found the candidate
   if (step >= 0) {
     html += statusEvent('green', 'Thread created &middot; Sarah Chen added from LinkedIn');
+    html += waitingBar('Sarah Chen is waiting for a first response');
   }
 
-  // Step 2: Reach Out
   if (step >= 1) {
     html += msgGroup('You', 'Recruiter', '#37B24D', 'Just now', '',
       `<p>Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad.</p>
        <p>The team is building a new enterprise design system and we're looking for someone with your systems thinking background. Would you be interested in learning more?</p>`);
+    html += statusEvent('blue', 'You changed status to Outreach sent');
   }
 
-  // Step 3: Engage — candidate responds
   if (step >= 2) {
     html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', '2 min ago', '',
       `<p>Hi! Thanks for reaching out. I've been looking at design systems roles and this sounds interesting.</p>
        <p>I'd definitely like to learn more about the role and team.</p>`);
-    html += statusEvent('blue', 'Status changed to Active conversation');
+    html += statusEvent('green', 'Status changed to Active conversation');
   }
 
-  // Step 4: Inform — share JD + docs
   if (step >= 3) {
     html += msgGroup('You', 'Recruiter', '#37B24D', '1 min ago', '',
       `<p>Great! I'm sharing the role details here so you have everything in one place.</p>`);
@@ -1006,7 +1264,6 @@ function recruiterHTML(step) {
       `<p>You'll be working with 4 designers and 2 PMs. The team is building the next generation of our enterprise design system — it's a greenfield project with a lot of ownership.</p>`);
   }
 
-  // Step 5: Assist — AI agent joins
   if (step >= 4) {
     html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', '30 sec ago', '',
       `<p>This looks great! What's the interview process like? And is there flexibility on remote work?</p>`);
@@ -1021,7 +1278,6 @@ function recruiterHTML(step) {
       `<p>Yep, and I'll personally walk you through the first stage. It's very conversational — no trick questions!</p>`);
   }
 
-  // Step 6: Schedule
   if (step >= 5) {
     html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', 'Just now', '',
       `<p>Sounds good! I'm available Thursday afternoon if that works?</p>`);
@@ -1029,51 +1285,40 @@ function recruiterHTML(step) {
       `<p>I've checked everyone's calendars. Thursday at 4:00 PM IST works for the recruiter conversation.</p>`);
     html += inlineCard('&#128197;', '#E6F9ED', 'Interview Scheduled',
       'Thursday, Oct 24 &middot; 4:00 PM IST &middot; Video Call', 'Confirmed');
-    html += statusEvent('purple', 'Stage changed to Interview &middot; Portfolio Review');
+    html += statusEvent('purple', 'Stage changed to Interview');
     html += inlineCard('&#128218;', '#F3EEFF', 'Interview Preparation Guide',
       'Sent to Sarah Chen automatically', 'View');
   }
 
-  // Step 7: Collaborate — internal team
   if (step >= 6) {
-    html += `<div style="margin:16px 0 8px; padding:12px; background:var(--amber-bg); border-radius:var(--radius-lg); border-left:3px solid var(--amber)">
-      <div style="font-size:11px; font-weight:600; color:#BF6C00; margin-bottom:4px; display:flex; align-items:center; gap:4px;">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
-        INTERNAL — Not visible to Sarah
-      </div>
-    </div>`;
-    html += msgGroup('You', 'Recruiter', '#37B24D', '10 min ago', 'internal',
-      `<p>@Sachin — Sarah is confirmed for Thursday. Her portfolio has strong systems work from Flipkart.</p>`);
-    html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '5 min ago', 'internal',
+    html += noteBlock('You left a note &middot; 10 min ago', 'Sarah',
+      `<p>@Sachin — Sarah is confirmed for Thursday. Her portfolio has strong systems work from Flipkart. Worth paying attention to the checkout redesign case study.</p>`);
+    html += noteBlock('Sachin Patel left a note &middot; 5 min ago', 'Sarah',
       `<p>Great, I looked at her case studies. Can you ask about the checkout redesign project specifically? I want to understand how she handles stakeholder alignment.</p>`);
     html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', 'Just now', 'ai',
       `<p>I've added "checkout redesign — stakeholder alignment" to the interview plan for the portfolio review stage.</p>`);
   }
 
-  // Step 8: Interview — call happens
   if (step >= 7) {
     html += statusEvent('green', 'Interview completed &middot; Recruiter Conversation &middot; 32 min');
-    html += inlineCard('&#127909;', '#E7EDFF', 'Interview Recording',
-      'Recruiter Conversation &middot; 32 minutes', 'Play');
+    html += fileAttachment('Interview_Recording.mp4', '32 min');
   }
 
-  // Step 9: Capture — AI summarizes
   if (step >= 8) {
     html += aiSummary(
       `Sarah demonstrated strong systems thinking and clear communication. Key highlights:
        <br>&bull; Led the Flipkart checkout redesign serving 200M+ users
        <br>&bull; Built a component library adopted by 12 product teams
        <br>&bull; Comfortable with enterprise constraints and stakeholder management
-       <br>&bull; Salary expectation: ₹28-32 LPA (within our range)
+       <br>&bull; Salary expectation: &#8377;28-32 LPA (within our range)
        <br><br><strong>Recommendation:</strong> Advance to Portfolio Review with Sachin.`);
   }
 
-  // Step 10: Decide — team discussion
   if (step >= 9) {
-    html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '2h ago', 'internal',
+    html += noteBlock('Sachin Patel left a note &middot; 2h ago', 'Sarah',
       `<p>Strong systems thinking. The checkout case study was impressive — she managed 6 stakeholder groups.</p>
        <p>One concern: limited experience with enterprise B2B workflows. But she's a fast learner.</p>`);
-    html += msgGroup('Priya Gupta', 'Interviewer', '#7C3AED', '1h ago', 'internal',
+    html += noteBlock('Priya Gupta left a note &middot; 1h ago', 'Sarah',
       `<p>Agreed. Her product thinking exercise was the strongest I've seen this quarter. She reframed the problem beautifully.</p>`);
     html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', '30 min ago', 'ai',
       `<p>All interviewers have submitted feedback. Average score: <strong>4.2/5</strong>.</p>
@@ -1081,24 +1326,22 @@ function recruiterHTML(step) {
     html += statusEvent('green', 'Decision: Proceed to Offer');
   }
 
-  // Step 11: Offer
   if (step >= 10) {
     html += msgGroup('You', 'Recruiter', '#37B24D', '15 min ago', '',
       `<p>Sarah, great news! The team was really impressed with your interviews. We'd love to have you join us.</p>
        <p>I'm sharing the offer details below:</p>`);
     html += inlineCard('&#127881;', '#E6F9ED', 'Offer Letter — Product Designer',
-      '₹30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer');
+      '&#8377;30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer');
     html += inlineCard('&#128203;', '#F3EEFF', 'Benefits & Equity Package',
       'Health, RSUs, relocation support', 'View');
   }
 
-  // Step 12: Close
   if (step >= 11) {
     html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', 'Just now', '',
       `<p>This is amazing! I'm thrilled to accept. The team, the role, and the offer all feel right.</p>
-       <p>Thank you for making this process so smooth — having everything in one conversation made it so easy to stay on top of things. &#128588;</p>`);
-    html += `<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;margin:12px 0;background:var(--green-light);border-radius:var(--radius-lg);">
-      <span style="font-size:20px">&#127881;</span>
+       <p>Thank you for making this process so smooth — having everything in one conversation made it so easy to stay on top of things.</p>`);
+    html += `<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;margin:8px 0;background:var(--green-light);border-radius:var(--radius-lg);">
+      <span style="font-size:18px">&#127881;</span>
       <span style="font-size:14px;font-weight:600;color:var(--green-dark)">Offer Accepted — Sarah Chen joins as Product Designer</span>
     </div>`;
     html += statusEvent('green', 'Thread closed &middot; Candidate hired');
@@ -1113,9 +1356,7 @@ function recruiterHTML(step) {
   return html;
 }
 
-/* ═══════════════════════════════════════════
-   CANDIDATE CONVERSATION CONTENT PER STEP
-   ═══════════════════════════════════════════ */
+/* ═══ CANDIDATE CONVERSATION CONTENT ═══ */
 function candidateHTML(step) {
   let html = '';
 
@@ -1123,12 +1364,10 @@ function candidateHTML(step) {
     html += candMsg('received', 'Recruiter', '#37B24D', '',
       'Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad.');
   }
-
   if (step >= 2) {
     html += candMsg('sent', '', '#4C6EF5', '',
       "Hi! Thanks for reaching out. I've been looking at design systems roles and this sounds interesting. I'd love to learn more!");
   }
-
   if (step >= 3) {
     html += candMsg('received', 'Recruiter', '#37B24D', '',
       "Great! Here are the role details:");
@@ -1137,7 +1376,6 @@ function candidateHTML(step) {
     html += candCard('&#128101; Team Overview',
       '4 designers, 2 PMs &middot; Enterprise Design System', 'View', '');
   }
-
   if (step >= 4) {
     html += candMsg('sent', '', '#4C6EF5', '',
       "This looks great! What's the interview process like? And is there flexibility on remote work?");
@@ -1146,7 +1384,6 @@ function candidateHTML(step) {
     html += candMsg('received', 'Recruiter', '#37B24D', '',
       "I'll walk you through the first stage personally — it's very conversational, no trick questions!");
   }
-
   if (step >= 5) {
     html += candMsg('sent', '', '#4C6EF5', '',
       "Sounds good! I'm available Thursday afternoon if that works?");
@@ -1154,25 +1391,22 @@ function candidateHTML(step) {
     html += candCard('&#128218; Interview Preparation Guide',
       'Tips and what to expect at each stage', 'Read Guide', '');
   }
-
   if (step >= 7) {
     html += `<div style="text-align:center;padding:12px 0;font-size:12px;color:var(--gray-500);">Interview completed &middot; 32 min</div>`;
   }
-
   if (step >= 10) {
     html += candMsg('received', 'Recruiter', '#37B24D', '',
       "Sarah, great news! The team was really impressed. We'd love to have you join us:");
     html += candCard('&#127881; Offer Letter — Product Designer',
-      '₹30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer', '');
+      '&#8377;30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer', '');
     html += candCard('&#128203; Benefits & Equity Package',
       'Health, RSUs, relocation support', 'View Details', '');
   }
-
   if (step >= 11) {
     html += candMsg('sent', '', '#4C6EF5', '',
-      "This is amazing! I'm thrilled to accept. The team, the role, and the offer all feel right. Thank you for making this so smooth! &#128588;");
-    html += `<div style="text-align:center;padding:16px;margin:8px 0;background:var(--green-light);border-radius:var(--radius-xl);">
-      <div style="font-size:20px;margin-bottom:4px">&#127881;</div>
+      "This is amazing! I'm thrilled to accept. The team, the role, and the offer all feel right. Thank you for making this so smooth!");
+    html += `<div style="text-align:center;padding:14px;margin:8px 0;background:var(--green-light);border-radius:var(--radius-xl);">
+      <div style="font-size:18px;margin-bottom:4px">&#127881;</div>
       <div style="font-size:14px;font-weight:600;color:var(--green-dark)">You're in! Welcome to ABC Staffing</div>
       <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">Starting Jan 6 &middot; Hyderabad</div>
     </div>`;
@@ -1181,15 +1415,44 @@ function candidateHTML(step) {
   return html;
 }
 
-/* ═══════════════════════════════════════════
-   HTML HELPERS
-   ═══════════════════════════════════════════ */
+/* ═══ AGENT SESSION CONTENT ═══ */
+function agentHTML(step) {
+  let html = '';
+  if (step >= 4) {
+    html += `<div class="agent-msg question">Based on this thread, what should I do next to help resolve this?</div>`;
+    if (step === 4) {
+      html += `<div class="agent-msg thinking"><div class="agent-thinking-dots"><span></span><span></span><span></span></div> Thinking...</div>`;
+    }
+  }
+  if (step >= 5) {
+    html += `<div class="agent-msg response">I've checked calendars and found Thursday at 4:00 PM IST works for all parties. I've also prepared an interview guide to send to the candidate automatically.</div>`;
+  }
+  if (step >= 6) {
+    html += `<div class="agent-msg question">The hiring manager has questions about the checkout redesign. Should I add this to the interview plan?</div>`;
+    html += `<div class="agent-msg response">Done. I've added "checkout redesign — stakeholder alignment" to the portfolio review interview plan.</div>`;
+  }
+  if (step >= 8) {
+    html += `<div class="agent-msg question">The interview is complete. Shall I generate a summary and scorecard?</div>`;
+    html += `<div class="agent-msg response">Summary generated. Sarah scored 4.2/5 overall. She's the strongest candidate for this role based on all interviewer feedback.</div>`;
+  }
+  if (step >= 10) {
+    html += `<div class="agent-msg question">The team has decided to extend an offer. Shall I prepare the offer package?</div>`;
+    html += `<div class="agent-msg response">Offer package prepared at &#8377;30 LPA with standard benefits. Ready for your review and send.</div>`;
+  }
+  if (step >= 11) {
+    html += `<div class="agent-msg response">Offer accepted! I've initiated the onboarding workflow: welcome email, IT equipment, team channel, and Day-1 orientation all queued.</div>`;
+  }
+  return html;
+}
+
+/* ═══ HTML HELPERS ═══ */
 function msgGroup(name, role, color, time, badge, content) {
   const badgeHTML = badge === 'ai' ? ' <span class="msg-sender-badge badge-ai">AI</span>'
     : badge === 'internal' ? ' <span class="msg-sender-badge badge-internal">Internal</span>' : '';
+  const initials = name.split(' ').map(w=>w[0]).join('').slice(0,2);
   return `<div class="msg-group">
     <div class="msg-sender">
-      <div class="msg-sender-avatar" style="background:${color}">${name.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
+      <div class="msg-sender-avatar" style="background:${color}">${initials}</div>
       <span class="msg-sender-name">${name}</span>${badgeHTML}
       <span class="msg-sender-time">${time}</span>
     </div>
@@ -1197,8 +1460,26 @@ function msgGroup(name, role, color, time, badge, content) {
   </div>`;
 }
 
+function noteBlock(header, candidateName, content) {
+  return `<div class="msg-note">
+    <div class="msg-note-header">${header}</div>
+    ${content.replace(/<\/?p>/g, function(m) { return m; })}
+    <div class="note-warning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+      Not visible to ${candidateName}
+    </div>
+  </div>`;
+}
+
 function statusEvent(color, text) {
   return `<div class="status-event"><div class="dot" style="background:var(--${color})"></div>${text}</div>`;
+}
+
+function waitingBar(text) {
+  return `<div class="waiting-bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    ${text}
+  </div>`;
 }
 
 function inlineCard(icon, bgColor, title, desc, actionText) {
@@ -1212,13 +1493,26 @@ function inlineCard(icon, bgColor, title, desc, actionText) {
   </div>`;
 }
 
+function fileAttachment(name, size) {
+  return `<div class="file-attachment">
+    <div class="file-icon">MP4</div>
+    <span class="file-name">${name}</span>
+    <span class="file-size">${size}</span>
+  </div>`;
+}
+
 function aiSummary(text) {
   return `<div class="ai-summary">
     <div class="ai-summary-label">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-      AI Summary
+      Summary
     </div>
     <div class="ai-summary-text">${text}</div>
+    <div class="ai-summary-footer">
+      <span>&#128077; Helpful</span>
+      <span>&#128078; Not helpful</span>
+      <span>Show conversation details &#8250;</span>
+    </div>
   </div>`;
 }
 
@@ -1229,10 +1523,7 @@ function candMsg(dir, sender, color, badge, text) {
     `<div class="cand-msg-sender">${sender}${badge==='ai' ? ' <span class="ai-tag">AI</span>' : ''}</div>` : '';
   return `<div class="cand-msg ${dir}">
     ${senderHTML}
-    <div class="cand-msg-row">
-      ${avatarHTML}
-      <div class="cand-bubble">${text}</div>
-    </div>
+    <div class="cand-msg-row">${avatarHTML}<div class="cand-bubble">${text}</div></div>
   </div>`;
 }
 
@@ -1241,10 +1532,7 @@ function candCard(title, desc, primary, secondary) {
   return `<div class="cand-card">
     <div class="cand-card-title">${title}</div>
     <div class="cand-card-desc">${desc}</div>
-    <div class="cand-card-actions">
-      <button class="cand-card-btn primary">${primary}</button>
-      ${secHTML}
-    </div>
+    <div class="cand-card-actions"><button class="cand-card-btn primary">${primary}</button>${secHTML}</div>
   </div>`;
 }
 
@@ -1259,9 +1547,7 @@ function candSchedule(title, detail, sub) {
   </div>`;
 }
 
-/* ═══════════════════════════════════════════
-   STEP NAVIGATION
-   ═══════════════════════════════════════════ */
+/* ═══ STEP NAVIGATION ═══ */
 function updateDetailPanel(step) {
   const stages = ['Outreach','Outreach','Active','Active','Active','Interview','Interview','Interview','Interview','Decision','Offer','Hired'];
   const statuses = ['Needs first response','Outreach sent','Active conversation','Sharing information','AI assisting','Interview scheduled','Team collaborating','Interview in progress','Reviewing feedback','Making decision','Offer extended','Hired!'];
@@ -1270,11 +1556,6 @@ function updateDetailPanel(step) {
   document.getElementById('detail-status').textContent = statuses[step] || statuses[0];
   document.getElementById('detail-status-dot').style.background = statusColors[step] || statusColors[0];
   document.getElementById('detail-stage').textContent = stages[step] || stages[0];
-
-  const stageMap = {0:'stage-outreach',1:'stage-outreach',2:'stage-outreach',3:'stage-outreach',4:'stage-outreach',5:'stage-interview',6:'stage-interview',7:'stage-interview',8:'stage-interview',9:'stage-interview',10:'stage-offer',11:'stage-offer'};
-  const stageEl = document.getElementById('thread-sarah-stage');
-  stageEl.className = 'thread-stage ' + (stageMap[step] || 'stage-outreach');
-  stageEl.textContent = stages[step] || 'Outreach';
 
   const previews = ['Thanks! I\'d love to know more about the role.','Outreach message sent','I\'d definitely like to learn more!','Sharing role details...','What\'s the interview process?','Thursday at 4 PM confirmed','Internal: Team discussion','Interview completed — 32 min','AI Summary generated','Decision: Proceed to Offer','Offer letter shared','Offer Accepted!'];
   document.getElementById('thread-sarah-preview').textContent = previews[step] || previews[0];
@@ -1301,7 +1582,16 @@ function updateDetailPanel(step) {
   if (step >= 9) logs.push('Decision: Proceed to Offer');
   if (step >= 10) logs.push('Offer sent');
   if (step >= 11) logs.push('Offer accepted!');
-  logEl.innerHTML = logs.map(l => `<div style="font-size:12px;color:var(--gray-500);padding:3px 0;">&bull; ${l}</div>`).join('');
+  logEl.innerHTML = logs.map(l => `<div class="activity-item"><span class="activity-dot"></span><span class="activity-text">${l}</span></div>`).join('');
+}
+
+function toggleAgent() {
+  agentVisible = !agentVisible;
+  document.getElementById('agent-panel').classList.toggle('visible', agentVisible);
+  document.getElementById('detail-panel').style.display = agentVisible ? 'none' : 'block';
+  if (agentVisible) {
+    document.getElementById('agent-body').innerHTML = agentHTML(currentStep);
+  }
 }
 
 function render() {
@@ -1310,6 +1600,10 @@ function render() {
 
   convBody.innerHTML = recruiterHTML(currentStep);
   candBody.innerHTML = candidateHTML(currentStep);
+
+  if (agentVisible) {
+    document.getElementById('agent-body').innerHTML = agentHTML(currentStep);
+  }
 
   document.getElementById('step-num').textContent = currentStep + 1;
   document.getElementById('step-name').textContent = '— ' + STEPS[currentStep].name;
@@ -1323,22 +1617,15 @@ function render() {
 
   updateDetailPanel(currentStep);
 
-  // Auto scroll
   setTimeout(() => {
     convBody.scrollTop = convBody.scrollHeight;
     candBody.scrollTop = candBody.scrollHeight;
   }, 50);
 }
 
-function nextStep() {
-  if (currentStep < STEPS.length - 1) { currentStep++; render(); }
-}
-function prevStep() {
-  if (currentStep > 0) { currentStep--; render(); }
-}
-function goToStep(i) {
-  currentStep = i; render();
-}
+function nextStep() { if (currentStep < STEPS.length - 1) { currentStep++; render(); } }
+function prevStep() { if (currentStep > 0) { currentStep--; render(); } }
+function goToStep(i) { currentStep = i; render(); }
 
 function showView(view) {
   currentView = view;
@@ -1348,13 +1635,11 @@ function showView(view) {
   document.getElementById('candidate-view').classList.toggle('hidden', view !== 'candidate');
 }
 
-// Keyboard navigation
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') nextStep();
   if (e.key === 'ArrowLeft') prevStep();
 });
 
-// Init
 render();
 </script>
 </body>
