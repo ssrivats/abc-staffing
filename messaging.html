@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABC Staffing — Messaging Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   Plain Design Language — CSS Tokens
+   ═══════════════════════════════════════════ */
+:root {
+  --green: #37B24D;
+  --green-light: #E6F9ED;
+  --green-dark: #2F9E44;
+  --blue: #4C6EF5;
+  --blue-light: #E7EDFF;
+  --purple: #7C3AED;
+  --purple-light: #F3EEFF;
+  --amber: #F59F00;
+  --amber-bg: #FFF3D0;
+  --red: #E03131;
+  --red-light: #FFF0F0;
+
+  --gray-900: #1A1A1A;
+  --gray-700: #4A4A4A;
+  --gray-500: #8C8C8C;
+  --gray-400: #ADB5BD;
+  --gray-300: #D1D1D1;
+  --gray-200: #E5E5E5;
+  --gray-100: #F5F5F5;
+  --gray-50: #FAFAFA;
+  --white: #FFFFFF;
+
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+  --shadow-xl: 0 8px 32px rgba(0,0,0,0.16);
+
+  --sidebar-w: 260px;
+  --detail-w: 300px;
+  --icon-rail-w: 48px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font);
+  background: var(--white);
+  color: var(--gray-900);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   View Switcher (top bar)
+   ═══════════════════════════════════════════ */
+.view-switcher {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 44px;
+  background: var(--gray-900);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 0 16px;
+}
+.view-switcher .label {
+  font-size: 12px; font-weight: 500; color: var(--gray-400);
+  margin-right: 8px; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.view-btn {
+  padding: 6px 16px; border-radius: var(--radius-full);
+  border: 1px solid rgba(255,255,255,0.15); background: transparent;
+  color: rgba(255,255,255,0.6); font-family: var(--font);
+  font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+}
+.view-btn:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); }
+.view-btn.active { background: var(--white); color: var(--gray-900); border-color: var(--white); }
+.story-step-label {
+  margin-left: auto; font-size: 11px; color: var(--gray-500);
+  display: flex; align-items: center; gap: 6px;
+}
+.story-step-label span { color: var(--green); font-weight: 600; }
+.story-nav {
+  display: flex; gap: 4px; margin-left: 8px;
+}
+.story-nav button {
+  width: 28px; height: 28px; border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.2); background: transparent;
+  color: rgba(255,255,255,0.6); cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.story-nav button:hover { background: rgba(255,255,255,0.1); color: white; }
+.story-nav button:disabled { opacity: 0.3; cursor: default; }
+
+/* ═══════════════════════════════════════════
+   RECRUITER VIEW
+   ═══════════════════════════════════════════ */
+.recruiter-view {
+  display: flex; height: calc(100vh - 44px); margin-top: 44px;
+}
+.recruiter-view.hidden { display: none; }
+
+/* Icon Rail */
+.icon-rail {
+  width: var(--icon-rail-w);
+  background: var(--gray-50);
+  border-right: 1px solid var(--gray-200);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 16px 0; gap: 4px;
+}
+.rail-icon {
+  width: 36px; height: 36px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray-500); cursor: pointer; transition: all 0.12s;
+  position: relative;
+}
+.rail-icon:hover { background: var(--gray-100); color: var(--gray-700); }
+.rail-icon.active { background: var(--green-light); color: var(--green); }
+.rail-icon svg { width: 20px; height: 20px; }
+.rail-icon .badge {
+  position: absolute; top: 2px; right: 2px;
+  width: 16px; height: 16px; border-radius: var(--radius-full);
+  background: var(--green); color: white;
+  font-size: 9px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.rail-spacer { flex: 1; }
+.rail-logo {
+  width: 32px; height: 32px; border-radius: var(--radius-lg);
+  background: var(--green); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; margin-bottom: 16px;
+}
+
+/* Thread List Sidebar */
+.thread-sidebar {
+  width: 280px;
+  border-right: 1px solid var(--gray-200);
+  display: flex; flex-direction: column;
+  background: var(--white);
+}
+.thread-sidebar-header {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--gray-100);
+}
+.thread-sidebar-header h2 {
+  font-size: 16px; font-weight: 700; color: var(--gray-900);
+  display: flex; align-items: center; gap: 8px;
+}
+.thread-sidebar-header h2 .count {
+  font-size: 11px; font-weight: 600; color: var(--white);
+  background: var(--green); border-radius: var(--radius-full);
+  padding: 1px 7px;
+}
+.thread-tabs {
+  display: flex; gap: 2px; padding: 8px 16px 0;
+}
+.thread-tab {
+  font-size: 12px; font-weight: 500; padding: 6px 12px;
+  border-radius: var(--radius-full); border: none; background: none;
+  color: var(--gray-500); cursor: pointer; font-family: var(--font);
+  transition: all 0.12s;
+}
+.thread-tab:hover { background: var(--gray-100); color: var(--gray-700); }
+.thread-tab.active { background: var(--gray-900); color: var(--white); }
+.thread-list {
+  flex: 1; overflow-y: auto; padding: 8px;
+}
+.thread-item {
+  display: flex; gap: 10px; padding: 12px; border-radius: var(--radius-lg);
+  cursor: pointer; transition: background 0.1s; position: relative;
+}
+.thread-item:hover { background: var(--gray-50); }
+.thread-item.active { background: var(--blue-light); }
+.thread-avatar {
+  width: 36px; height: 36px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 13px; color: var(--white); flex-shrink: 0;
+}
+.thread-item-content { flex: 1; min-width: 0; }
+.thread-item-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+.thread-item-name { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+.thread-item-time { font-size: 11px; color: var(--gray-500); }
+.thread-item-subject { font-size: 12px; color: var(--gray-700); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+.thread-item-preview { font-size: 12px; color: var(--gray-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.thread-item-meta { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+.thread-stage {
+  font-size: 10px; font-weight: 600; padding: 2px 8px;
+  border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.03em;
+}
+.stage-outreach { background: var(--blue-light); color: var(--blue); }
+.stage-interview { background: var(--purple-light); color: var(--purple); }
+.stage-offer { background: var(--green-light); color: var(--green); }
+.stage-screen { background: #FFF3E0; color: #E65100; }
+.priority-dot { width: 6px; height: 6px; border-radius: var(--radius-full); }
+.priority-high { background: var(--amber); }
+.priority-normal { background: var(--gray-400); }
+.priority-urgent { background: var(--red); }
+.unread-dot {
+  position: absolute; top: 16px; left: 6px;
+  width: 6px; height: 6px; border-radius: var(--radius-full);
+  background: var(--blue);
+}
+
+/* ── Center: Conversation ── */
+.conversation-panel {
+  flex: 1; display: flex; flex-direction: column;
+  min-width: 0;
+}
+.conv-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--gray-200);
+  background: var(--white);
+}
+.conv-header-info { flex: 1; }
+.conv-header-info h3 { font-size: 15px; font-weight: 600; }
+.conv-header-info .sub {
+  font-size: 12px; color: var(--gray-500);
+  display: flex; align-items: center; gap: 6px;
+}
+.conv-header-info .sub .channel-badge {
+  font-size: 10px; font-weight: 600; padding: 2px 6px;
+  border-radius: var(--radius-sm); background: var(--gray-100); color: var(--gray-700);
+}
+.conv-header-actions { display: flex; gap: 4px; }
+.conv-header-actions button {
+  width: 32px; height: 32px; border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); background: var(--white);
+  color: var(--gray-500); cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.12s;
+}
+.conv-header-actions button:hover { border-color: var(--gray-300); color: var(--gray-700); }
+
+.conv-body {
+  flex: 1; overflow-y: auto; padding: 20px 24px;
+  display: flex; flex-direction: column; gap: 0;
+}
+
+/* Messages */
+.msg-group { margin-bottom: 20px; }
+.msg-sender {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+}
+.msg-sender-avatar {
+  width: 28px; height: 28px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 11px; color: var(--white); flex-shrink: 0;
+}
+.msg-sender-name { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+.msg-sender-time { font-size: 11px; color: var(--gray-500); }
+.msg-sender-badge {
+  font-size: 10px; font-weight: 600; padding: 1px 6px;
+  border-radius: var(--radius-sm); margin-left: 2px;
+}
+.badge-ai { background: var(--purple-light); color: var(--purple); }
+.badge-internal { background: var(--amber-bg); color: #BF6C00; }
+.msg-bubble {
+  padding: 0 0 0 36px;
+  font-size: 14px; line-height: 1.6;
+  color: var(--gray-700);
+}
+.msg-bubble p { margin-bottom: 8px; }
+.msg-bubble p:last-child { margin-bottom: 0; }
+
+/* Internal note */
+.msg-note {
+  background: var(--amber-bg);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 10px 14px;
+  margin: 4px 0 4px 36px;
+  font-size: 13px;
+}
+.msg-note .note-warning {
+  font-size: 11px; font-weight: 600; color: var(--red);
+  display: flex; align-items: center; gap: 4px; margin-bottom: 4px;
+}
+
+/* AI Summary card */
+.ai-summary {
+  background: var(--amber-bg);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  margin: 8px 0 8px 36px;
+}
+.ai-summary-label {
+  font-size: 12px; font-weight: 600; color: #BF6C00;
+  display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+}
+.ai-summary-label svg { width: 14px; height: 14px; }
+.ai-summary-text { font-size: 13px; color: var(--gray-700); line-height: 1.5; }
+
+/* Status event */
+.status-event {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 8px 0; margin: 4px 0;
+  font-size: 12px; color: var(--gray-500);
+}
+.status-event .dot {
+  width: 6px; height: 6px; border-radius: var(--radius-full);
+}
+
+/* Inline cards (job, schedule, doc) */
+.inline-card {
+  margin: 8px 0 8px 36px;
+  padding: 14px 16px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  display: flex; align-items: center; gap: 12px;
+  background: var(--white);
+  transition: border-color 0.12s;
+  cursor: pointer;
+}
+.inline-card:hover { border-color: var(--gray-300); }
+.inline-card-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.inline-card-content { flex: 1; }
+.inline-card-title { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+.inline-card-desc { font-size: 12px; color: var(--gray-500); }
+.inline-card-action {
+  font-size: 12px; font-weight: 600; color: var(--green);
+  padding: 4px 12px; border: 1px solid var(--green);
+  border-radius: var(--radius-full); cursor: pointer;
+  background: transparent; font-family: var(--font);
+  transition: all 0.12s;
+}
+.inline-card-action:hover { background: var(--green-light); }
+
+/* Waiting indicator */
+.waiting-bar {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--green-light);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  margin: 8px 0;
+  font-size: 12px; font-weight: 500; color: var(--green-dark);
+}
+.waiting-bar svg { width: 14px; height: 14px; }
+
+/* Action Bar */
+.action-bar {
+  display: flex; align-items: center; gap: 4px;
+  padding: 10px 20px;
+  border-top: 1px solid var(--gray-200);
+  background: var(--white);
+}
+.action-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: var(--radius-md);
+  border: none; background: none;
+  font-family: var(--font); font-size: 13px; font-weight: 500;
+  color: var(--gray-500); cursor: pointer; transition: all 0.12s;
+}
+.action-btn:hover { background: var(--gray-100); color: var(--gray-900); }
+.action-btn svg { width: 16px; height: 16px; }
+.action-key {
+  font-size: 10px; font-weight: 600; color: var(--gray-400);
+  background: var(--gray-100); border: 1px solid var(--gray-200);
+  border-radius: 3px; padding: 1px 4px; line-height: 1;
+}
+.action-bar-spacer { flex: 1; }
+.action-btn-primary {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 18px; border-radius: var(--radius-md);
+  border: none; background: var(--green);
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  color: var(--white); cursor: pointer; transition: all 0.12s;
+}
+.action-btn-primary:hover { background: var(--green-dark); }
+
+/* ── Right: Detail Panel ── */
+.detail-panel {
+  width: var(--detail-w);
+  border-left: 1px solid var(--gray-200);
+  overflow-y: auto; background: var(--white);
+  padding: 0;
+}
+.detail-header {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--gray-100);
+}
+.detail-header h4 { font-size: 14px; font-weight: 600; color: var(--gray-900); line-height: 1.3; }
+.detail-section {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gray-100);
+}
+.detail-section-title {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--gray-500);
+  margin-bottom: 10px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.detail-section-title .toggle {
+  font-size: 14px; color: var(--gray-400); cursor: pointer;
+  transform: rotate(0deg); transition: transform 0.15s;
+}
+.detail-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 5px 0;
+}
+.detail-label { font-size: 12px; color: var(--gray-500); font-weight: 500; }
+.detail-value { font-size: 13px; color: var(--gray-900); font-weight: 400; display: flex; align-items: center; gap: 6px; }
+.detail-value .status-dot { width: 8px; height: 8px; border-radius: var(--radius-full); flex-shrink: 0; }
+.detail-value .add-btn {
+  font-size: 12px; color: var(--gray-400); cursor: pointer;
+  display: flex; align-items: center; gap: 2px;
+}
+.detail-value .add-btn:hover { color: var(--gray-700); }
+
+/* Team members */
+.team-member {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 0;
+}
+.team-member-avatar {
+  width: 24px; height: 24px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 10px; color: var(--white); flex-shrink: 0;
+}
+.team-member-info { flex: 1; }
+.team-member-name { font-size: 12px; font-weight: 500; color: var(--gray-900); }
+.team-member-role { font-size: 11px; color: var(--gray-500); }
+
+/* Similar threads */
+.similar-thread {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 0; cursor: pointer;
+}
+.similar-thread:hover .sim-title { color: var(--green); }
+.sim-dot { width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--gray-300); flex-shrink: 0; }
+.sim-title { font-size: 12px; color: var(--gray-700); transition: color 0.1s; flex: 1; }
+.sim-time { font-size: 11px; color: var(--gray-500); }
+
+/* ═══════════════════════════════════════════
+   CANDIDATE VIEW
+   ═══════════════════════════════════════════ */
+.candidate-view {
+  margin-top: 44px; height: calc(100vh - 44px);
+  display: flex; flex-direction: column;
+  max-width: 520px; margin-left: auto; margin-right: auto;
+  background: var(--white);
+  border-left: 1px solid var(--gray-200);
+  border-right: 1px solid var(--gray-200);
+}
+.candidate-view.hidden { display: none; }
+
+.cand-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.cand-header-avatar {
+  width: 36px; height: 36px; border-radius: var(--radius-full);
+  background: var(--green); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px;
+}
+.cand-header-info { flex: 1; }
+.cand-header-info h3 { font-size: 15px; font-weight: 600; }
+.cand-header-info .sub { font-size: 12px; color: var(--gray-500); }
+.cand-header-actions { display: flex; gap: 8px; }
+.cand-header-actions button {
+  width: 36px; height: 36px; border-radius: var(--radius-full);
+  border: 1px solid var(--gray-200); background: var(--white);
+  color: var(--gray-500); cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+.cand-header-actions button:hover { background: var(--gray-50); color: var(--gray-700); }
+
+.cand-body {
+  flex: 1; overflow-y: auto; padding: 20px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+/* Candidate message bubbles */
+.cand-msg { display: flex; flex-direction: column; gap: 4px; }
+.cand-msg.sent { align-items: flex-end; }
+.cand-msg.received { align-items: flex-start; }
+.cand-msg-row { display: flex; align-items: flex-end; gap: 8px; max-width: 85%; }
+.cand-msg.sent .cand-msg-row { flex-direction: row-reverse; }
+.cand-msg-avatar-sm {
+  width: 24px; height: 24px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 9px; color: var(--white); flex-shrink: 0;
+}
+.cand-bubble {
+  padding: 10px 14px;
+  font-size: 14px; line-height: 1.5;
+  border-radius: 16px;
+  max-width: 100%;
+}
+.cand-msg.received .cand-bubble {
+  background: var(--gray-100);
+  color: var(--gray-900);
+  border-bottom-left-radius: 4px;
+}
+.cand-msg.sent .cand-bubble {
+  background: var(--green);
+  color: var(--white);
+  border-bottom-right-radius: 4px;
+}
+.cand-msg-time {
+  font-size: 11px; color: var(--gray-500);
+  padding: 0 36px;
+}
+.cand-msg-sender {
+  font-size: 11px; font-weight: 600; color: var(--gray-700);
+  padding: 0 36px;
+  display: flex; align-items: center; gap: 4px;
+}
+.cand-msg-sender .ai-tag {
+  font-size: 9px; padding: 1px 5px;
+  background: var(--purple-light); color: var(--purple);
+  border-radius: var(--radius-sm); font-weight: 600;
+}
+
+/* Candidate inline cards */
+.cand-card {
+  border: 1px solid var(--gray-200); border-radius: var(--radius-xl);
+  padding: 16px; background: var(--white); max-width: 85%;
+}
+.cand-card-title {
+  font-size: 14px; font-weight: 600; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.cand-card-desc { font-size: 13px; color: var(--gray-500); margin-bottom: 10px; }
+.cand-card-actions { display: flex; gap: 8px; }
+.cand-card-btn {
+  padding: 8px 16px; border-radius: var(--radius-full);
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.12s;
+}
+.cand-card-btn.primary {
+  background: var(--green); color: var(--white); border: none;
+}
+.cand-card-btn.primary:hover { background: var(--green-dark); }
+.cand-card-btn.secondary {
+  background: var(--white); color: var(--gray-700); border: 1px solid var(--gray-200);
+}
+.cand-card-btn.secondary:hover { background: var(--gray-50); }
+
+/* Candidate schedule card */
+.cand-schedule {
+  border: 1px solid var(--green); border-radius: var(--radius-xl);
+  padding: 16px; background: var(--green-light);
+}
+.cand-schedule-title {
+  font-size: 13px; font-weight: 600; color: var(--green-dark);
+  display: flex; align-items: center; gap: 6px; margin-bottom: 4px;
+}
+.cand-schedule-detail {
+  font-size: 14px; font-weight: 600; color: var(--gray-900);
+  margin-bottom: 2px;
+}
+.cand-schedule-sub { font-size: 12px; color: var(--gray-500); }
+
+/* Candidate input */
+.cand-input {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--gray-200);
+  background: var(--white);
+}
+.cand-input-field {
+  flex: 1; height: 40px; padding: 0 16px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius-full);
+  font-family: var(--font); font-size: 14px; color: var(--gray-900);
+  outline: none; transition: border-color 0.15s;
+  background: var(--gray-50);
+}
+.cand-input-field:focus { border-color: var(--green); background: var(--white); }
+.cand-input-btn {
+  width: 40px; height: 40px; border-radius: var(--radius-full);
+  border: none; background: var(--green); color: var(--white);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.12s;
+}
+.cand-input-btn:hover { background: var(--green-dark); }
+.cand-input-attach {
+  width: 40px; height: 40px; border-radius: var(--radius-full);
+  border: 1px solid var(--gray-200); background: var(--white);
+  color: var(--gray-500); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.cand-powered {
+  text-align: center; padding: 6px 0;
+  font-size: 11px; color: var(--gray-400);
+}
+
+/* ═══════════════════════════════════════════
+   Animations
+   ═══════════════════════════════════════════ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  animation: fadeIn 0.25s ease-out both;
+}
+.msg-group, .cand-msg, .cand-card, .cand-schedule, .inline-card, .ai-summary, .status-event, .waiting-bar, .msg-note {
+  animation: fadeIn 0.3s ease-out both;
+}
+
+/* Story step indicator dots */
+.step-dots {
+  display: flex; gap: 3px; margin-left: 12px;
+}
+.step-dot {
+  width: 8px; height: 8px; border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.15); cursor: pointer;
+  transition: all 0.15s;
+}
+.step-dot.active { background: var(--green); }
+.step-dot.done { background: rgba(255,255,255,0.4); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     VIEW SWITCHER
+     ═══════════════════════════════════════════ -->
+<div class="view-switcher">
+  <span class="label">View</span>
+  <button class="view-btn active" onclick="showView('recruiter')">Recruiter</button>
+  <button class="view-btn" onclick="showView('candidate')">Candidate</button>
+  <div class="story-step-label">
+    Step <span id="step-num">1</span>/12
+    <span id="step-name">— Discover</span>
+  </div>
+  <div class="step-dots" id="step-dots"></div>
+  <div class="story-nav">
+    <button id="prev-btn" onclick="prevStep()" disabled>&larr;</button>
+    <button id="next-btn" onclick="nextStep()">&rarr;</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     RECRUITER VIEW
+     ═══════════════════════════════════════════ -->
+<div class="recruiter-view" id="recruiter-view">
+
+  <!-- Icon Rail -->
+  <div class="icon-rail">
+    <div class="rail-logo">A</div>
+    <div class="rail-icon active" title="Threads">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <div class="badge">4</div>
+    </div>
+    <div class="rail-icon" title="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    </div>
+    <div class="rail-icon" title="Candidates">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    </div>
+    <div class="rail-icon" title="Jobs">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+    </div>
+    <div class="rail-spacer"></div>
+    <div class="rail-icon" title="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+    </div>
+  </div>
+
+  <!-- Thread List Sidebar -->
+  <div class="thread-sidebar">
+    <div class="thread-sidebar-header">
+      <h2>Threads <span class="count">4</span></h2>
+    </div>
+    <div class="thread-tabs">
+      <button class="thread-tab active">Todo</button>
+      <button class="thread-tab">Snoozed</button>
+      <button class="thread-tab">Done</button>
+    </div>
+    <div class="thread-list">
+      <div class="thread-item active" id="thread-sarah">
+        <div class="unread-dot"></div>
+        <div class="thread-avatar" style="background:#4C6EF5">SC</div>
+        <div class="thread-item-content">
+          <div class="thread-item-top">
+            <span class="thread-item-name">Sarah Chen</span>
+            <span class="thread-item-time">Just now</span>
+          </div>
+          <div class="thread-item-subject">Product Designer — Hyderabad</div>
+          <div class="thread-item-preview" id="thread-sarah-preview">Thanks! I'd love to know more about the role.</div>
+          <div class="thread-item-meta">
+            <span class="thread-stage stage-outreach" id="thread-sarah-stage">Outreach</span>
+            <span class="priority-dot priority-high"></span>
+          </div>
+        </div>
+      </div>
+      <div class="thread-item">
+        <div class="thread-avatar" style="background:#37B24D">AK</div>
+        <div class="thread-item-content">
+          <div class="thread-item-top">
+            <span class="thread-item-name">Arjun Kumar</span>
+            <span class="thread-item-time">2h ago</span>
+          </div>
+          <div class="thread-item-subject">Frontend Engineer — Bangalore</div>
+          <div class="thread-item-preview">When is the technical round?</div>
+          <div class="thread-item-meta">
+            <span class="thread-stage stage-interview">Interview</span>
+            <span class="priority-dot priority-normal"></span>
+          </div>
+        </div>
+      </div>
+      <div class="thread-item">
+        <div class="thread-avatar" style="background:#7C3AED">PM</div>
+        <div class="thread-item-content">
+          <div class="thread-item-top">
+            <span class="thread-item-name">Priya Mehta</span>
+            <span class="thread-item-time">5h ago</span>
+          </div>
+          <div class="thread-item-subject">Engineering Manager — Remote</div>
+          <div class="thread-item-preview">I've accepted! Looking forward to starting.</div>
+          <div class="thread-item-meta">
+            <span class="thread-stage stage-offer">Offer</span>
+            <span class="priority-dot priority-normal"></span>
+          </div>
+        </div>
+      </div>
+      <div class="thread-item">
+        <div class="thread-avatar" style="background:#E03131">RV</div>
+        <div class="thread-item-content">
+          <div class="thread-item-top">
+            <span class="thread-item-name">Rahul Verma</span>
+            <span class="thread-item-time">1d ago</span>
+          </div>
+          <div class="thread-item-subject">Data Analyst — Pune</div>
+          <div class="thread-item-preview">Could you share the compensation details?</div>
+          <div class="thread-item-meta">
+            <span class="thread-stage stage-screen">Screening</span>
+            <span class="priority-dot priority-urgent"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conversation Panel -->
+  <div class="conversation-panel">
+    <div class="conv-header">
+      <div class="thread-avatar" style="background:#4C6EF5; width:32px; height:32px; font-size:12px;">SC</div>
+      <div class="conv-header-info">
+        <h3>Sarah Chen</h3>
+        <div class="sub">
+          <span class="channel-badge">Email</span>
+          T-12 &middot; Product Designer &middot; Hyderabad
+        </div>
+      </div>
+      <div class="conv-header-actions">
+        <button title="Pin">&#128204;</button>
+        <button title="Snooze">&#9203;</button>
+        <button title="More">&middot;&middot;&middot;</button>
+      </div>
+    </div>
+    <div class="conv-body" id="conv-body">
+      <!-- Messages injected by JS -->
+    </div>
+    <div class="action-bar">
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
+        Reply <span class="action-key">R</span>
+      </button>
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        Note <span class="action-key">N</span>
+      </button>
+      <button class="action-btn">
+        &middot;&middot;&middot; More
+      </button>
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+        Agent <span class="action-key">A</span>
+      </button>
+      <div class="action-bar-spacer"></div>
+      <button class="action-btn-primary" id="reply-wait-btn">
+        Reply &amp; wait &#8594;
+      </button>
+    </div>
+  </div>
+
+  <!-- Detail Panel -->
+  <div class="detail-panel">
+    <div class="detail-header">
+      <h4>Sarah Chen — Product Designer</h4>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Information <span class="toggle">&#9662;</span></div>
+      <div class="detail-row">
+        <span class="detail-label">Status</span>
+        <span class="detail-value"><span class="status-dot" style="background:var(--blue)" id="detail-status-dot"></span> <span id="detail-status">Needs first response</span></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Assignee</span>
+        <span class="detail-value" id="detail-assignee">You (Recruiter)</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Priority</span>
+        <span class="detail-value"><span class="status-dot" style="background:var(--amber)"></span> High</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Stage</span>
+        <span class="detail-value" id="detail-stage">Outreach</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Labels</span>
+        <span class="detail-value"><span class="add-btn">Labels +</span></span>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Job <span class="toggle">&#9662;</span></div>
+      <div class="detail-row">
+        <span class="detail-label">Role</span>
+        <span class="detail-value">Product Designer</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Location</span>
+        <span class="detail-value">Hyderabad</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Department</span>
+        <span class="detail-value">Design</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Hiring Manager</span>
+        <span class="detail-value">Sachin Patel</span>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Team <span class="toggle">&#9662;</span></div>
+      <div class="team-member">
+        <div class="team-member-avatar" style="background:#E65100">SP</div>
+        <div class="team-member-info">
+          <div class="team-member-name">Sachin Patel</div>
+          <div class="team-member-role">Hiring Manager</div>
+        </div>
+      </div>
+      <div class="team-member">
+        <div class="team-member-avatar" style="background:#7C3AED">PG</div>
+        <div class="team-member-info">
+          <div class="team-member-name">Priya Gupta</div>
+          <div class="team-member-role">Interviewer</div>
+        </div>
+      </div>
+      <div class="team-member">
+        <div class="team-member-avatar" style="background:var(--green)">AI</div>
+        <div class="team-member-info">
+          <div class="team-member-name">Recruiting Agent</div>
+          <div class="team-member-role">AI Assistant</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Documents <span class="toggle">&#9662;</span></div>
+      <div id="detail-docs">
+        <div class="detail-row">
+          <span class="detail-label">&#128196;</span>
+          <span class="detail-value">Resume_SarahChen.pdf</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Actions <span class="toggle">&#9662;</span></div>
+      <div class="detail-row">
+        <span class="detail-label">&#10024;</span>
+        <span class="detail-value" style="color:var(--purple)">Ask Agent</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">&#128172;</span>
+        <span class="detail-value">Discuss internally</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">&#9881;</span>
+        <span class="detail-value">Run workflow</span>
+      </div>
+    </div>
+
+    <div class="detail-section" id="similar-threads-section">
+      <div class="detail-section-title">Activity Log <span class="toggle">&#9662;</span></div>
+      <div id="activity-log">
+        <div style="font-size:12px; color:var(--gray-500); padding:4px 0;">No activity yet</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     CANDIDATE VIEW
+     ═══════════════════════════════════════════ -->
+<div class="candidate-view hidden" id="candidate-view">
+  <div class="cand-header">
+    <div class="cand-header-avatar">A</div>
+    <div class="cand-header-info">
+      <h3>ABC Staffing</h3>
+      <div class="sub">Product Designer &middot; Hyderabad</div>
+    </div>
+    <div class="cand-header-actions">
+      <button title="Voice">&#127908;</button>
+      <button title="Call">&#128222;</button>
+    </div>
+  </div>
+  <div class="cand-body" id="cand-body">
+    <!-- Messages injected by JS -->
+  </div>
+  <div class="cand-input">
+    <button class="cand-input-attach" title="Attach">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+    </button>
+    <input class="cand-input-field" placeholder="Type a message..." type="text">
+    <button class="cand-input-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+    </button>
+  </div>
+  <div class="cand-powered">Powered by ABC Staffing</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   STORY DATA — 12 Acts
+   ═══════════════════════════════════════════ */
+const STEPS = [
+  { name: "Discover", num: 1 },
+  { name: "Reach Out", num: 2 },
+  { name: "Engage", num: 3 },
+  { name: "Inform", num: 4 },
+  { name: "Assist", num: 5 },
+  { name: "Schedule", num: 6 },
+  { name: "Collaborate", num: 7 },
+  { name: "Interview", num: 8 },
+  { name: "Capture", num: 9 },
+  { name: "Decide", num: 10 },
+  { name: "Offer", num: 11 },
+  { name: "Close", num: 12 },
+];
+
+let currentStep = 0;
+let currentView = 'recruiter';
+
+// Build step dots
+const dotsEl = document.getElementById('step-dots');
+STEPS.forEach((s, i) => {
+  const d = document.createElement('div');
+  d.className = 'step-dot' + (i === 0 ? ' active' : '');
+  d.title = `${s.num}. ${s.name}`;
+  d.onclick = () => goToStep(i);
+  dotsEl.appendChild(d);
+});
+
+/* ═══════════════════════════════════════════
+   RECRUITER CONVERSATION CONTENT PER STEP
+   ═══════════════════════════════════════════ */
+
+function recruiterHTML(step) {
+  let html = '';
+
+  // Step 1: Discover — recruiter found the candidate
+  if (step >= 0) {
+    html += statusEvent('green', 'Thread created &middot; Sarah Chen added from LinkedIn');
+  }
+
+  // Step 2: Reach Out
+  if (step >= 1) {
+    html += msgGroup('You', 'Recruiter', '#37B24D', 'Just now', '',
+      `<p>Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad.</p>
+       <p>The team is building a new enterprise design system and we're looking for someone with your systems thinking background. Would you be interested in learning more?</p>`);
+  }
+
+  // Step 3: Engage — candidate responds
+  if (step >= 2) {
+    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', '2 min ago', '',
+      `<p>Hi! Thanks for reaching out. I've been looking at design systems roles and this sounds interesting.</p>
+       <p>I'd definitely like to learn more about the role and team.</p>`);
+    html += statusEvent('blue', 'Status changed to Active conversation');
+  }
+
+  // Step 4: Inform — share JD + docs
+  if (step >= 3) {
+    html += msgGroup('You', 'Recruiter', '#37B24D', '1 min ago', '',
+      `<p>Great! I'm sharing the role details here so you have everything in one place.</p>`);
+    html += inlineCard('&#128196;', '#E7EDFF', 'Product Designer — Job Description',
+      'Design team &middot; Hyderabad &middot; Full-time', 'View');
+    html += inlineCard('&#128101;', '#E6F9ED', 'Team Overview',
+      '4 designers, 2 PMs &middot; Enterprise Design System', 'View');
+    html += msgGroup('You', 'Recruiter', '#37B24D', '1 min ago', '',
+      `<p>You'll be working with 4 designers and 2 PMs. The team is building the next generation of our enterprise design system — it's a greenfield project with a lot of ownership.</p>`);
+  }
+
+  // Step 5: Assist — AI agent joins
+  if (step >= 4) {
+    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', '30 sec ago', '',
+      `<p>This looks great! What's the interview process like? And is there flexibility on remote work?</p>`);
+    html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', 'Just now', 'ai',
+      `<p>There are 4 stages in the interview process:</p>
+       <p><strong>1.</strong> Recruiter conversation (30 min)<br>
+       <strong>2.</strong> Portfolio review with hiring manager (45 min)<br>
+       <strong>3.</strong> Product thinking exercise (60 min)<br>
+       <strong>4.</strong> Final discussion with VP Design (30 min)</p>
+       <p>Regarding remote work: the role is hybrid with 2 days in the Hyderabad office. The team does async standups and has flexible hours.</p>`);
+    html += msgGroup('You', 'Recruiter', '#37B24D', 'Just now', '',
+      `<p>Yep, and I'll personally walk you through the first stage. It's very conversational — no trick questions!</p>`);
+  }
+
+  // Step 6: Schedule
+  if (step >= 5) {
+    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', 'Just now', '',
+      `<p>Sounds good! I'm available Thursday afternoon if that works?</p>`);
+    html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', 'Just now', 'ai',
+      `<p>I've checked everyone's calendars. Thursday at 4:00 PM IST works for the recruiter conversation.</p>`);
+    html += inlineCard('&#128197;', '#E6F9ED', 'Interview Scheduled',
+      'Thursday, Oct 24 &middot; 4:00 PM IST &middot; Video Call', 'Confirmed');
+    html += statusEvent('purple', 'Stage changed to Interview &middot; Portfolio Review');
+    html += inlineCard('&#128218;', '#F3EEFF', 'Interview Preparation Guide',
+      'Sent to Sarah Chen automatically', 'View');
+  }
+
+  // Step 7: Collaborate — internal team
+  if (step >= 6) {
+    html += `<div style="margin:16px 0 8px; padding:12px; background:var(--amber-bg); border-radius:var(--radius-lg); border-left:3px solid var(--amber)">
+      <div style="font-size:11px; font-weight:600; color:#BF6C00; margin-bottom:4px; display:flex; align-items:center; gap:4px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+        INTERNAL — Not visible to Sarah
+      </div>
+    </div>`;
+    html += msgGroup('You', 'Recruiter', '#37B24D', '10 min ago', 'internal',
+      `<p>@Sachin — Sarah is confirmed for Thursday. Her portfolio has strong systems work from Flipkart.</p>`);
+    html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '5 min ago', 'internal',
+      `<p>Great, I looked at her case studies. Can you ask about the checkout redesign project specifically? I want to understand how she handles stakeholder alignment.</p>`);
+    html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', 'Just now', 'ai',
+      `<p>I've added "checkout redesign — stakeholder alignment" to the interview plan for the portfolio review stage.</p>`);
+  }
+
+  // Step 8: Interview — call happens
+  if (step >= 7) {
+    html += statusEvent('green', 'Interview completed &middot; Recruiter Conversation &middot; 32 min');
+    html += inlineCard('&#127909;', '#E7EDFF', 'Interview Recording',
+      'Recruiter Conversation &middot; 32 minutes', 'Play');
+  }
+
+  // Step 9: Capture — AI summarizes
+  if (step >= 8) {
+    html += aiSummary(
+      `Sarah demonstrated strong systems thinking and clear communication. Key highlights:
+       <br>&bull; Led the Flipkart checkout redesign serving 200M+ users
+       <br>&bull; Built a component library adopted by 12 product teams
+       <br>&bull; Comfortable with enterprise constraints and stakeholder management
+       <br>&bull; Salary expectation: ₹28-32 LPA (within our range)
+       <br><br><strong>Recommendation:</strong> Advance to Portfolio Review with Sachin.`);
+  }
+
+  // Step 10: Decide — team discussion
+  if (step >= 9) {
+    html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '2h ago', 'internal',
+      `<p>Strong systems thinking. The checkout case study was impressive — she managed 6 stakeholder groups.</p>
+       <p>One concern: limited experience with enterprise B2B workflows. But she's a fast learner.</p>`);
+    html += msgGroup('Priya Gupta', 'Interviewer', '#7C3AED', '1h ago', 'internal',
+      `<p>Agreed. Her product thinking exercise was the strongest I've seen this quarter. She reframed the problem beautifully.</p>`);
+    html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', '30 min ago', 'ai',
+      `<p>All interviewers have submitted feedback. Average score: <strong>4.2/5</strong>.</p>
+       <p>Based on the team's assessment, Sarah is the top candidate for this role. Shall I prepare the offer package?</p>`);
+    html += statusEvent('green', 'Decision: Proceed to Offer');
+  }
+
+  // Step 11: Offer
+  if (step >= 10) {
+    html += msgGroup('You', 'Recruiter', '#37B24D', '15 min ago', '',
+      `<p>Sarah, great news! The team was really impressed with your interviews. We'd love to have you join us.</p>
+       <p>I'm sharing the offer details below:</p>`);
+    html += inlineCard('&#127881;', '#E6F9ED', 'Offer Letter — Product Designer',
+      '₹30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer');
+    html += inlineCard('&#128203;', '#F3EEFF', 'Benefits & Equity Package',
+      'Health, RSUs, relocation support', 'View');
+  }
+
+  // Step 12: Close
+  if (step >= 11) {
+    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', 'Just now', '',
+      `<p>This is amazing! I'm thrilled to accept. The team, the role, and the offer all feel right.</p>
+       <p>Thank you for making this process so smooth — having everything in one conversation made it so easy to stay on top of things. &#128588;</p>`);
+    html += `<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;margin:12px 0;background:var(--green-light);border-radius:var(--radius-lg);">
+      <span style="font-size:20px">&#127881;</span>
+      <span style="font-size:14px;font-weight:600;color:var(--green-dark)">Offer Accepted — Sarah Chen joins as Product Designer</span>
+    </div>`;
+    html += statusEvent('green', 'Thread closed &middot; Candidate hired');
+    html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', 'Just now', 'ai',
+      `<p>Congratulations! I've triggered the onboarding workflow:</p>
+       <p>&bull; Welcome email scheduled for Dec 20<br>
+       &bull; IT equipment request submitted<br>
+       &bull; Team introduction channel created<br>
+       &bull; Day-1 orientation booked for Jan 6</p>`);
+  }
+
+  return html;
+}
+
+/* ═══════════════════════════════════════════
+   CANDIDATE CONVERSATION CONTENT PER STEP
+   ═══════════════════════════════════════════ */
+function candidateHTML(step) {
+  let html = '';
+
+  if (step >= 1) {
+    html += candMsg('received', 'Recruiter', '#37B24D', '',
+      'Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad.');
+  }
+
+  if (step >= 2) {
+    html += candMsg('sent', '', '#4C6EF5', '',
+      "Hi! Thanks for reaching out. I've been looking at design systems roles and this sounds interesting. I'd love to learn more!");
+  }
+
+  if (step >= 3) {
+    html += candMsg('received', 'Recruiter', '#37B24D', '',
+      "Great! Here are the role details:");
+    html += candCard('&#128196; Product Designer — Job Description',
+      'Design team &middot; Hyderabad &middot; Full-time', 'View', 'Save');
+    html += candCard('&#128101; Team Overview',
+      '4 designers, 2 PMs &middot; Enterprise Design System', 'View', '');
+  }
+
+  if (step >= 4) {
+    html += candMsg('sent', '', '#4C6EF5', '',
+      "This looks great! What's the interview process like? And is there flexibility on remote work?");
+    html += candMsg('received', 'Recruiting Agent', '#7C3AED', 'ai',
+      "There are 4 stages: recruiter conversation (30 min), portfolio review (45 min), product thinking exercise (60 min), and final discussion (30 min). The role is hybrid — 2 days in office with flexible hours.");
+    html += candMsg('received', 'Recruiter', '#37B24D', '',
+      "I'll walk you through the first stage personally — it's very conversational, no trick questions!");
+  }
+
+  if (step >= 5) {
+    html += candMsg('sent', '', '#4C6EF5', '',
+      "Sounds good! I'm available Thursday afternoon if that works?");
+    html += candSchedule('Interview Scheduled', 'Thursday, Oct 24 &middot; 4:00 PM IST', 'Video Call with Recruiter');
+    html += candCard('&#128218; Interview Preparation Guide',
+      'Tips and what to expect at each stage', 'Read Guide', '');
+  }
+
+  if (step >= 7) {
+    html += `<div style="text-align:center;padding:12px 0;font-size:12px;color:var(--gray-500);">Interview completed &middot; 32 min</div>`;
+  }
+
+  if (step >= 10) {
+    html += candMsg('received', 'Recruiter', '#37B24D', '',
+      "Sarah, great news! The team was really impressed. We'd love to have you join us:");
+    html += candCard('&#127881; Offer Letter — Product Designer',
+      '₹30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer', '');
+    html += candCard('&#128203; Benefits & Equity Package',
+      'Health, RSUs, relocation support', 'View Details', '');
+  }
+
+  if (step >= 11) {
+    html += candMsg('sent', '', '#4C6EF5', '',
+      "This is amazing! I'm thrilled to accept. The team, the role, and the offer all feel right. Thank you for making this so smooth! &#128588;");
+    html += `<div style="text-align:center;padding:16px;margin:8px 0;background:var(--green-light);border-radius:var(--radius-xl);">
+      <div style="font-size:20px;margin-bottom:4px">&#127881;</div>
+      <div style="font-size:14px;font-weight:600;color:var(--green-dark)">You're in! Welcome to ABC Staffing</div>
+      <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">Starting Jan 6 &middot; Hyderabad</div>
+    </div>`;
+  }
+
+  return html;
+}
+
+/* ═══════════════════════════════════════════
+   HTML HELPERS
+   ═══════════════════════════════════════════ */
+function msgGroup(name, role, color, time, badge, content) {
+  const badgeHTML = badge === 'ai' ? ' <span class="msg-sender-badge badge-ai">AI</span>'
+    : badge === 'internal' ? ' <span class="msg-sender-badge badge-internal">Internal</span>' : '';
+  return `<div class="msg-group">
+    <div class="msg-sender">
+      <div class="msg-sender-avatar" style="background:${color}">${name.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
+      <span class="msg-sender-name">${name}</span>${badgeHTML}
+      <span class="msg-sender-time">${time}</span>
+    </div>
+    <div class="msg-bubble">${content}</div>
+  </div>`;
+}
+
+function statusEvent(color, text) {
+  return `<div class="status-event"><div class="dot" style="background:var(--${color})"></div>${text}</div>`;
+}
+
+function inlineCard(icon, bgColor, title, desc, actionText) {
+  return `<div class="inline-card">
+    <div class="inline-card-icon" style="background:${bgColor}">${icon}</div>
+    <div class="inline-card-content">
+      <div class="inline-card-title">${title}</div>
+      <div class="inline-card-desc">${desc}</div>
+    </div>
+    <button class="inline-card-action">${actionText}</button>
+  </div>`;
+}
+
+function aiSummary(text) {
+  return `<div class="ai-summary">
+    <div class="ai-summary-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+      AI Summary
+    </div>
+    <div class="ai-summary-text">${text}</div>
+  </div>`;
+}
+
+function candMsg(dir, sender, color, badge, text) {
+  const initials = sender ? sender.split(' ').map(w=>w[0]).join('').slice(0,2) : '';
+  const avatarHTML = dir === 'received' ? `<div class="cand-msg-avatar-sm" style="background:${color}">${initials}</div>` : '';
+  const senderHTML = dir === 'received' && sender ?
+    `<div class="cand-msg-sender">${sender}${badge==='ai' ? ' <span class="ai-tag">AI</span>' : ''}</div>` : '';
+  return `<div class="cand-msg ${dir}">
+    ${senderHTML}
+    <div class="cand-msg-row">
+      ${avatarHTML}
+      <div class="cand-bubble">${text}</div>
+    </div>
+  </div>`;
+}
+
+function candCard(title, desc, primary, secondary) {
+  const secHTML = secondary ? `<button class="cand-card-btn secondary">${secondary}</button>` : '';
+  return `<div class="cand-card">
+    <div class="cand-card-title">${title}</div>
+    <div class="cand-card-desc">${desc}</div>
+    <div class="cand-card-actions">
+      <button class="cand-card-btn primary">${primary}</button>
+      ${secHTML}
+    </div>
+  </div>`;
+}
+
+function candSchedule(title, detail, sub) {
+  return `<div class="cand-schedule">
+    <div class="cand-schedule-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 2v4m8-4v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+      ${title}
+    </div>
+    <div class="cand-schedule-detail">${detail}</div>
+    <div class="cand-schedule-sub">${sub}</div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════
+   STEP NAVIGATION
+   ═══════════════════════════════════════════ */
+function updateDetailPanel(step) {
+  const stages = ['Outreach','Outreach','Active','Active','Active','Interview','Interview','Interview','Interview','Decision','Offer','Hired'];
+  const statuses = ['Needs first response','Outreach sent','Active conversation','Sharing information','AI assisting','Interview scheduled','Team collaborating','Interview in progress','Reviewing feedback','Making decision','Offer extended','Hired!'];
+  const statusColors = ['var(--blue)','var(--blue)','var(--green)','var(--green)','var(--purple)','var(--purple)','var(--amber)','var(--purple)','var(--amber)','var(--amber)','var(--green)','var(--green)'];
+
+  document.getElementById('detail-status').textContent = statuses[step] || statuses[0];
+  document.getElementById('detail-status-dot').style.background = statusColors[step] || statusColors[0];
+  document.getElementById('detail-stage').textContent = stages[step] || stages[0];
+
+  const stageMap = {0:'stage-outreach',1:'stage-outreach',2:'stage-outreach',3:'stage-outreach',4:'stage-outreach',5:'stage-interview',6:'stage-interview',7:'stage-interview',8:'stage-interview',9:'stage-interview',10:'stage-offer',11:'stage-offer'};
+  const stageEl = document.getElementById('thread-sarah-stage');
+  stageEl.className = 'thread-stage ' + (stageMap[step] || 'stage-outreach');
+  stageEl.textContent = stages[step] || 'Outreach';
+
+  const previews = ['Thanks! I\'d love to know more about the role.','Outreach message sent','I\'d definitely like to learn more!','Sharing role details...','What\'s the interview process?','Thursday at 4 PM confirmed','Internal: Team discussion','Interview completed — 32 min','AI Summary generated','Decision: Proceed to Offer','Offer letter shared','Offer Accepted!'];
+  document.getElementById('thread-sarah-preview').textContent = previews[step] || previews[0];
+
+  const docsEl = document.getElementById('detail-docs');
+  let docsHTML = '<div class="detail-row"><span class="detail-label">&#128196;</span><span class="detail-value">Resume_SarahChen.pdf</span></div>';
+  if (step >= 3) docsHTML += '<div class="detail-row"><span class="detail-label">&#128196;</span><span class="detail-value">JobDescription.pdf</span></div>';
+  if (step >= 5) docsHTML += '<div class="detail-row"><span class="detail-label">&#128218;</span><span class="detail-value">InterviewGuide.pdf</span></div>';
+  if (step >= 7) docsHTML += '<div class="detail-row"><span class="detail-label">&#127909;</span><span class="detail-value">Interview_Recording.mp4</span></div>';
+  if (step >= 10) docsHTML += '<div class="detail-row"><span class="detail-label">&#127881;</span><span class="detail-value">OfferLetter_SarahChen.pdf</span></div>';
+  docsEl.innerHTML = docsHTML;
+
+  const logEl = document.getElementById('activity-log');
+  const logs = [];
+  if (step >= 0) logs.push('Thread created');
+  if (step >= 1) logs.push('Outreach sent');
+  if (step >= 2) logs.push('Sarah responded');
+  if (step >= 3) logs.push('JD & team info shared');
+  if (step >= 4) logs.push('AI Agent answered questions');
+  if (step >= 5) logs.push('Interview scheduled — Oct 24');
+  if (step >= 6) logs.push('Internal discussion started');
+  if (step >= 7) logs.push('Interview completed');
+  if (step >= 8) logs.push('AI Summary generated');
+  if (step >= 9) logs.push('Decision: Proceed to Offer');
+  if (step >= 10) logs.push('Offer sent');
+  if (step >= 11) logs.push('Offer accepted!');
+  logEl.innerHTML = logs.map(l => `<div style="font-size:12px;color:var(--gray-500);padding:3px 0;">&bull; ${l}</div>`).join('');
+}
+
+function render() {
+  const convBody = document.getElementById('conv-body');
+  const candBody = document.getElementById('cand-body');
+
+  convBody.innerHTML = recruiterHTML(currentStep);
+  candBody.innerHTML = candidateHTML(currentStep);
+
+  document.getElementById('step-num').textContent = currentStep + 1;
+  document.getElementById('step-name').textContent = '— ' + STEPS[currentStep].name;
+
+  document.querySelectorAll('.step-dot').forEach((d, i) => {
+    d.className = 'step-dot' + (i === currentStep ? ' active' : i < currentStep ? ' done' : '');
+  });
+
+  document.getElementById('prev-btn').disabled = currentStep === 0;
+  document.getElementById('next-btn').disabled = currentStep === STEPS.length - 1;
+
+  updateDetailPanel(currentStep);
+
+  // Auto scroll
+  setTimeout(() => {
+    convBody.scrollTop = convBody.scrollHeight;
+    candBody.scrollTop = candBody.scrollHeight;
+  }, 50);
+}
+
+function nextStep() {
+  if (currentStep < STEPS.length - 1) { currentStep++; render(); }
+}
+function prevStep() {
+  if (currentStep > 0) { currentStep--; render(); }
+}
+function goToStep(i) {
+  currentStep = i; render();
+}
+
+function showView(view) {
+  currentView = view;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('recruiter-view').classList.toggle('hidden', view !== 'recruiter');
+  document.getElementById('candidate-view').classList.toggle('hidden', view !== 'candidate');
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') nextStep();
+  if (e.key === 'ArrowLeft') prevStep();
+});
+
+// Init
+render();
+</script>
+</body>
+</html>
