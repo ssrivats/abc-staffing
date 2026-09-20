@@ -1426,19 +1426,7 @@ function recruiterHTML(step) {
   }
 
   if (step >= 3) {
-    html += msgGroup('You', 'Recruiter', '#37B24D', '1h ago', '',
-      `<p>@Agent &mdash; help me prepare for Sarah's interview. She has strong systems experience but I want to probe the B2B gap.</p>`);
-
-    html += agentInline(
-      `<p>I've pulled together a focused plan based on Sarah's profile, the role requirements, and input from the hiring team:</p>
-       <p><strong>1. Background &amp; motivation</strong> &mdash; why design systems, why now</p>
-       <p><strong>2. Flipkart checkout redesign</strong> &mdash; stakeholder alignment across 6 groups <span style="font-size:11px;color:var(--purple)">(via Sachin)</span></p>
-       <p><strong>3. B2B enterprise workflows</strong> &mdash; depth check on enterprise experience <span style="font-size:11px;color:var(--purple)">(via Priya)</span></p>
-       <p><strong>4. Technical skills</strong> &mdash; design tokens, component APIs, documentation</p>
-       <p>I've also sent Sarah an interview prep guide with what to expect.</p>`,
-      `<button class="btn-primary" onclick="return false">Use this plan</button>
-       <button class="btn-secondary" onclick="return false">Adjust topics</button>`
-    );
+    html += agentActionCard('Interview plan prepared &mdash; see Agent panel for details');
   }
 
   if (step >= 4) {
@@ -1771,14 +1759,37 @@ function candidateHTML(step) {
 /* ═══ AGENT PANEL CONTENT ═══ */
 function agentPanelHTML(step) {
   let html = '';
-  html += `<div class="agent-intro">I have context on Sarah's thread. Here are some things I can help with:</div>`;
-  html += `<div class="agent-quick-actions">
-    <button class="agent-chip">${IC.messageSquare} Draft a reply</button>
-    <button class="agent-chip">${IC.lightbulb} What should I do next?</button>
-    <button class="agent-chip">${IC.trendingUp} Should this be escalated?</button>
-    <button class="agent-chip">${IC.fileText} Summarize this thread</button>
-    <button class="agent-chip">${IC.search} Find relevant docs</button>
-  </div>`;
+
+  if (step === 3) {
+    html += `<div class="agent-msg question">Help me prepare for Sarah's interview. She has strong systems experience but I want to probe the B2B gap.</div>`;
+    html += `<div class="agent-msg response">
+      <p>I've pulled together a focused plan based on Sarah's profile and the team's input:</p>
+      <p style="margin:8px 0 4px"><strong>1. Background &amp; motivation</strong><br><span style="color:var(--gray-500)">Why design systems, why now</span></p>
+      <p style="margin:4px 0"><strong>2. Flipkart checkout redesign</strong><br><span style="color:var(--gray-500)">Stakeholder alignment across 6 groups</span> <span style="font-size:11px;color:var(--purple)">(Sachin asked)</span></p>
+      <p style="margin:4px 0"><strong>3. B2B enterprise workflows</strong><br><span style="color:var(--gray-500)">Depth check on enterprise experience</span> <span style="font-size:11px;color:var(--purple)">(Priya flagged)</span></p>
+      <p style="margin:4px 0"><strong>4. Technical skills</strong><br><span style="color:var(--gray-500)">Design tokens, component APIs, documentation</span></p>
+    </div>`;
+    html += `<div class="agent-msg question">Also send Sarah a prep guide so she knows what to expect.</div>`;
+    html += `<div class="agent-msg response">
+      <p>Done. I've sent Sarah an interview preparation guide covering:</p>
+      <p style="margin:4px 0;color:var(--gray-500)">&bull; What to expect at each stage<br>&bull; Who she'll be speaking with<br>&bull; Tips for the product thinking exercise</p>
+      <p style="margin-top:6px">${IC.circleCheck} <span style="color:var(--green);font-weight:500">Sent to Sarah</span></p>
+    </div>`;
+    html += `<div class="agent-quick-actions" style="margin-top:8px">
+      <button class="agent-chip">${IC.lightbulb} Suggest follow-up questions</button>
+      <button class="agent-chip">${IC.search} Find similar candidate interviews</button>
+    </div>`;
+  } else {
+    html += `<div class="agent-intro">I have context on Sarah's thread. Here are some things I can help with:</div>`;
+    html += `<div class="agent-quick-actions">
+      <button class="agent-chip">${IC.messageSquare} Draft a reply</button>
+      <button class="agent-chip">${IC.lightbulb} What should I do next?</button>
+      <button class="agent-chip">${IC.trendingUp} Should this be escalated?</button>
+      <button class="agent-chip">${IC.fileText} Summarize this thread</button>
+      <button class="agent-chip">${IC.search} Find relevant docs</button>
+    </div>`;
+  }
+
   return html;
 }
 
@@ -1839,6 +1850,18 @@ function render() {
     currentTab = 'candidate';
     document.getElementById('tab-candidate').classList.add('active');
     document.getElementById('tab-team').classList.remove('active');
+  }
+
+  // Auto-open agent panel at step 3 (Collaborate), close when leaving
+  if (currentStep === 3) {
+    agentVisible = true;
+    document.getElementById('agent-panel').classList.add('visible');
+    document.getElementById('detail-panel').style.display = 'none';
+    document.getElementById('agent-body').innerHTML = agentPanelHTML(currentStep);
+  } else if (agentVisible) {
+    agentVisible = false;
+    document.getElementById('agent-panel').classList.remove('visible');
+    document.getElementById('detail-panel').style.display = 'block';
   }
 
   // Show team dot indicator
