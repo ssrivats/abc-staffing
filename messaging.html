@@ -42,7 +42,7 @@
   --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
 
   --detail-w: 300px;
-  --icon-rail-w: 48px;
+  --icon-rail-w: 56px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -106,36 +106,67 @@ body {
 }
 .recruiter-view.hidden { display: none; }
 
-/* Icon Rail */
+/* Icon Rail — WhatsApp + Slack hybrid */
 .icon-rail {
   width: var(--icon-rail-w);
   background: var(--gray-50);
   border-right: 1px solid var(--gray-200);
   display: flex; flex-direction: column; align-items: center;
-  padding: 12px 0; gap: 2px;
+  padding: 8px 0 10px; gap: 0;
+}
+.rail-logo {
+  width: 34px; height: 34px; border-radius: var(--radius-lg);
+  background: var(--green); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; margin-bottom: 14px; flex-shrink: 0;
 }
 .rail-icon {
-  width: 36px; height: 36px; border-radius: var(--radius-md);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--gray-500); cursor: pointer; transition: all 0.12s;
-  position: relative;
+  width: 44px; height: 40px; border-radius: var(--radius-md);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1px;
+  color: var(--gray-400); cursor: pointer; transition: all 0.12s;
+  position: relative; margin: 1px 0;
 }
 .rail-icon:hover { background: var(--gray-100); color: var(--gray-700); }
-.rail-icon.active { background: var(--green-light); color: var(--green); }
-.rail-icon svg { width: 20px; height: 20px; }
+.rail-icon.active { color: var(--green); }
+.rail-icon.active::before {
+  content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+  width: 3px; border-radius: 0 2px 2px 0; background: var(--green);
+}
+.rail-icon svg { width: 18px; height: 18px; }
+.rail-icon-label {
+  font-size: 9px; font-weight: 500; line-height: 1;
+  letter-spacing: 0.01em;
+}
 .rail-icon .badge {
-  position: absolute; top: 2px; right: 2px;
-  width: 16px; height: 16px; border-radius: var(--radius-full);
+  position: absolute; top: 3px; right: 2px;
+  min-width: 16px; height: 16px; padding: 0 4px;
+  border-radius: var(--radius-full);
   background: var(--green); color: white;
   font-size: 9px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
+.rail-icon .badge-dot {
+  position: absolute; top: 6px; right: 8px;
+  width: 8px; height: 8px; border-radius: var(--radius-full);
+  background: var(--green); border: 2px solid var(--gray-50);
+}
+.rail-divider {
+  width: 28px; height: 1px; background: var(--gray-200);
+  margin: 6px 0;
+}
 .rail-spacer { flex: 1; }
-.rail-logo {
-  width: 32px; height: 32px; border-radius: var(--radius-lg);
-  background: var(--green); color: white;
+.rail-avatar {
+  width: 30px; height: 30px; border-radius: var(--radius-full);
+  background: var(--blue); color: white;
   display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 13px; margin-bottom: 12px;
+  font-weight: 600; font-size: 11px; cursor: pointer;
+  position: relative; flex-shrink: 0;
+}
+.rail-avatar .online-dot {
+  position: absolute; bottom: -1px; right: -1px;
+  width: 10px; height: 10px; border-radius: var(--radius-full);
+  background: var(--green); border: 2px solid var(--gray-50);
 }
 
 /* Thread List */
@@ -146,15 +177,14 @@ body {
   background: var(--white);
 }
 .thread-sidebar-header {
-  padding: 12px 16px 10px;
+  padding: 12px 16px 8px;
   display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--gray-100);
 }
 .thread-sidebar-header h2 {
-  font-size: 14px; font-weight: 600; color: var(--gray-900);
+  font-size: 15px; font-weight: 700; color: var(--gray-900);
   display: flex; align-items: center; gap: 8px;
 }
-.thread-header-controls { display: flex; gap: 6px; }
+.thread-header-controls { display: flex; gap: 4px; }
 .thread-header-btn {
   font-size: 12px; color: var(--gray-500); cursor: pointer;
   padding: 4px 8px; border-radius: var(--radius-sm);
@@ -162,6 +192,41 @@ body {
   display: flex; align-items: center; gap: 4px; transition: all 0.1s;
 }
 .thread-header-btn:hover { background: var(--gray-100); color: var(--gray-700); }
+.thread-search {
+  padding: 0 12px 8px;
+}
+.thread-search input {
+  width: 100%; height: 32px; padding: 0 12px 0 32px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+  font-family: var(--font); font-size: 12px; color: var(--gray-700);
+  background: var(--gray-50); outline: none; transition: border-color 0.15s;
+}
+.thread-search input:focus { border-color: var(--green); background: var(--white); }
+.thread-search { position: relative; }
+.thread-search svg {
+  position: absolute; left: 22px; top: 8px;
+  width: 14px; height: 14px; color: var(--gray-400); pointer-events: none;
+}
+.thread-filter-tabs {
+  display: flex; gap: 0; padding: 0 12px 8px;
+  border-bottom: 1px solid var(--gray-100);
+}
+.thread-filter-tab {
+  padding: 5px 12px; border-radius: var(--radius-full);
+  border: none; background: none;
+  font-family: var(--font); font-size: 11px; font-weight: 600;
+  color: var(--gray-400); cursor: pointer; transition: all 0.12s;
+  white-space: nowrap;
+}
+.thread-filter-tab:hover { color: var(--gray-700); background: var(--gray-50); }
+.thread-filter-tab.active { background: var(--green-light); color: var(--green-dark); }
+.thread-filter-tab .tab-count {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 16px; height: 16px; padding: 0 4px;
+  border-radius: var(--radius-full);
+  background: var(--green); color: white;
+  font-size: 9px; font-weight: 700; margin-left: 4px;
+}
 .thread-list { flex: 1; overflow-y: auto; }
 .thread-status-header {
   font-size: 11px; font-weight: 500; color: var(--gray-400);
@@ -217,6 +282,20 @@ body {
   border: 2px solid white; margin-left: -4px; opacity: 0.75;
 }
 .thread-assignee-dot svg { width: 10px; height: 10px; }
+.thread-item.unread .thread-item-name { font-weight: 700; }
+.thread-item.unread .thread-item-preview { color: var(--gray-700); font-weight: 500; }
+.thread-unread-badge {
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: var(--radius-full);
+  background: var(--green); color: white;
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.thread-mention-badge {
+  font-size: 10px; font-weight: 700; color: var(--red);
+  display: flex; align-items: center; gap: 2px;
+}
 
 /* ═══ Center: Conversation ═══ */
 .conversation-panel {
@@ -1073,46 +1152,90 @@ body {
 <!-- ═══ RECRUITER VIEW ═══ -->
 <div class="recruiter-view" id="recruiter-view">
 
-  <!-- Icon Rail -->
+  <!-- Icon Rail — WhatsApp + Slack hybrid -->
   <div class="icon-rail">
-    <div class="rail-icon" title="Back" style="margin-bottom:4px">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-    </div>
-    <div class="rail-icon" title="Previous" style="margin-bottom:0">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-    </div>
-    <div class="rail-icon" title="Next" style="margin-bottom:8px">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-    </div>
-    <div class="rail-icon" title="Notifications">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-    </div>
-    <div class="rail-icon active" title="Threads">
+    <div class="rail-logo">A</div>
+
+    <!-- Primary nav (WhatsApp-style) -->
+    <div class="rail-icon active" title="Chats">
+      <span class="badge">4</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span class="rail-icon-label">Chats</span>
     </div>
-    <div class="rail-icon" title="Candidates">
+    <div class="rail-icon" title="Calls">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span class="rail-icon-label">Calls</span>
+    </div>
+    <div class="rail-icon" title="Video">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
+      <span class="rail-icon-label">Video</span>
+    </div>
+    <div class="rail-icon" title="Contacts">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span class="rail-icon-label">Contacts</span>
     </div>
+
+    <div class="rail-divider"></div>
+
+    <!-- Secondary nav (Slack-style) -->
+    <div class="rail-icon" title="Activity">
+      <span class="badge">2</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+      <span class="rail-icon-label">Activity</span>
+    </div>
+    <div class="rail-icon" title="Mentions">
+      <span class="badge-dot"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg>
+      <span class="rail-icon-label">Mentions</span>
+    </div>
+    <div class="rail-icon" title="Threads">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M14 10h.01"/><path d="M10 10h.01"/><path d="M18 10h.01"/></svg>
+      <span class="rail-icon-label">Threads</span>
+    </div>
+
     <div class="rail-spacer"></div>
+
+    <!-- Bottom nav -->
     <div class="rail-icon" title="Help">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+      <span class="rail-icon-label">Help</span>
     </div>
     <div class="rail-icon" title="Settings">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/></svg>
+      <span class="rail-icon-label">Settings</span>
     </div>
-    <div class="rail-logo" style="margin-top:8px">A</div>
+    <div class="rail-avatar" title="You" style="margin-top:6px">
+      SR
+      <span class="online-dot"></span>
+    </div>
   </div>
 
   <!-- Thread List -->
   <div class="thread-sidebar">
     <div class="thread-sidebar-header">
-      <h2>Threads<br><span style="font-size:12px;font-weight:400;color:var(--gray-400)">Todo 4</span></h2>
+      <h2>Chats</h2>
       <div class="thread-header-controls">
-        <button class="thread-header-btn">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-          Display
+        <button class="thread-header-btn" title="New chat">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+        </button>
+        <button class="thread-header-btn" title="Filter">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
         </button>
       </div>
+    </div>
+
+    <!-- Search (WhatsApp-style) -->
+    <div class="thread-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" placeholder="Search chats...">
+    </div>
+
+    <!-- Filter tabs (WhatsApp + Slack hybrid) -->
+    <div class="thread-filter-tabs">
+      <button class="thread-filter-tab active">All</button>
+      <button class="thread-filter-tab">Unread<span class="tab-count">3</span></button>
+      <button class="thread-filter-tab">@Mentions</button>
+      <button class="thread-filter-tab">Groups</button>
     </div>
 
     <div class="thread-list">
@@ -1141,7 +1264,7 @@ body {
 
       <div class="thread-status-header">Active</div>
 
-      <div class="thread-item">
+      <div class="thread-item unread">
         <div class="thread-avatar" style="background:#37B24D">AK</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
@@ -1160,6 +1283,7 @@ body {
               <div class="thread-assignee-dot" style="background:var(--purple)" title="AI">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
               </div>
+              <div class="thread-unread-badge">2</div>
             </div>
           </div>
         </div>
@@ -1186,7 +1310,7 @@ body {
         </div>
       </div>
 
-      <div class="thread-item">
+      <div class="thread-item unread">
         <div class="thread-avatar" style="background:#E03131">RV</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
@@ -1194,7 +1318,7 @@ body {
             <span class="thread-item-time">1d ago</span>
           </div>
           <div class="thread-item-subject">Data Analyst &middot; Pune</div>
-          <div class="thread-item-preview">Could you share the compensation details?</div>
+          <div class="thread-item-preview">@You — Could you share the compensation deta...</div>
           <div class="thread-item-meta">
             <div class="thread-priority">
               <span class="priority-bar" style="background:var(--red)"></span>
@@ -1202,6 +1326,7 @@ body {
             </div>
             <div class="thread-assignees">
               <div class="thread-assignee-dot" style="background:#E65100" title="Sachin">SP</div>
+              <div class="thread-unread-badge">1</div>
             </div>
           </div>
         </div>
@@ -1228,6 +1353,9 @@ body {
         </button>
       </div>
       <div class="conv-header-actions">
+        <button title="Voice call"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+        <button title="Video call"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></button>
+        <button title="Search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
         <button title="Details"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
       </div>
     </div>
