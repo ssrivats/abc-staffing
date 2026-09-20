@@ -11,14 +11,12 @@
   --green: #37B24D;
   --green-light: #E6F9ED;
   --green-dark: #2F9E44;
-  --blue: #4C6EF5;
-  --blue-light: #E7EDFF;
-  --purple: #7C3AED;
-  --purple-light: #F3EEFF;
   --amber: #F59F00;
   --amber-bg: #FFF3D0;
   --red: #E03131;
-  --red-light: #FFF0F0;
+
+  --neutral-avatar: #6B7280;
+  --neutral-avatar-dark: #4B5563;
 
   --gray-900: #1A1A1A;
   --gray-700: #4A4A4A;
@@ -158,7 +156,7 @@ body {
 .rail-spacer { flex: 1; }
 .rail-avatar {
   width: 30px; height: 30px; border-radius: var(--radius-full);
-  background: var(--blue); color: white;
+  background: var(--neutral-avatar); color: white;
   display: flex; align-items: center; justify-content: center;
   font-weight: 600; font-size: 11px; cursor: pointer;
   position: relative; flex-shrink: 0;
@@ -219,7 +217,7 @@ body {
   white-space: nowrap;
 }
 .thread-filter-tab:hover { color: var(--gray-700); background: var(--gray-50); }
-.thread-filter-tab.active { background: var(--green-light); color: var(--green-dark); }
+.thread-filter-tab.active { background: var(--gray-100); color: var(--gray-900); }
 .thread-filter-tab .tab-count {
   display: inline-flex; align-items: center; justify-content: center;
   min-width: 16px; height: 16px; padding: 0 4px;
@@ -293,7 +291,7 @@ body {
   flex-shrink: 0;
 }
 .thread-mention-badge {
-  font-size: 10px; font-weight: 700; color: var(--red);
+  font-size: 10px; font-weight: 700; color: var(--green);
   display: flex; align-items: center; gap: 2px;
 }
 
@@ -371,7 +369,7 @@ body {
   font-size: 10px; font-weight: 600; padding: 1px 6px;
   border-radius: var(--radius-sm); margin-left: 2px;
 }
-.badge-ai { background: var(--purple-light); color: var(--purple); }
+.badge-ai { background: var(--amber-bg); color: #BF6C00; }
 .badge-internal { background: var(--amber-bg); color: #BF6C00; }
 .msg-bubble {
   padding: 0 0 0 36px;
@@ -474,12 +472,12 @@ body {
 .agent-inline {
   margin: 8px 0 8px 0;
   padding: 14px 16px;
-  border: 1px solid rgba(124,58,237,0.15);
+  border: 1px solid rgba(245,159,0,0.2);
   border-radius: var(--radius-lg);
-  background: var(--purple-light);
+  background: var(--amber-bg);
 }
 .agent-inline-header {
-  font-size: 12px; font-weight: 600; color: var(--purple);
+  font-size: 12px; font-weight: 600; color: #BF6C00;
   display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
 }
 .agent-inline-header svg { width: 14px; height: 14px; }
@@ -492,7 +490,7 @@ body {
   background: var(--white); border-radius: var(--radius-md);
   padding: 10px 12px; margin: 8px 0;
   font-size: 13px; color: var(--gray-700); line-height: 1.6;
-  border-left: 3px solid var(--purple);
+  border-left: 3px solid var(--amber);
 }
 .agent-inline-options {
   display: flex; flex-direction: column; gap: 4px; margin: 8px 0;
@@ -503,13 +501,13 @@ body {
   background: var(--white); font-size: 13px; color: var(--gray-700);
   cursor: pointer; transition: all 0.1s; border: 1px solid var(--gray-200);
 }
-.agent-inline-option:hover { border-color: var(--purple); }
+.agent-inline-option:hover { border-color: var(--amber); }
 .agent-inline-option.recommended {
-  border-color: var(--purple); font-weight: 500;
+  border-color: var(--amber); font-weight: 500;
 }
 .agent-inline-option .rec-badge {
-  font-size: 10px; font-weight: 600; color: var(--purple);
-  background: var(--purple-light); padding: 1px 6px; border-radius: var(--radius-sm);
+  font-size: 10px; font-weight: 600; color: #BF6C00;
+  background: var(--amber-bg); padding: 1px 6px; border-radius: var(--radius-sm);
   margin-left: auto;
 }
 .agent-inline-actions {
@@ -521,7 +519,7 @@ body {
   cursor: pointer; transition: all 0.12s; border: none;
 }
 .agent-inline-actions .btn-primary {
-  background: var(--purple); color: white;
+  background: var(--green); color: white;
 }
 .agent-inline-actions .btn-primary:hover { opacity: 0.9; }
 .agent-inline-actions .btn-secondary {
@@ -538,7 +536,7 @@ body {
   background: var(--white); cursor: pointer; transition: all 0.12s;
   font-size: 12px;
 }
-.source-card:hover { border-color: var(--purple); background: #FAFAFE; }
+.source-card:hover { border-color: var(--gray-300); background: var(--gray-50); }
 .source-card-icon {
   width: 28px; height: 28px; border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
@@ -548,8 +546,8 @@ body {
 .source-card-title { font-weight: 600; color: var(--gray-900); font-size: 12px; }
 .source-card-sub { font-size: 11px; color: var(--gray-500); }
 .source-card-badge {
-  font-size: 10px; font-weight: 600; color: var(--purple);
-  background: var(--purple-light); padding: 2px 6px; border-radius: var(--radius-sm);
+  font-size: 10px; font-weight: 600; color: var(--gray-500);
+  background: var(--gray-100); padding: 2px 6px; border-radius: var(--radius-sm);
   flex-shrink: 0;
 }
 
@@ -557,8 +555,8 @@ body {
 .agent-action {
   display: flex; align-items: center; gap: 10px;
   margin: 6px 0; padding: 10px 14px;
-  background: var(--purple-light); border-radius: var(--radius-md);
-  font-size: 12px; color: var(--purple); font-weight: 500;
+  background: var(--amber-bg); border-radius: var(--radius-md);
+  font-size: 12px; color: #BF6C00; font-weight: 500;
 }
 .agent-action svg { width: 14px; height: 14px; flex-shrink: 0; }
 .agent-action .undo-btn {
@@ -648,7 +646,7 @@ body {
 .file-attachment:hover { border-color: var(--gray-300); }
 .file-attachment .file-icon {
   width: 28px; height: 28px; border-radius: var(--radius-sm);
-  background: var(--red); color: white;
+  background: var(--neutral-avatar); color: white;
   display: flex; align-items: center; justify-content: center;
   font-size: 9px; font-weight: 700;
 }
@@ -694,12 +692,12 @@ body {
 .composer-btn:hover { background: var(--gray-50); color: var(--gray-700); }
 .composer-btn svg { width: 16px; height: 16px; }
 .composer-btn.agent {
-  border-color: var(--purple); color: var(--purple);
+  border-color: var(--amber); color: #BF6C00;
   width: auto; padding: 0 12px; border-radius: var(--radius-full);
   font-family: var(--font); font-size: 12px; font-weight: 500;
   gap: 4px;
 }
-.composer-btn.agent:hover { background: var(--purple-light); }
+.composer-btn.agent:hover { background: var(--amber-bg); }
 .composer-btn.agent svg { width: 14px; height: 14px; }
 .composer-send {
   height: 38px; padding: 0 20px;
@@ -779,13 +777,13 @@ body {
   flex-shrink: 0; font-size: 10px; color: white;
 }
 .step-item .step-check.done { background: var(--green); border-color: var(--green); }
-.step-item .step-check.active { border-color: var(--blue); }
+.step-item .step-check.active { border-color: var(--green); }
 .step-item .step-check svg { width: 12px; height: 12px; }
 .step-item .step-info { flex: 1; }
 .step-item .step-name { font-size: 12px; font-weight: 500; color: var(--gray-900); }
 .step-item .step-meta { font-size: 11px; color: var(--gray-500); }
 .step-item .ai-added {
-  font-size: 10px; color: var(--purple); font-weight: 600;
+  font-size: 10px; color: #BF6C00; font-weight: 600;
   display: flex; align-items: center; gap: 3px;
 }
 .step-item .ai-added svg { width: 10px; height: 10px; }
@@ -835,7 +833,7 @@ body {
 }
 .customer-card-label { font-size: 12px; color: var(--gray-500); }
 .customer-card-val { font-size: 12px; color: var(--gray-900); }
-.customer-card-val a { color: var(--blue); text-decoration: none; }
+.customer-card-val a { color: var(--green); text-decoration: none; }
 
 /* Detail action button */
 .detail-action-btn {
@@ -866,7 +864,7 @@ body {
   display: flex; align-items: center; justify-content: space-between;
 }
 .agent-panel-header h4 {
-  font-size: 13px; font-weight: 600; color: var(--purple);
+  font-size: 13px; font-weight: 600; color: #BF6C00;
   display: flex; align-items: center; gap: 6px;
 }
 .agent-panel-header h4 svg { width: 14px; height: 14px; }
@@ -890,7 +888,7 @@ body {
   align-self: flex-end; max-width: 90%;
 }
 .agent-msg.response {
-  background: var(--purple-light); border: 1px solid rgba(124,58,237,0.15);
+  background: var(--amber-bg); border: 1px solid rgba(245,159,0,0.2);
 }
 .agent-msg.response p { margin-bottom: 4px; }
 .agent-msg.response p:last-child { margin-bottom: 0; }
@@ -902,7 +900,7 @@ body {
   border: 1px solid var(--gray-200); border-radius: var(--radius-md);
   background: var(--white); cursor: pointer; transition: all 0.12s;
 }
-.agent-source:hover { border-color: var(--purple); }
+.agent-source:hover { border-color: var(--amber); }
 .agent-source-icon {
   width: 24px; height: 24px; border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
@@ -917,12 +915,12 @@ body {
 .agent-action-btn {
   display: flex; align-items: center; gap: 8px;
   padding: 8px 12px; border-radius: var(--radius-md);
-  border: 1px solid rgba(124,58,237,0.25); background: var(--white);
+  border: 1px solid rgba(245,159,0,0.25); background: var(--white);
   font-family: var(--font); font-size: 12px; font-weight: 500;
-  color: var(--purple); cursor: pointer; transition: all 0.12s;
+  color: #BF6C00; cursor: pointer; transition: all 0.12s;
   margin: 2px 0; width: 100%; text-align: left;
 }
-.agent-action-btn:hover { background: var(--purple-light); border-color: var(--purple); }
+.agent-action-btn:hover { background: var(--amber-bg); border-color: var(--amber); }
 .agent-action-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
 .agent-intro {
@@ -939,7 +937,7 @@ body {
   font-family: var(--font); font-size: 13px; color: var(--gray-700);
   cursor: pointer; transition: all 0.12s; text-align: left; width: 100%;
 }
-.agent-chip:hover { border-color: var(--purple); background: var(--purple-light); color: var(--purple); }
+.agent-chip:hover { border-color: var(--amber); background: var(--amber-bg); color: #BF6C00; }
 .agent-chip svg { width: 16px; height: 16px; flex-shrink: 0; }
 
 /* Agent panel input */
@@ -953,11 +951,11 @@ body {
   font-family: var(--font); font-size: 13px; color: var(--gray-900);
   outline: none; background: var(--gray-50);
 }
-.agent-panel-input input:focus { border-color: var(--purple); background: white; }
+.agent-panel-input input:focus { border-color: var(--amber); background: white; }
 .agent-panel-input input::placeholder { color: var(--gray-400); }
 .agent-panel-send {
   width: 32px; height: 32px; border-radius: var(--radius-md);
-  border: none; background: var(--purple); color: white;
+  border: none; background: var(--amber); color: white;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: all 0.12s; flex-shrink: 0;
 }
@@ -1037,7 +1035,7 @@ body {
 }
 .cand-msg-sender .ai-tag {
   font-size: 9px; padding: 1px 5px;
-  background: var(--purple-light); color: var(--purple);
+  background: var(--amber-bg); color: #BF6C00;
   border-radius: var(--radius-sm); font-weight: 600;
 }
 .cand-card {
@@ -1242,7 +1240,7 @@ body {
       <div class="thread-status-header">Needs first response</div>
 
       <div class="thread-item active" id="thread-sarah">
-        <div class="thread-avatar" style="background:#4C6EF5">SC</div>
+        <div class="thread-avatar" style="background:#6B7280">SC</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Sarah Chen</span>
@@ -1265,7 +1263,7 @@ body {
       <div class="thread-status-header">Active</div>
 
       <div class="thread-item unread">
-        <div class="thread-avatar" style="background:#37B24D">AK</div>
+        <div class="thread-avatar" style="background:#4B5563">AK</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Arjun Kumar</span>
@@ -1280,7 +1278,7 @@ body {
             </div>
             <div class="thread-assignees">
               <div class="thread-assignee-dot" style="background:var(--green)" title="You">Y</div>
-              <div class="thread-assignee-dot" style="background:var(--purple)" title="AI">
+              <div class="thread-assignee-dot" style="background:var(--gray-500)" title="AI">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
               </div>
               <div class="thread-unread-badge">2</div>
@@ -1290,7 +1288,7 @@ body {
       </div>
 
       <div class="thread-item">
-        <div class="thread-avatar" style="background:#7C3AED">PM</div>
+        <div class="thread-avatar" style="background:#374151">PM</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Priya Mehta</span>
@@ -1311,7 +1309,7 @@ body {
       </div>
 
       <div class="thread-item unread">
-        <div class="thread-avatar" style="background:#E03131">RV</div>
+        <div class="thread-avatar" style="background:#9CA3AF">RV</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Rahul Verma</span>
@@ -1325,7 +1323,7 @@ body {
               <span style="font-size:11px;color:var(--gray-500)">Urgent</span>
             </div>
             <div class="thread-assignees">
-              <div class="thread-assignee-dot" style="background:#E65100" title="Sachin">SP</div>
+              <div class="thread-assignee-dot" style="background:#6B7280" title="Sachin">SP</div>
               <div class="thread-unread-badge">1</div>
             </div>
           </div>
@@ -1665,7 +1663,7 @@ function recruiterHTML(step) {
        <div class="agent-inline-draft">Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad. The team is building a new enterprise design system and we're looking for someone with your systems thinking background. Would you be interested in learning more?</div>`,
       `<button class="btn-primary" onclick="return false">Send as-is</button>
        <button class="btn-secondary" onclick="return false">Edit first</button>`,
-      sourceCard('#4C6EF5', 'LI', 'Sarah Chen &mdash; LinkedIn Profile', '8 yrs experience &middot; Flipkart')
+      sourceCard('#6B7280', 'LI', 'Sarah Chen &mdash; LinkedIn Profile', '8 yrs experience &middot; Flipkart')
     );
   }
 
@@ -1682,7 +1680,7 @@ function recruiterHTML(step) {
   }
 
   if (step >= 1) {
-    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', '2 min ago', '',
+    html += msgGroup('Sarah Chen', 'Candidate', '#6B7280', '2 min ago', '',
       `<p>Hi! Thanks for reaching out. I've been looking at design systems roles and this sounds interesting.</p>
        <p>What's the interview process like? And is there flexibility on remote work?</p>`);
 
@@ -1692,20 +1690,20 @@ function recruiterHTML(step) {
        <p><strong>Interview:</strong> 4 stages, ~3 hours total &mdash; recruiter conversation, portfolio review, product exercise, final discussion.</p>`,
       `<button class="btn-primary" onclick="return false">Send answer</button>
        <button class="btn-secondary" onclick="return false">Edit first</button>`,
-      sourceCard('#E03131', 'PDF', 'JobDescription.pdf', 'Remote policy &middot; Interview stages')
+      sourceCard('#6B7280', 'PDF', 'JobDescription.pdf', 'Remote policy &middot; Interview stages')
         + sourceCard('#37B24D', 'HR', 'Company Handbook', 'Hybrid work policy &middot; Section 4.2')
     );
 
     html += msgGroup('You', 'Recruiter', '#37B24D', '1 min ago', '',
       `<p>Great questions! I'll walk you through the first stage personally &mdash; it's very conversational, no trick questions.</p>`);
-    html += inlineCard(IC.fileText, '#E7EDFF', 'Product Designer &mdash; Job Description',
+    html += inlineCard(IC.fileText, 'var(--gray-100)', 'Product Designer &mdash; Job Description',
       'Design team &middot; Hyderabad &middot; Full-time', 'View');
     html += inlineCard(IC.users, '#E6F9ED', 'Team Overview',
       '4 designers, 2 PMs &middot; Enterprise Design System', 'View');
   }
 
   if (step >= 2) {
-    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', 'Just now', '',
+    html += msgGroup('Sarah Chen', 'Candidate', '#6B7280', 'Just now', '',
       `<p>Sounds good! I'm available Thursday afternoon if that works?</p>`);
 
     html += agentInline(
@@ -1717,7 +1715,7 @@ function recruiterHTML(step) {
        </div>`,
       `<button class="btn-primary" onclick="return false">Send 4:00 PM</button>
        <button class="btn-secondary" onclick="return false">Show all options</button>`,
-      sourceCard('#4C6EF5', 'Cal', 'Google Calendar', 'Checked 3 participants &middot; 6 slots')
+      sourceCard('#6B7280', 'Cal', 'Google Calendar', 'Checked 3 participants &middot; 6 slots')
     );
 
     html += eventCard(IC.calendar, 'var(--green-light)', 'Interview Scheduled', 'Recruiter Conversation',
@@ -1726,7 +1724,7 @@ function recruiterHTML(step) {
     );
 
     html += agentActionCard('Sent interview prep guide to Sarah automatically');
-    html += statusEvent('purple', 'Stage &rarr; Interview');
+    html += statusEvent('green', 'Stage &rarr; Interview');
   }
 
   if (step >= 3) {
@@ -1750,7 +1748,7 @@ function recruiterHTML(step) {
     html += msgGroup('You', 'Recruiter', '#37B24D', '30 min ago', '',
       `<p>Thanks for speaking with us today, Sarah. The team is reviewing feedback and I'll be in touch shortly.</p>`);
 
-    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', '25 min ago', '',
+    html += msgGroup('Sarah Chen', 'Candidate', '#6B7280', '25 min ago', '',
       `<p>Thank you! I really enjoyed learning about the design system work. Looking forward to hearing back.</p>`);
   }
 
@@ -1759,10 +1757,10 @@ function recruiterHTML(step) {
       `<p>Sarah, great news! The team was really impressed with your interviews. We'd love to have you join us.</p>`);
     html += inlineCard(IC.award, '#E6F9ED', 'Offer Letter &mdash; Product Designer',
       '&#8377;30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer');
-    html += inlineCard(IC.clipboard, '#F3EEFF', 'Benefits &amp; Equity Package',
+    html += inlineCard(IC.clipboard, 'var(--amber-bg)', 'Benefits &amp; Equity Package',
       'Health, RSUs, relocation support', 'View');
 
-    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', 'Just now', '',
+    html += msgGroup('Sarah Chen', 'Candidate', '#6B7280', 'Just now', '',
       `<p>This is amazing! I'm thrilled to accept. The team, the role, and the offer all feel right.</p>
        <p>Thank you for making this process so smooth &mdash; having everything in one conversation made it so easy to stay on top of things.</p>`);
 
@@ -1800,27 +1798,27 @@ function teamHTML(step) {
   }
 
   if (step >= 3) {
-    html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '20 min ago', '',
+    html += msgGroup('Sachin Patel', 'Hiring Manager', '#374151', '20 min ago', '',
       `<p>Great. Can you ask about the checkout redesign specifically? I want to understand how she handles stakeholder alignment.</p>`);
 
     html += agentActionCard('Added "checkout redesign &mdash; stakeholder alignment" to interview plan');
 
-    html += msgGroup('Priya Gupta', 'Interviewer', '#7C3AED', '15 min ago', '',
+    html += msgGroup('Priya Gupta', 'Interviewer', '#4B5563', '15 min ago', '',
       `<p>I'll probe her B2B enterprise experience too. That's the one gap I see on the resume.</p>`);
 
     html += agentActionCard('Updated plan: added B2B enterprise workflow questions');
   }
 
   if (step >= 4) {
-    html += eventCard(IC.video, 'var(--purple-light)', 'Interview Completed', 'All scorecards submitted',
+    html += eventCard(IC.video, 'var(--gray-100)', 'Interview Completed', 'All scorecards submitted',
       [['Overall Score', '4.2 / 5'], ['Concern', 'B2B experience gap (addressable)'], ['Decision', 'Advance to offer']],
       `<button class="event-card-btn">View full scorecard</button>`
     );
 
-    html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '2h ago', '',
+    html += msgGroup('Sachin Patel', 'Hiring Manager', '#374151', '2h ago', '',
       `<p>The checkout case study was impressive &mdash; she managed 6 stakeholder groups. I'm comfortable with the B2B gap; she's a fast learner.</p>`);
 
-    html += msgGroup('Priya Gupta', 'Interviewer', '#7C3AED', '1h ago', '',
+    html += msgGroup('Priya Gupta', 'Interviewer', '#4B5563', '1h ago', '',
       `<p>Agreed. Her product thinking exercise was the strongest I've seen this quarter. She reframed the problem beautifully.</p>`);
   }
 
@@ -1841,7 +1839,7 @@ function teamHTML(step) {
       sourceCard('#37B24D', 'HR', 'Compensation Bands 2024', 'Product Designer &middot; L4 &middot; Hyderabad')
     );
 
-    html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '15 min ago', '',
+    html += msgGroup('Sachin Patel', 'Hiring Manager', '#374151', '15 min ago', '',
       `<p>Approved. Send it.</p>`);
   }
 
@@ -1853,7 +1851,7 @@ function contextPanelHTML(step) {
   let html = '';
 
   const stages = ['Outreach', 'Active', 'Interview', 'Interview', 'Review', 'Hired'];
-  const stageColors = ['var(--blue)', 'var(--green)', 'var(--purple)', 'var(--purple)', 'var(--amber)', 'var(--green)'];
+  const stageColors = ['var(--green)', 'var(--green)', 'var(--green)', 'var(--green)', 'var(--green)', 'var(--green)'];
   html += `<div class="detail-section" style="padding:12px 16px 8px;">
     <div style="display:flex;align-items:center;justify-content:space-between;">
       <span class="stage-pill" style="background:${stageColors[step]}15;color:${stageColors[step]}">${stages[step]}</span>
@@ -1863,7 +1861,7 @@ function contextPanelHTML(step) {
 
   html += `<div class="customer-card">
     <div class="customer-card-header">
-      <div class="customer-card-avatar" style="background:#4C6EF5">SC</div>
+      <div class="customer-card-avatar" style="background:#6B7280">SC</div>
       <span class="customer-card-name">Sarah Chen</span>
     </div>
     <div class="customer-card-row">
@@ -1920,9 +1918,9 @@ function contextPanelHTML(step) {
         <div class="context-card-sub">30 min &middot; Video call</div>
       </div>
       <div style="margin-top:8px">
-        <div class="participant"><div class="participant-avatar" style="background:#4C6EF5">SC</div><span class="participant-name">Sarah Chen</span><span class="participant-check">${IC.circleCheck}</span></div>
-        <div class="participant"><div class="participant-avatar" style="background:#37B24D">Y</div><span class="participant-name">You</span><span class="participant-check">${IC.circleCheck}</span></div>
-        <div class="participant"><div class="participant-avatar" style="background:#E65100">SP</div><span class="participant-name">Sachin Patel</span><span class="participant-check">${IC.circleCheck}</span></div>
+        <div class="participant"><div class="participant-avatar" style="background:#6B7280">SC</div><span class="participant-name">Sarah Chen</span><span class="participant-check">${IC.circleCheck}</span></div>
+        <div class="participant"><div class="participant-avatar" style="background:var(--green)">Y</div><span class="participant-name">You</span><span class="participant-check">${IC.circleCheck}</span></div>
+        <div class="participant"><div class="participant-avatar" style="background:#4B5563">SP</div><span class="participant-name">Sachin Patel</span><span class="participant-check">${IC.circleCheck}</span></div>
       </div>
     </div>`;
   }
@@ -1933,14 +1931,14 @@ function contextPanelHTML(step) {
       <div style="font-size:12px;font-weight:500;color:var(--gray-900);margin-bottom:6px">Recruiter Conversation &middot; 30 min</div>
       <div class="step-item"><div class="step-check" style="width:14px;height:14px;border-width:1.5px;"></div><div class="step-info"><div class="step-name">Background &amp; motivation</div></div></div>
       <div class="step-item"><div class="step-check" style="width:14px;height:14px;border-width:1.5px;"></div><div class="step-info"><div class="step-name">Technical skills</div></div></div>
-      <div class="step-item"><div class="step-check" style="width:14px;height:14px;border-width:1.5px;border-color:var(--purple)"></div><div class="step-info"><div class="step-name">Checkout redesign &mdash; stakeholder alignment</div><div class="ai-added">${IC.sparkles} Added by agent via Sachin</div></div></div>
-      <div class="step-item"><div class="step-check" style="width:14px;height:14px;border-width:1.5px;border-color:var(--purple)"></div><div class="step-info"><div class="step-name">B2B enterprise experience</div><div class="ai-added">${IC.sparkles} Added by agent via Priya</div></div></div>
+      <div class="step-item"><div class="step-check" style="width:14px;height:14px;border-width:1.5px;border-color:var(--amber)"></div><div class="step-info"><div class="step-name">Checkout redesign &mdash; stakeholder alignment</div><div class="ai-added">${IC.sparkles} Added by agent via Sachin</div></div></div>
+      <div class="step-item"><div class="step-check" style="width:14px;height:14px;border-width:1.5px;border-color:var(--amber)"></div><div class="step-info"><div class="step-name">B2B enterprise experience</div><div class="ai-added">${IC.sparkles} Added by agent via Priya</div></div></div>
     </div>
     <div class="detail-section">
       <div class="detail-section-title">Panel</div>
-      <div class="participant"><div class="participant-avatar" style="background:#37B24D">Y</div><span class="participant-name">You &mdash; Recruiter</span></div>
-      <div class="participant"><div class="participant-avatar" style="background:#E65100">SP</div><span class="participant-name">Sachin &mdash; Portfolio</span></div>
-      <div class="participant"><div class="participant-avatar" style="background:#7C3AED">PG</div><span class="participant-name">Priya &mdash; Exercise</span></div>
+      <div class="participant"><div class="participant-avatar" style="background:var(--green)">Y</div><span class="participant-name">You &mdash; Recruiter</span></div>
+      <div class="participant"><div class="participant-avatar" style="background:#4B5563">SP</div><span class="participant-name">Sachin &mdash; Portfolio</span></div>
+      <div class="participant"><div class="participant-avatar" style="background:#374151">PG</div><span class="participant-name">Priya &mdash; Exercise</span></div>
       <div class="participant"><div class="participant-avatar" style="background:var(--gray-500)">VP</div><span class="participant-name">VP Design &mdash; Final</span></div>
     </div>`;
   }
@@ -1949,10 +1947,10 @@ function contextPanelHTML(step) {
     html += `<div class="detail-section">
       <div class="detail-section-title">Interview scorecard</div>`;
     const scores = [
-      ['Systems Thinking', 4.5, '#37B24D'],
-      ['Communication', 4.0, '#4C6EF5'],
-      ['Stakeholder Mgmt', 4.5, '#37B24D'],
-      ['Product Thinking', 4.0, '#4C6EF5'],
+      ['Systems Thinking', 4.5, 'var(--green)'],
+      ['Communication', 4.0, 'var(--green)'],
+      ['Stakeholder Mgmt', 4.5, 'var(--green)'],
+      ['Product Thinking', 4.0, 'var(--green)'],
     ];
     scores.forEach(([label, score, color]) => {
       const pct = (score / 5) * 100;
@@ -2016,9 +2014,9 @@ function candidateHTML(step) {
       'Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad.');
   }
   if (step >= 1) {
-    html += candMsg('sent', '', '#4C6EF5', '',
+    html += candMsg('sent', '', '#6B7280', '',
       "Hi! Thanks for reaching out. What's the interview process like? And is remote work possible?");
-    html += candMsg('received', 'Recruiting Assistant', '#7C3AED', 'ai',
+    html += candMsg('received', 'Recruiting Assistant', '#4B5563', 'ai',
       "There are 4 stages: recruiter conversation (30 min), portfolio review (45 min), product thinking exercise (60 min), and final discussion (30 min). The role is hybrid &mdash; 2 days in office with flexible hours.");
     html += candMsg('received', 'Recruiter', '#37B24D', '',
       "I'll walk you through the first stage personally &mdash; it's very conversational!");
@@ -2026,7 +2024,7 @@ function candidateHTML(step) {
       'Design team &middot; Hyderabad &middot; Full-time', 'View', 'Save');
   }
   if (step >= 2) {
-    html += candMsg('sent', '', '#4C6EF5', '',
+    html += candMsg('sent', '', '#6B7280', '',
       "Sounds good! I'm available Thursday afternoon.");
     html += candSchedule('Interview Scheduled', 'Thursday, Oct 24 &middot; 4:00 PM IST', 'Video Call with Recruiter');
     html += candCard(IC.bookOpen, 'Interview Preparation Guide',
@@ -2036,7 +2034,7 @@ function candidateHTML(step) {
     html += candEvent(IC.video, 'Interview Completed', '32 min &middot; Thank you for your time!');
     html += candMsg('received', 'Recruiter', '#37B24D', '',
       "Thanks for taking the time today, Sarah. It was great speaking with you &mdash; I'll be in touch shortly with next steps.");
-    html += candMsg('sent', '', '#4C6EF5', '',
+    html += candMsg('sent', '', '#6B7280', '',
       "Thank you! I really enjoyed learning about the design system work. Looking forward to hearing back.");
     html += candMsg('received', 'Recruiter', '#37B24D', '',
       "We're reviewing the team's feedback now. Should have an update for you by end of day.");
@@ -2048,7 +2046,7 @@ function candidateHTML(step) {
       '&#8377;30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer', '');
     html += candCard(IC.clipboard, 'Benefits &amp; Equity Package',
       'Health, RSUs, relocation support', 'View Details', '');
-    html += candMsg('sent', '', '#4C6EF5', '',
+    html += candMsg('sent', '', '#6B7280', '',
       "This is amazing! I'm thrilled to accept. Thank you for making this so smooth!");
     html += `<div style="text-align:center;padding:14px;margin:8px 0;background:var(--green-light);border-radius:var(--radius-xl);">
       <div style="color:var(--green);margin-bottom:4px">${IC.award}</div>
@@ -2067,11 +2065,11 @@ function agentPanelHTML(step) {
   if (step === 0) {
     // Outreach: agent gathered context, drafted outreach
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">CONTEXT</p>
+      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">CONTEXT</p>
       <p>Sarah Chen is a Product Designer at Flipkart with 8 years of experience. She led the checkout redesign (200M+ users) and built a component library used by 12 teams.</p>
     </div>`;
-    html += agentSource(IC.file, '#4C6EF5', 'Sarah Chen &mdash; LinkedIn', '8 yrs &middot; Flipkart &middot; IIT Delhi');
-    html += agentSource(IC.fileText, '#E03131', 'JobDescription.pdf', 'Product Designer &middot; Hyderabad');
+    html += agentSource(IC.file, '#6B7280', 'Sarah Chen &mdash; LinkedIn', '8 yrs &middot; Flipkart &middot; IIT Delhi');
+    html += agentSource(IC.fileText, '#6B7280', 'JobDescription.pdf', 'Product Designer &middot; Hyderabad');
     html += `<div style="margin-top:8px">`;
     html += agentActionButton(IC.messageSquare, 'Draft another version');
     html += agentActionButton(IC.search, 'Find similar candidates');
@@ -2082,11 +2080,11 @@ function agentPanelHTML(step) {
     // Engage: agent answered Sarah's questions, pulled from docs
     html += `<div class="agent-msg question">Sarah asked about remote work and interview process. What should I tell her?</div>`;
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">ANSWER</p>
+      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">ANSWER</p>
       <p><strong>Remote:</strong> Hybrid model &mdash; 2 days/week in Hyderabad office with async standups and flexible hours.</p>
       <p><strong>Interview:</strong> 4 stages totaling ~3 hours: recruiter conversation, portfolio review, product exercise, final discussion.</p>
     </div>`;
-    html += agentSource(IC.fileText, '#E03131', 'JobDescription.pdf', 'Remote policy &middot; Interview stages');
+    html += agentSource(IC.fileText, '#6B7280', 'JobDescription.pdf', 'Remote policy &middot; Interview stages');
     html += agentSource(IC.bookOpen, '#37B24D', 'Company Handbook', 'Section 4.2 &middot; Hybrid work policy');
     html += `<div style="margin-top:8px">`;
     html += agentActionButton(IC.messageSquare, 'Draft response for Sarah');
@@ -2098,11 +2096,11 @@ function agentPanelHTML(step) {
     // Schedule: agent checked calendars, found slots
     html += `<div class="agent-msg question">Sarah wants Thursday afternoon. What times work?</div>`;
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">ANSWER</p>
+      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">ANSWER</p>
       <p>I checked calendars for you, Sarah, and Sachin. Three slots work:</p>
       <p>&bull; 3:30 PM IST<br>&bull; <strong>4:00 PM IST</strong> (recommended &mdash; no conflicts after)<br>&bull; 4:30 PM IST</p>
     </div>`;
-    html += agentSource(IC.calendar, '#4C6EF5', 'Google Calendar', '3 participants &middot; 6 open slots');
+    html += agentSource(IC.calendar, '#6B7280', 'Google Calendar', '3 participants &middot; 6 open slots');
     html += `<div style="margin-top:8px">`;
     html += agentActionButton(IC.calendar, 'Send invite for 4:00 PM');
     html += agentActionButton(IC.bookOpen, 'Generate prep guide for Sarah');
@@ -2113,15 +2111,15 @@ function agentPanelHTML(step) {
     // Collaborate: real multi-turn conversation preparing for interview
     html += `<div class="agent-msg question">Help me prepare for Sarah's interview. She has strong systems experience but I want to probe the B2B gap.</div>`;
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">ANSWER</p>
+      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">ANSWER</p>
       <p>I've pulled together a plan based on Sarah's profile and the team's input:</p>
       <p style="margin:6px 0 2px"><strong>1. Background &amp; motivation</strong><br><span style="color:var(--gray-500)">Why design systems, why now</span></p>
-      <p style="margin:2px 0"><strong>2. Flipkart checkout redesign</strong><br><span style="color:var(--gray-500)">Stakeholder alignment across 6 groups</span> <span style="font-size:11px;color:var(--purple)">(Sachin asked)</span></p>
-      <p style="margin:2px 0"><strong>3. B2B enterprise workflows</strong><br><span style="color:var(--gray-500)">Depth check on enterprise experience</span> <span style="font-size:11px;color:var(--purple)">(Priya flagged)</span></p>
+      <p style="margin:2px 0"><strong>2. Flipkart checkout redesign</strong><br><span style="color:var(--gray-500)">Stakeholder alignment across 6 groups</span> <span style="font-size:11px;color:#BF6C00">(Sachin asked)</span></p>
+      <p style="margin:2px 0"><strong>3. B2B enterprise workflows</strong><br><span style="color:var(--gray-500)">Depth check on enterprise experience</span> <span style="font-size:11px;color:#BF6C00">(Priya flagged)</span></p>
       <p style="margin:2px 0"><strong>4. Technical skills</strong><br><span style="color:var(--gray-500)">Design tokens, component APIs, documentation</span></p>
     </div>`;
-    html += agentSource(IC.file, '#4C6EF5', 'Resume_SarahChen.pdf', 'Work history &middot; Skills');
-    html += agentSource(IC.users, '#E65100', 'Hiring Team Thread', "Sachin + Priya's requests");
+    html += agentSource(IC.file, '#6B7280', 'Resume_SarahChen.pdf', 'Work history &middot; Skills');
+    html += agentSource(IC.users, '#374151', 'Hiring Team Thread', "Sachin + Priya's requests");
     html += `<div class="agent-msg question" style="margin-top:8px">Also send Sarah a prep guide so she knows what to expect.</div>`;
     html += `<div class="agent-msg response">
       <p style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:6px">ACTION COMPLETED</p>
@@ -2137,16 +2135,16 @@ function agentPanelHTML(step) {
   else if (step === 4) {
     // Interview complete: agent summarizes, shows scorecard
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">CONTEXT</p>
+      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">CONTEXT</p>
       <p>Interview completed. 3 scorecards submitted. Here's the summary:</p>
       <p style="margin:6px 0 2px"><strong>Overall: 4.2/5</strong></p>
       <p>&bull; Systems Thinking: 4.5/5<br>&bull; Communication: 4.0/5<br>&bull; Stakeholder Mgmt: 4.5/5<br>&bull; Product Thinking: 4.0/5</p>
       <p style="margin-top:6px;padding:6px 8px;background:var(--amber-bg);border-radius:4px;font-size:12px;color:#BF6C00">Limited B2B experience &mdash; Sachin noted she's a fast learner</p>
     </div>`;
     html += agentSource(IC.barChart, '#37B24D', 'Interview Scorecard', '3 reviewers &middot; 4 dimensions');
-    html += agentSource(IC.video, '#4C6EF5', 'Interview Recording', '32 min &middot; Recruiter conversation');
+    html += agentSource(IC.video, '#6B7280', 'Interview Recording', '32 min &middot; Recruiter conversation');
     html += `<div class="agent-msg response" style="margin-top:8px">
-      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">RECOMMENDATION</p>
+      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">RECOMMENDATION</p>
       <p>Advance to Portfolio Review with Sachin. Sarah's strengths in systems thinking and stakeholder management outweigh the B2B gap.</p>
     </div>`;
     html += `<div style="margin-top:8px">`;
@@ -2159,13 +2157,13 @@ function agentPanelHTML(step) {
     // Decide & Offer: agent prepared the offer
     html += `<div class="agent-msg question">Prepare the offer for Sarah.</div>`;
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">ANSWER</p>
+      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">ANSWER</p>
       <p>I've drafted the offer based on approved compensation bands:</p>
       <p style="margin:6px 0"><strong>&#8377;30 LPA</strong> &mdash; base salary<br>RSU equity grant &middot; Health insurance &middot; Relocation support</p>
       <p>This is within the approved L4 band (&#8377;25&ndash;32 LPA) and matches Sarah's expectation (&#8377;28&ndash;32 LPA).</p>
     </div>`;
     html += agentSource(IC.award, '#37B24D', 'Compensation Bands 2024', 'Product Designer &middot; L4 &middot; Hyderabad');
-    html += agentSource(IC.clipboard, '#7C3AED', 'Benefits Package', 'Health, RSUs, relocation');
+    html += agentSource(IC.clipboard, '#4B5563', 'Benefits Package', 'Health, RSUs, relocation');
     html += `<div class="agent-msg response" style="margin-top:8px">
       <p style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:6px">ACTION COMPLETED</p>
       <p>${IC.circleCheck} Offer letter generated<br>${IC.circleCheck} Benefits package attached<br>${IC.circleCheck} Sachin approved<br>${IC.circleCheck} Sent to Sarah</p>
