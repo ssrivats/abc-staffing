@@ -349,7 +349,49 @@ body {
   width: 6px; height: 6px; border-radius: var(--radius-full);
 }
 
-/* Agent inline suggestion — proactive agent in the conversation */
+/* ═══ Event Card (Upwork-style) ═══ */
+.event-card {
+  margin: 10px auto; padding: 14px 18px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius-lg);
+  background: var(--gray-50); max-width: 420px; width: 100%;
+}
+.event-card-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+}
+.event-card-icon {
+  width: 32px; height: 32px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.event-card-icon svg { width: 16px; height: 16px; }
+.event-card-title { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+.event-card-meta { font-size: 12px; color: var(--gray-500); }
+.event-card-details {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 8px 12px; margin-top: 6px;
+  background: var(--white); border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200);
+}
+.event-card-row {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px;
+}
+.event-card-row .label { color: var(--gray-500); }
+.event-card-row .value { color: var(--gray-900); font-weight: 500; }
+.event-card-actions {
+  display: flex; gap: 8px; margin-top: 8px;
+}
+.event-card-btn {
+  padding: 5px 12px; border-radius: var(--radius-md);
+  font-family: var(--font); font-size: 11px; font-weight: 600;
+  cursor: pointer; transition: all 0.12s; border: 1px solid var(--gray-200);
+  background: var(--white); color: var(--gray-700);
+}
+.event-card-btn:hover { border-color: var(--gray-300); background: var(--gray-50); }
+.event-card-btn.primary { background: var(--green); border-color: var(--green); color: white; }
+.event-card-btn.primary:hover { background: var(--green-dark); }
+
+/* Agent inline suggestion */
 .agent-inline {
   margin: 8px 0 8px 0;
   padding: 14px 16px;
@@ -409,7 +451,30 @@ body {
 }
 .agent-inline-actions .btn-secondary:hover { background: var(--gray-50); }
 
-/* Agent action card — agent took an action */
+/* ═══ Source Card (Gorgias-style) ═══ */
+.source-card {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 0 2px 16px; padding: 8px 12px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+  background: var(--white); cursor: pointer; transition: all 0.12s;
+  font-size: 12px;
+}
+.source-card:hover { border-color: var(--purple); background: #FAFAFE; }
+.source-card-icon {
+  width: 28px; height: 28px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 9px; font-weight: 700; color: white;
+}
+.source-card-text { flex: 1; }
+.source-card-title { font-weight: 600; color: var(--gray-900); font-size: 12px; }
+.source-card-sub { font-size: 11px; color: var(--gray-500); }
+.source-card-badge {
+  font-size: 10px; font-weight: 600; color: var(--purple);
+  background: var(--purple-light); padding: 2px 6px; border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+/* Agent action card */
 .agent-action {
   display: flex; align-items: center; gap: 10px;
   margin: 6px 0; padding: 10px 14px;
@@ -423,7 +488,7 @@ body {
 }
 .agent-action .undo-btn:hover { color: var(--gray-700); }
 
-/* Call card — first-class conversation object */
+/* Call card */
 .call-card {
   margin: 10px 0;
   padding: 16px;
@@ -614,7 +679,7 @@ body {
   font-size: 11px; font-weight: 500;
 }
 
-/* Context card — interactive right-panel card */
+/* Context card */
 .context-card {
   padding: 10px 12px; margin: 4px 0;
   border: 1px solid var(--gray-200); border-radius: var(--radius-md);
@@ -624,7 +689,7 @@ body {
 .context-card-title { font-size: 12px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
 .context-card-sub { font-size: 11px; color: var(--gray-500); }
 
-/* Step item in right panel (interview steps, scorecard rows) */
+/* Step item */
 .step-item {
   display: flex; align-items: center; gap: 8px; padding: 6px 0;
 }
@@ -708,7 +773,7 @@ body {
 }
 .detail-action-btn.primary:hover { background: var(--green-dark); }
 
-/* Sidekick Panel */
+/* ═══ Agent Sidekick Panel ═══ */
 .agent-panel {
   width: var(--detail-w);
   border-left: 1px solid var(--gray-200);
@@ -733,24 +798,60 @@ body {
 .agent-panel-header .close-btn:hover { color: var(--gray-700); }
 .agent-panel-body {
   flex: 1; overflow-y: auto; padding: 16px;
-  display: flex; flex-direction: column; gap: 12px;
+  display: flex; flex-direction: column; gap: 10px;
 }
+
+/* Agent panel messages */
 .agent-msg {
   font-size: 13px; line-height: 1.5; color: var(--gray-700);
   padding: 10px 12px; border-radius: var(--radius-lg);
 }
 .agent-msg.question {
   background: var(--gray-50); border: 1px solid var(--gray-200);
+  align-self: flex-end; max-width: 90%;
 }
 .agent-msg.response {
   background: var(--purple-light); border: 1px solid rgba(124,58,237,0.15);
 }
+.agent-msg.response p { margin-bottom: 4px; }
+.agent-msg.response p:last-child { margin-bottom: 0; }
+
+/* Agent source card (inside panel) */
+.agent-source {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; margin: 4px 0;
+  border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+  background: var(--white); cursor: pointer; transition: all 0.12s;
+}
+.agent-source:hover { border-color: var(--purple); }
+.agent-source-icon {
+  width: 24px; height: 24px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.agent-source-icon svg { width: 14px; height: 14px; }
+.agent-source-text { flex: 1; }
+.agent-source-title { font-size: 11px; font-weight: 600; color: var(--gray-900); }
+.agent-source-sub { font-size: 10px; color: var(--gray-500); }
+
+/* Agent action button (inside panel) */
+.agent-action-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: var(--radius-md);
+  border: 1px solid rgba(124,58,237,0.25); background: var(--white);
+  font-family: var(--font); font-size: 12px; font-weight: 500;
+  color: var(--purple); cursor: pointer; transition: all 0.12s;
+  margin: 2px 0; width: 100%; text-align: left;
+}
+.agent-action-btn:hover { background: var(--purple-light); border-color: var(--purple); }
+.agent-action-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
 .agent-intro {
   font-size: 13px; color: var(--gray-500); line-height: 1.5;
   padding: 0 0 8px; margin-bottom: 4px;
 }
 .agent-quick-actions {
-  display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px;
+  display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px;
 }
 .agent-chip {
   display: flex; align-items: center; gap: 8px;
@@ -761,9 +862,11 @@ body {
 }
 .agent-chip:hover { border-color: var(--purple); background: var(--purple-light); color: var(--purple); }
 .agent-chip svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* Agent panel input */
 .agent-panel-input {
   padding: 12px 16px; border-top: 1px solid var(--gray-100);
-  display: flex; gap: 8px;
+  display: flex; gap: 8px; align-items: center;
 }
 .agent-panel-input input {
   flex: 1; height: 36px; padding: 0 12px;
@@ -773,6 +876,14 @@ body {
 }
 .agent-panel-input input:focus { border-color: var(--purple); background: white; }
 .agent-panel-input input::placeholder { color: var(--gray-400); }
+.agent-panel-send {
+  width: 32px; height: 32px; border-radius: var(--radius-md);
+  border: none; background: var(--purple); color: white;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.12s; flex-shrink: 0;
+}
+.agent-panel-send:hover { opacity: 0.9; }
+.agent-panel-send svg { width: 14px; height: 14px; }
 
 /* Activity log */
 .activity-item {
@@ -883,6 +994,18 @@ body {
 .cand-schedule-title svg { width: 14px; height: 14px; }
 .cand-schedule-detail { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
 .cand-schedule-sub { font-size: 12px; color: var(--gray-500); }
+
+/* Candidate event card */
+.cand-event {
+  margin: 4px 0; padding: 12px 16px;
+  background: var(--gray-50); border-radius: var(--radius-xl);
+  border: 1px solid var(--gray-200); text-align: center;
+}
+.cand-event-icon { margin-bottom: 4px; color: var(--gray-500); }
+.cand-event-icon svg { width: 18px; height: 18px; }
+.cand-event-title { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+.cand-event-sub { font-size: 12px; color: var(--gray-500); }
+
 .cand-input {
   display: flex; align-items: center; gap: 8px;
   padding: 10px 16px; border-top: 1px solid var(--gray-200); background: var(--white);
@@ -920,7 +1043,7 @@ body {
 }
 .msg-group, .cand-msg, .cand-card, .cand-schedule, .inline-card, .ai-summary,
 .status-event, .waiting-bar, .msg-note, .file-attachment, .agent-inline,
-.agent-action, .call-card {
+.agent-action, .call-card, .event-card, .source-card, .cand-event {
   animation: fadeIn 0.25s ease-out both;
 }
 </style>
@@ -1144,7 +1267,10 @@ body {
     </div>
     <div class="agent-panel-body" id="agent-body"></div>
     <div class="agent-panel-input">
-      <input type="text" placeholder="Ask the agent..." id="agent-input">
+      <input type="text" placeholder="Ask a follow-up question..." id="agent-input">
+      <button class="agent-panel-send">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+      </button>
     </div>
   </div>
 </div>
@@ -1201,6 +1327,8 @@ const IC = {
   play: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>',
   check: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
   chevronRight: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>',
+  send: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>',
+  barChart: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>',
 };
 
 /* ═══ STEPS ═══ */
@@ -1246,10 +1374,35 @@ function statusEvent(color, text) {
   return `<div class="status-event"><div class="dot" style="background:var(--${color})"></div>${text}</div>`;
 }
 
-function waitingBar(text) {
-  return `<div class="waiting-bar">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    ${text}
+function eventCard(iconSvg, iconBg, title, meta, rows, actions) {
+  let rowsHTML = '';
+  if (rows && rows.length) {
+    rowsHTML = '<div class="event-card-details">';
+    rows.forEach(r => { rowsHTML += `<div class="event-card-row"><span class="label">${r[0]}</span><span class="value">${r[1]}</span></div>`; });
+    rowsHTML += '</div>';
+  }
+  let actHTML = '';
+  if (actions) { actHTML = `<div class="event-card-actions">${actions}</div>`; }
+  return `<div class="event-card">
+    <div class="event-card-header">
+      <div class="event-card-icon" style="background:${iconBg}">${iconSvg}</div>
+      <div>
+        <div class="event-card-title">${title}</div>
+        <div class="event-card-meta">${meta}</div>
+      </div>
+    </div>
+    ${rowsHTML}${actHTML}
+  </div>`;
+}
+
+function sourceCard(iconColor, iconLabel, title, sub) {
+  return `<div class="source-card">
+    <div class="source-card-icon" style="background:${iconColor}">${iconLabel}</div>
+    <div class="source-card-text">
+      <div class="source-card-title">${title}</div>
+      <div class="source-card-sub">${sub}</div>
+    </div>
+    <span class="source-card-badge">Source</span>
   </div>`;
 }
 
@@ -1264,14 +1417,15 @@ function inlineCard(iconSvg, bgColor, title, desc, actionText) {
   </div>`;
 }
 
-function agentInline(body, actions) {
+function agentInline(body, actions, sources) {
   const actionsHTML = actions ? `<div class="agent-inline-actions">${actions}</div>` : '';
+  const srcHTML = sources || '';
   return `<div class="agent-inline">
     <div class="agent-inline-header">
       ${IC.sparkles} Recruiting Agent
     </div>
     <div class="agent-inline-body">${body}</div>
-    ${actionsHTML}
+    ${srcHTML}${actionsHTML}
   </div>`;
 }
 
@@ -1303,14 +1457,6 @@ function noteBlock(header, candidateName, content) {
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
       Not visible to ${candidateName}
     </div>
-  </div>`;
-}
-
-function fileAttachment(name, size) {
-  return `<div class="file-attachment">
-    <div class="file-icon">MP4</div>
-    <span class="file-name">${name}</span>
-    <span class="file-size">${size}</span>
   </div>`;
 }
 
@@ -1357,6 +1503,29 @@ function candSchedule(title, detail, sub) {
   </div>`;
 }
 
+function candEvent(iconSvg, title, sub) {
+  return `<div class="cand-event">
+    <div class="cand-event-icon">${iconSvg}</div>
+    <div class="cand-event-title">${title}</div>
+    <div class="cand-event-sub">${sub}</div>
+  </div>`;
+}
+
+/* ═══ AGENT PANEL SOURCE CARD (inside panel) ═══ */
+function agentSource(iconSvg, iconBg, title, sub) {
+  return `<div class="agent-source">
+    <div class="agent-source-icon" style="background:${iconBg};color:white">${iconSvg}</div>
+    <div class="agent-source-text">
+      <div class="agent-source-title">${title}</div>
+      <div class="agent-source-sub">${sub}</div>
+    </div>
+  </div>`;
+}
+
+function agentActionButton(iconSvg, text) {
+  return `<button class="agent-action-btn">${iconSvg} ${text}</button>`;
+}
+
 /* ═══ RECRUITER CONVERSATION — Candidate Tab ═══ */
 function recruiterHTML(step) {
   let html = '';
@@ -1367,7 +1536,8 @@ function recruiterHTML(step) {
       `<p>I've drafted a personalized outreach based on Sarah's profile at Flipkart and the Product Designer role.</p>
        <div class="agent-inline-draft">Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad. The team is building a new enterprise design system and we're looking for someone with your systems thinking background. Would you be interested in learning more?</div>`,
       `<button class="btn-primary" onclick="return false">Send as-is</button>
-       <button class="btn-secondary" onclick="return false">Edit first</button>`
+       <button class="btn-secondary" onclick="return false">Edit first</button>`,
+      sourceCard('#4C6EF5', 'LI', 'Sarah Chen &mdash; LinkedIn Profile', '8 yrs experience &middot; Flipkart')
     );
   }
 
@@ -1393,7 +1563,9 @@ function recruiterHTML(step) {
        <p><strong>Remote:</strong> Hybrid, 2 days/week in Hyderabad office. Async standups, flexible hours.</p>
        <p><strong>Interview:</strong> 4 stages, ~3 hours total &mdash; recruiter conversation, portfolio review, product exercise, final discussion.</p>`,
       `<button class="btn-primary" onclick="return false">Send answer</button>
-       <button class="btn-secondary" onclick="return false">Edit first</button>`
+       <button class="btn-secondary" onclick="return false">Edit first</button>`,
+      sourceCard('#E03131', 'PDF', 'JobDescription.pdf', 'Remote policy &middot; Interview stages')
+        + sourceCard('#37B24D', 'HR', 'Company Handbook', 'Hybrid work policy &middot; Section 4.2')
     );
 
     html += msgGroup('You', 'Recruiter', '#37B24D', '1 min ago', '',
@@ -1416,21 +1588,28 @@ function recruiterHTML(step) {
          <div class="agent-inline-option">Thu 4:30 PM IST &middot; 30 min</div>
        </div>`,
       `<button class="btn-primary" onclick="return false">Send 4:00 PM</button>
-       <button class="btn-secondary" onclick="return false">Show all options</button>`
+       <button class="btn-secondary" onclick="return false">Show all options</button>`,
+      sourceCard('#4C6EF5', 'Cal', 'Google Calendar', 'Checked 3 participants &middot; 6 slots')
     );
 
-    html += inlineCard(IC.calendar, '#E6F9ED', 'Interview Scheduled',
-      'Thursday, Oct 24 &middot; 4:00 PM IST &middot; Video Call', 'Confirmed');
+    html += eventCard(IC.calendar, 'var(--green-light)', 'Interview Scheduled', 'Recruiter Conversation',
+      [['Date', 'Thursday, Oct 24'], ['Time', '4:00 PM IST'], ['Format', 'Video Call &middot; 30 min']],
+      `<button class="event-card-btn">Add to calendar</button><button class="event-card-btn primary">Join call</button>`
+    );
+
     html += agentActionCard('Sent interview prep guide to Sarah automatically');
     html += statusEvent('purple', 'Stage &rarr; Interview');
   }
 
   if (step >= 3) {
-    html += agentActionCard('Interview plan prepared &mdash; see Agent panel for details');
+    html += agentActionCard('Interview plan prepared &mdash; open Agent panel for details');
   }
 
   if (step >= 4) {
-    html += callCard('Recruiter conversation', '32 min', 'Today, 4:00 PM IST', 'Sarah Chen + You');
+    html += eventCard(IC.video, 'var(--green-light)', 'Interview Completed', 'Recruiter Conversation with Sarah Chen',
+      [['Duration', '32 minutes'], ['Scorecards', '3 submitted'], ['Overall', '4.2 / 5']],
+      `<button class="event-card-btn">${IC.play} Play recording</button><button class="event-card-btn">View scorecard</button>`
+    );
 
     html += aiSummary(
       `Sarah demonstrated strong systems thinking and clear communication. Key highlights:
@@ -1496,7 +1675,7 @@ function teamHTML(step) {
     html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '20 min ago', '',
       `<p>Great. Can you ask about the checkout redesign specifically? I want to understand how she handles stakeholder alignment.</p>`);
 
-    html += agentActionCard('Added "checkout redesign &mdash; stakeholder alignment" to portfolio interview plan');
+    html += agentActionCard('Added "checkout redesign &mdash; stakeholder alignment" to interview plan');
 
     html += msgGroup('Priya Gupta', 'Interviewer', '#7C3AED', '15 min ago', '',
       `<p>I'll probe her B2B enterprise experience too. That's the one gap I see on the resume.</p>`);
@@ -1505,9 +1684,9 @@ function teamHTML(step) {
   }
 
   if (step >= 4) {
-    html += agentInline(
-      `<p>Interview completed. Sarah scored <strong>4.2/5</strong> overall. One concern flagged: limited enterprise B2B experience.</p>`,
-      `<button class="btn-secondary" onclick="return false">View scorecard</button>`
+    html += eventCard(IC.video, 'var(--purple-light)', 'Interview Completed', 'All scorecards submitted',
+      [['Overall Score', '4.2 / 5'], ['Concern', 'B2B experience gap (addressable)'], ['Decision', 'Advance to offer']],
+      `<button class="event-card-btn">View full scorecard</button>`
     );
 
     html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '2h ago', '',
@@ -1530,7 +1709,8 @@ function teamHTML(step) {
     html += agentInline(
       `<p>I've drafted the offer at <strong>&#8377;30 LPA</strong> based on approved compensation bands. Benefits package included.</p>`,
       `<button class="btn-primary" onclick="return false">Review draft</button>
-       <button class="btn-secondary" onclick="return false">Edit</button>`
+       <button class="btn-secondary" onclick="return false">Edit</button>`,
+      sourceCard('#37B24D', 'HR', 'Compensation Bands 2024', 'Product Designer &middot; L4 &middot; Hyderabad')
     );
 
     html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '15 min ago', '',
@@ -1544,7 +1724,6 @@ function teamHTML(step) {
 function contextPanelHTML(step) {
   let html = '';
 
-  // Ambient stage indicator
   const stages = ['Outreach', 'Active', 'Interview', 'Interview', 'Review', 'Hired'];
   const stageColors = ['var(--blue)', 'var(--green)', 'var(--purple)', 'var(--purple)', 'var(--amber)', 'var(--green)'];
   html += `<div class="detail-section" style="padding:12px 16px 8px;">
@@ -1554,7 +1733,6 @@ function contextPanelHTML(step) {
     </div>
   </div>`;
 
-  // Customer card (always visible)
   html += `<div class="customer-card">
     <div class="customer-card-header">
       <div class="customer-card-avatar" style="background:#4C6EF5">SC</div>
@@ -1578,7 +1756,6 @@ function contextPanelHTML(step) {
     </div>
   </div>`;
 
-  // Step-specific context
   if (step === 0) {
     html += `<div class="detail-section">
       <div class="detail-section-title">Role</div>
@@ -1690,7 +1867,6 @@ function contextPanelHTML(step) {
     </div>`;
   }
 
-  // Documents (always)
   html += `<div class="detail-section">
     <div class="detail-section-title">Documents</div>`;
   html += `<div class="detail-row"><span class="detail-label">${IC.file}</span><span class="detail-value" style="font-size:12px">Resume_SarahChen.pdf</span></div>`;
@@ -1729,7 +1905,7 @@ function candidateHTML(step) {
       'Tips and what to expect at each stage', 'Read Guide', '');
   }
   if (step >= 4) {
-    html += `<div style="text-align:center;padding:12px 0;font-size:12px;color:var(--gray-500);">Interview completed &middot; 32 min</div>`;
+    html += candEvent(IC.video, 'Interview Completed', '32 min &middot; Thank you for your time!');
     html += candMsg('received', 'Recruiter', '#37B24D', '',
       "Thanks for taking the time today, Sarah. It was great speaking with you &mdash; I'll be in touch shortly with next steps.");
     html += candMsg('sent', '', '#4C6EF5', '',
@@ -1756,38 +1932,120 @@ function candidateHTML(step) {
   return html;
 }
 
-/* ═══ AGENT PANEL CONTENT ═══ */
+/* ═══ AGENT PANEL CONTENT — Step-aware with Context → Answer → Source → Action ═══ */
 function agentPanelHTML(step) {
   let html = '';
 
-  if (step === 3) {
+  if (step === 0) {
+    // Outreach: agent gathered context, drafted outreach
+    html += `<div class="agent-msg response">
+      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">CONTEXT</p>
+      <p>Sarah Chen is a Product Designer at Flipkart with 8 years of experience. She led the checkout redesign (200M+ users) and built a component library used by 12 teams.</p>
+    </div>`;
+    html += agentSource(IC.file, '#4C6EF5', 'Sarah Chen &mdash; LinkedIn', '8 yrs &middot; Flipkart &middot; IIT Delhi');
+    html += agentSource(IC.fileText, '#E03131', 'JobDescription.pdf', 'Product Designer &middot; Hyderabad');
+    html += `<div style="margin-top:8px">`;
+    html += agentActionButton(IC.messageSquare, 'Draft another version');
+    html += agentActionButton(IC.search, 'Find similar candidates');
+    html += `</div>`;
+  }
+
+  else if (step === 1) {
+    // Engage: agent answered Sarah's questions, pulled from docs
+    html += `<div class="agent-msg question">Sarah asked about remote work and interview process. What should I tell her?</div>`;
+    html += `<div class="agent-msg response">
+      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">ANSWER</p>
+      <p><strong>Remote:</strong> Hybrid model &mdash; 2 days/week in Hyderabad office with async standups and flexible hours.</p>
+      <p><strong>Interview:</strong> 4 stages totaling ~3 hours: recruiter conversation, portfolio review, product exercise, final discussion.</p>
+    </div>`;
+    html += agentSource(IC.fileText, '#E03131', 'JobDescription.pdf', 'Remote policy &middot; Interview stages');
+    html += agentSource(IC.bookOpen, '#37B24D', 'Company Handbook', 'Section 4.2 &middot; Hybrid work policy');
+    html += `<div style="margin-top:8px">`;
+    html += agentActionButton(IC.messageSquare, 'Draft response for Sarah');
+    html += agentActionButton(IC.lightbulb, 'What else do candidates usually ask?');
+    html += `</div>`;
+  }
+
+  else if (step === 2) {
+    // Schedule: agent checked calendars, found slots
+    html += `<div class="agent-msg question">Sarah wants Thursday afternoon. What times work?</div>`;
+    html += `<div class="agent-msg response">
+      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">ANSWER</p>
+      <p>I checked calendars for you, Sarah, and Sachin. Three slots work:</p>
+      <p>&bull; 3:30 PM IST<br>&bull; <strong>4:00 PM IST</strong> (recommended &mdash; no conflicts after)<br>&bull; 4:30 PM IST</p>
+    </div>`;
+    html += agentSource(IC.calendar, '#4C6EF5', 'Google Calendar', '3 participants &middot; 6 open slots');
+    html += `<div style="margin-top:8px">`;
+    html += agentActionButton(IC.calendar, 'Send invite for 4:00 PM');
+    html += agentActionButton(IC.bookOpen, 'Generate prep guide for Sarah');
+    html += `</div>`;
+  }
+
+  else if (step === 3) {
+    // Collaborate: real multi-turn conversation preparing for interview
     html += `<div class="agent-msg question">Help me prepare for Sarah's interview. She has strong systems experience but I want to probe the B2B gap.</div>`;
     html += `<div class="agent-msg response">
-      <p>I've pulled together a focused plan based on Sarah's profile and the team's input:</p>
-      <p style="margin:8px 0 4px"><strong>1. Background &amp; motivation</strong><br><span style="color:var(--gray-500)">Why design systems, why now</span></p>
-      <p style="margin:4px 0"><strong>2. Flipkart checkout redesign</strong><br><span style="color:var(--gray-500)">Stakeholder alignment across 6 groups</span> <span style="font-size:11px;color:var(--purple)">(Sachin asked)</span></p>
-      <p style="margin:4px 0"><strong>3. B2B enterprise workflows</strong><br><span style="color:var(--gray-500)">Depth check on enterprise experience</span> <span style="font-size:11px;color:var(--purple)">(Priya flagged)</span></p>
-      <p style="margin:4px 0"><strong>4. Technical skills</strong><br><span style="color:var(--gray-500)">Design tokens, component APIs, documentation</span></p>
+      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">ANSWER</p>
+      <p>I've pulled together a plan based on Sarah's profile and the team's input:</p>
+      <p style="margin:6px 0 2px"><strong>1. Background &amp; motivation</strong><br><span style="color:var(--gray-500)">Why design systems, why now</span></p>
+      <p style="margin:2px 0"><strong>2. Flipkart checkout redesign</strong><br><span style="color:var(--gray-500)">Stakeholder alignment across 6 groups</span> <span style="font-size:11px;color:var(--purple)">(Sachin asked)</span></p>
+      <p style="margin:2px 0"><strong>3. B2B enterprise workflows</strong><br><span style="color:var(--gray-500)">Depth check on enterprise experience</span> <span style="font-size:11px;color:var(--purple)">(Priya flagged)</span></p>
+      <p style="margin:2px 0"><strong>4. Technical skills</strong><br><span style="color:var(--gray-500)">Design tokens, component APIs, documentation</span></p>
     </div>`;
-    html += `<div class="agent-msg question">Also send Sarah a prep guide so she knows what to expect.</div>`;
+    html += agentSource(IC.file, '#4C6EF5', 'Resume_SarahChen.pdf', 'Work history &middot; Skills');
+    html += agentSource(IC.users, '#E65100', 'Hiring Team Thread', "Sachin + Priya's requests");
+    html += `<div class="agent-msg question" style="margin-top:8px">Also send Sarah a prep guide so she knows what to expect.</div>`;
     html += `<div class="agent-msg response">
+      <p style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:6px">ACTION COMPLETED</p>
       <p>Done. I've sent Sarah an interview preparation guide covering:</p>
-      <p style="margin:4px 0;color:var(--gray-500)">&bull; What to expect at each stage<br>&bull; Who she'll be speaking with<br>&bull; Tips for the product thinking exercise</p>
-      <p style="margin-top:6px">${IC.circleCheck} <span style="color:var(--green);font-weight:500">Sent to Sarah</span></p>
+      <p style="color:var(--gray-500)">&bull; What to expect at each stage<br>&bull; Who she'll be speaking with<br>&bull; Tips for the product thinking exercise</p>
     </div>`;
-    html += `<div class="agent-quick-actions" style="margin-top:8px">
-      <button class="agent-chip">${IC.lightbulb} Suggest follow-up questions</button>
-      <button class="agent-chip">${IC.search} Find similar candidate interviews</button>
+    html += `<div style="margin-top:8px">`;
+    html += agentActionButton(IC.lightbulb, 'Suggest follow-up questions');
+    html += agentActionButton(IC.search, 'Find similar candidate interviews');
+    html += `</div>`;
+  }
+
+  else if (step === 4) {
+    // Interview complete: agent summarizes, shows scorecard
+    html += `<div class="agent-msg response">
+      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">CONTEXT</p>
+      <p>Interview completed. 3 scorecards submitted. Here's the summary:</p>
+      <p style="margin:6px 0 2px"><strong>Overall: 4.2/5</strong></p>
+      <p>&bull; Systems Thinking: 4.5/5<br>&bull; Communication: 4.0/5<br>&bull; Stakeholder Mgmt: 4.5/5<br>&bull; Product Thinking: 4.0/5</p>
+      <p style="margin-top:6px;padding:6px 8px;background:var(--amber-bg);border-radius:4px;font-size:12px;color:#BF6C00">Limited B2B experience &mdash; Sachin noted she's a fast learner</p>
     </div>`;
-  } else {
-    html += `<div class="agent-intro">I have context on Sarah's thread. Here are some things I can help with:</div>`;
-    html += `<div class="agent-quick-actions">
-      <button class="agent-chip">${IC.messageSquare} Draft a reply</button>
-      <button class="agent-chip">${IC.lightbulb} What should I do next?</button>
-      <button class="agent-chip">${IC.trendingUp} Should this be escalated?</button>
-      <button class="agent-chip">${IC.fileText} Summarize this thread</button>
-      <button class="agent-chip">${IC.search} Find relevant docs</button>
+    html += agentSource(IC.barChart, '#37B24D', 'Interview Scorecard', '3 reviewers &middot; 4 dimensions');
+    html += agentSource(IC.video, '#4C6EF5', 'Interview Recording', '32 min &middot; Recruiter conversation');
+    html += `<div class="agent-msg response" style="margin-top:8px">
+      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">RECOMMENDATION</p>
+      <p>Advance to Portfolio Review with Sachin. Sarah's strengths in systems thinking and stakeholder management outweigh the B2B gap.</p>
     </div>`;
+    html += `<div style="margin-top:8px">`;
+    html += agentActionButton(IC.messageSquare, 'Draft follow-up to Sarah');
+    html += agentActionButton(IC.award, 'Start offer preparation');
+    html += `</div>`;
+  }
+
+  else if (step === 5) {
+    // Decide & Offer: agent prepared the offer
+    html += `<div class="agent-msg question">Prepare the offer for Sarah.</div>`;
+    html += `<div class="agent-msg response">
+      <p style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:6px">ANSWER</p>
+      <p>I've drafted the offer based on approved compensation bands:</p>
+      <p style="margin:6px 0"><strong>&#8377;30 LPA</strong> &mdash; base salary<br>RSU equity grant &middot; Health insurance &middot; Relocation support</p>
+      <p>This is within the approved L4 band (&#8377;25&ndash;32 LPA) and matches Sarah's expectation (&#8377;28&ndash;32 LPA).</p>
+    </div>`;
+    html += agentSource(IC.award, '#37B24D', 'Compensation Bands 2024', 'Product Designer &middot; L4 &middot; Hyderabad');
+    html += agentSource(IC.clipboard, '#7C3AED', 'Benefits Package', 'Health, RSUs, relocation');
+    html += `<div class="agent-msg response" style="margin-top:8px">
+      <p style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:6px">ACTION COMPLETED</p>
+      <p>${IC.circleCheck} Offer letter generated<br>${IC.circleCheck} Benefits package attached<br>${IC.circleCheck} Sachin approved<br>${IC.circleCheck} Sent to Sarah</p>
+    </div>`;
+    html += `<div style="margin-top:8px">`;
+    html += agentActionButton(IC.circleCheck, 'Trigger onboarding workflow');
+    html += agentActionButton(IC.users, 'Notify hiring team');
+    html += `</div>`;
   }
 
   return html;
@@ -1839,20 +2097,17 @@ function toggleAgent() {
 }
 
 function render() {
-  // Auto-switch to team tab at step 3
   if (currentStep === 3 && currentTab === 'candidate') {
     currentTab = 'team';
     document.getElementById('tab-candidate').classList.remove('active');
     document.getElementById('tab-team').classList.add('active');
   }
-  // Switch back to candidate tab at step 4+ if on team
   if (currentStep >= 4 && currentStep <= 4 && currentTab === 'team') {
     currentTab = 'candidate';
     document.getElementById('tab-candidate').classList.add('active');
     document.getElementById('tab-team').classList.remove('active');
   }
 
-  // Auto-open agent panel at step 3 (Collaborate), close when leaving
   if (currentStep === 3) {
     agentVisible = true;
     document.getElementById('agent-panel').classList.add('visible');
@@ -1864,17 +2119,12 @@ function render() {
     document.getElementById('detail-panel').style.display = 'block';
   }
 
-  // Show team dot indicator
   document.getElementById('team-dot').style.display = currentStep >= 2 ? 'block' : 'none';
 
-  // Render conversations
   renderConversation();
   document.getElementById('cand-body').innerHTML = candidateHTML(currentStep);
-
-  // Render contextual right panel
   document.getElementById('detail-panel').innerHTML = contextPanelHTML(currentStep);
 
-  // Update step indicators
   document.getElementById('step-num').textContent = currentStep + 1;
   document.getElementById('step-name').textContent = '— ' + STEPS[currentStep].name;
 
@@ -1885,7 +2135,6 @@ function render() {
   document.getElementById('prev-btn').disabled = currentStep === 0;
   document.getElementById('next-btn').disabled = currentStep === STEPS.length - 1;
 
-  // Update thread preview
   const previews = [
     'Outreach message sent',
     "What's the interview process?",
@@ -1896,12 +2145,10 @@ function render() {
   ];
   document.getElementById('thread-sarah-preview').textContent = previews[currentStep] || previews[0];
 
-  // Update agent panel if visible
   if (agentVisible) {
     document.getElementById('agent-body').innerHTML = agentPanelHTML(currentStep);
   }
 
-  // Scroll candidate view
   setTimeout(() => {
     document.getElementById('cand-body').scrollTop = document.getElementById('cand-body').scrollHeight;
   }, 50);
