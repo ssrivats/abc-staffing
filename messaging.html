@@ -1426,7 +1426,19 @@ function recruiterHTML(step) {
   }
 
   if (step >= 3) {
-    // Nothing new in candidate tab for collaborate step
+    html += msgGroup('You', 'Recruiter', '#37B24D', '1h ago', '',
+      `<p>@Agent &mdash; help me prepare for Sarah's interview. She has strong systems experience but I want to probe the B2B gap.</p>`);
+
+    html += agentInline(
+      `<p>I've pulled together a focused plan based on Sarah's profile, the role requirements, and input from the hiring team:</p>
+       <p><strong>1. Background &amp; motivation</strong> &mdash; why design systems, why now</p>
+       <p><strong>2. Flipkart checkout redesign</strong> &mdash; stakeholder alignment across 6 groups <span style="font-size:11px;color:var(--purple)">(via Sachin)</span></p>
+       <p><strong>3. B2B enterprise workflows</strong> &mdash; depth check on enterprise experience <span style="font-size:11px;color:var(--purple)">(via Priya)</span></p>
+       <p><strong>4. Technical skills</strong> &mdash; design tokens, component APIs, documentation</p>
+       <p>I've also sent Sarah an interview prep guide with what to expect.</p>`,
+      `<button class="btn-primary" onclick="return false">Use this plan</button>
+       <button class="btn-secondary" onclick="return false">Adjust topics</button>`
+    );
   }
 
   if (step >= 4) {
