@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ABC Staffing — Messaging Prototype</title>
+<title>ABC Staffing — Messaging</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -43,7 +43,6 @@
 
   --detail-w: 300px;
   --icon-rail-w: 48px;
-  --nav-sidebar-w: 200px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -58,7 +57,7 @@ body {
   overflow: hidden;
 }
 
-/* ═══ View Switcher (top bar) ═══ */
+/* ═══ View Switcher (prototype navigation) ═══ */
 .view-switcher {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   height: 40px;
@@ -92,6 +91,7 @@ body {
 }
 .story-nav button:hover { background: rgba(255,255,255,0.1); color: white; }
 .story-nav button:disabled { opacity: 0.3; cursor: default; }
+.story-nav button svg { width: 14px; height: 14px; }
 .step-dots { display: flex; gap: 3px; margin-left: 12px; }
 .step-dot {
   width: 7px; height: 7px; border-radius: var(--radius-full);
@@ -106,7 +106,7 @@ body {
 }
 .recruiter-view.hidden { display: none; }
 
-/* Icon Rail — matches Plain's 48px icon rail */
+/* Icon Rail */
 .icon-rail {
   width: var(--icon-rail-w);
   background: var(--gray-50);
@@ -138,54 +138,6 @@ body {
   font-weight: 700; font-size: 13px; margin-bottom: 12px;
 }
 
-/* Navigation Sidebar — matches Plain's expandable sidebar */
-.nav-sidebar {
-  width: var(--nav-sidebar-w);
-  border-right: 1px solid var(--gray-200);
-  background: var(--white);
-  overflow-y: auto; padding: 12px 0;
-  display: none;
-}
-.nav-workspace {
-  padding: 4px 12px 12px;
-  font-size: 14px; font-weight: 600; color: var(--gray-900);
-  border-bottom: 1px solid var(--gray-100);
-  margin-bottom: 8px;
-}
-.nav-workspace .sub { font-size: 11px; font-weight: 400; color: var(--gray-500); }
-.nav-section-label {
-  font-size: 11px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.5px; color: var(--gray-500);
-  padding: 12px 12px 4px; cursor: pointer;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.nav-section-label .chevron { font-size: 10px; }
-.nav-item {
-  display: flex; align-items: center; gap: 8px;
-  padding: 5px 12px; font-size: 13px; font-weight: 500;
-  color: var(--gray-700); cursor: pointer; transition: background 0.1s;
-  border-radius: 0;
-}
-.nav-item:hover { background: var(--gray-50); }
-.nav-item.active { background: var(--green-light); color: var(--green); }
-.nav-item .icon { width: 20px; text-align: center; font-size: 14px; flex-shrink: 0; }
-.nav-item .count {
-  margin-left: auto; font-size: 11px; font-weight: 600;
-  background: var(--green); color: white; border-radius: var(--radius-full);
-  padding: 0 6px; min-width: 18px; text-align: center; line-height: 18px;
-}
-.nav-item .count-muted {
-  margin-left: auto; font-size: 11px; color: var(--gray-500);
-}
-.nav-sub-item {
-  display: flex; align-items: center; gap: 8px;
-  padding: 4px 12px 4px 32px; font-size: 12px; font-weight: 400;
-  color: var(--gray-500); cursor: pointer; transition: background 0.1s;
-}
-.nav-sub-item:hover { background: var(--gray-50); color: var(--gray-700); }
-.nav-sub-item .status-icon { width: 8px; height: 8px; border-radius: var(--radius-full); flex-shrink: 0; }
-.nav-sub-item .count-muted { margin-left: auto; font-size: 11px; color: var(--gray-400); }
-
 /* Thread List */
 .thread-sidebar {
   width: 300px;
@@ -202,35 +154,18 @@ body {
   font-size: 14px; font-weight: 600; color: var(--gray-900);
   display: flex; align-items: center; gap: 8px;
 }
-.thread-header-controls {
-  display: flex; gap: 6px;
-}
+.thread-header-controls { display: flex; gap: 6px; }
 .thread-header-btn {
   font-size: 12px; color: var(--gray-500); cursor: pointer;
   padding: 4px 8px; border-radius: var(--radius-sm);
   border: none; background: none; font-family: var(--font); font-weight: 500;
-  display: flex; align-items: center; gap: 4px;
-  transition: all 0.1s;
+  display: flex; align-items: center; gap: 4px; transition: all 0.1s;
 }
 .thread-header-btn:hover { background: var(--gray-100); color: var(--gray-700); }
-.thread-tabs {
-  display: flex; gap: 2px; padding: 6px 12px;
-  border-bottom: 1px solid var(--gray-100);
-}
-.thread-tab {
-  font-size: 12px; font-weight: 500; padding: 4px 10px;
-  border-radius: var(--radius-full); border: none; background: none;
-  color: var(--gray-500); cursor: pointer; font-family: var(--font);
-  transition: all 0.12s;
-}
-.thread-tab:hover { background: var(--gray-100); color: var(--gray-700); }
-.thread-tab.active { background: var(--gray-900); color: var(--white); }
-.thread-tab .tab-count { font-size: 11px; margin-left: 3px; }
 .thread-list { flex: 1; overflow-y: auto; }
 .thread-status-header {
   font-size: 11px; font-weight: 500; color: var(--gray-400);
-  padding: 10px 16px 4px;
-  letter-spacing: 0.02em;
+  padding: 10px 16px 4px; letter-spacing: 0.02em;
 }
 .thread-item {
   display: flex; gap: 10px; padding: 10px 16px;
@@ -281,10 +216,7 @@ body {
   font-size: 8px; font-weight: 700; color: white; flex-shrink: 0;
   border: 2px solid white; margin-left: -4px; opacity: 0.75;
 }
-.thread-vip {
-  font-size: 9px; font-weight: 700; color: var(--amber);
-  background: #FFF3D0; padding: 1px 5px; border-radius: var(--radius-sm);
-}
+.thread-assignee-dot svg { width: 10px; height: 10px; }
 
 /* ═══ Center: Conversation ═══ */
 .conversation-panel {
@@ -297,17 +229,13 @@ body {
   background: var(--white);
   min-height: 52px;
 }
-.conv-header-info { flex: 1; }
+.conv-header-info { min-width: 0; }
 .conv-header-info h3 { font-size: 14px; font-weight: 600; line-height: 1.3; }
 .conv-header-info .sub {
   font-size: 11px; color: var(--gray-500);
   display: flex; align-items: center; gap: 6px;
 }
-.conv-header-info .sub .channel-badge {
-  font-size: 10px; font-weight: 600; padding: 1px 6px;
-  border-radius: var(--radius-sm); background: var(--gray-100); color: var(--gray-700);
-}
-.conv-header-actions { display: flex; gap: 4px; }
+.conv-header-actions { display: flex; gap: 4px; margin-left: auto; flex-shrink: 0; }
 .conv-header-actions button {
   width: 30px; height: 30px; border-radius: var(--radius-md);
   border: 1px solid var(--gray-200); background: var(--white);
@@ -316,6 +244,33 @@ body {
   transition: all 0.12s;
 }
 .conv-header-actions button:hover { border-color: var(--gray-300); color: var(--gray-700); }
+
+/* Conversation Tabs */
+.conv-tabs {
+  display: flex; gap: 2px; margin-left: 16px;
+  background: var(--gray-100); border-radius: var(--radius-md);
+  padding: 2px;
+}
+.conv-tab {
+  padding: 5px 14px; border-radius: var(--radius-sm);
+  border: none; background: none;
+  font-family: var(--font); font-size: 12px; font-weight: 500;
+  color: var(--gray-500); cursor: pointer; transition: all 0.12s;
+  display: flex; align-items: center; gap: 6px;
+  white-space: nowrap;
+}
+.conv-tab:hover { color: var(--gray-700); }
+.conv-tab.active { background: var(--white); color: var(--gray-900); box-shadow: var(--shadow-sm); }
+.conv-tab .tab-badge {
+  font-size: 10px; font-weight: 600; color: var(--white);
+  background: var(--green); border-radius: var(--radius-full);
+  padding: 0 5px; min-width: 16px; text-align: center; line-height: 16px;
+}
+.conv-tab .tab-dot {
+  width: 6px; height: 6px; border-radius: var(--radius-full);
+  background: var(--green);
+}
+
 .conv-body {
   flex: 1; overflow-y: auto; padding: 16px 24px;
   display: flex; flex-direction: column; gap: 0;
@@ -346,7 +301,7 @@ body {
 .msg-bubble p { margin-bottom: 6px; }
 .msg-bubble p:last-child { margin-bottom: 0; }
 
-/* Internal note — matches Plain's amber note with red "Not visible to" warning */
+/* Internal note */
 .msg-note {
   background: var(--amber-bg);
   border-left: 3px solid var(--amber);
@@ -365,12 +320,11 @@ body {
 }
 .msg-note .note-warning svg { width: 12px; height: 12px; }
 
-/* AI Summary card — matches Plain's amber summary with sparkle icon */
+/* AI Summary card */
 .ai-summary {
   background: var(--amber-bg);
   border-radius: var(--radius-lg);
-  padding: 12px 16px;
-  margin: 8px 0 8px 0;
+  padding: 12px 16px; margin: 8px 0;
 }
 .ai-summary-label {
   font-size: 12px; font-weight: 600; color: #BF6C00;
@@ -382,10 +336,10 @@ body {
   margin-top: 8px; font-size: 11px; color: var(--gray-500);
   display: flex; align-items: center; gap: 12px;
 }
-.ai-summary-footer span { cursor: pointer; }
+.ai-summary-footer span { cursor: pointer; display: flex; align-items: center; gap: 4px; }
 .ai-summary-footer span:hover { color: var(--gray-700); }
 
-/* Status event — matches Plain's centered timeline events */
+/* Status event */
 .status-event {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   padding: 6px 0; margin: 4px 0;
@@ -395,13 +349,119 @@ body {
   width: 6px; height: 6px; border-radius: var(--radius-full);
 }
 
-/* Waiting indicator — matches Plain's green highlight bar */
+/* Agent inline suggestion — proactive agent in the conversation */
+.agent-inline {
+  margin: 8px 0 8px 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(124,58,237,0.15);
+  border-radius: var(--radius-lg);
+  background: var(--purple-light);
+}
+.agent-inline-header {
+  font-size: 12px; font-weight: 600; color: var(--purple);
+  display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+}
+.agent-inline-header svg { width: 14px; height: 14px; }
+.agent-inline-body {
+  font-size: 13px; color: var(--gray-700); line-height: 1.6;
+}
+.agent-inline-body p { margin-bottom: 6px; }
+.agent-inline-body p:last-child { margin-bottom: 0; }
+.agent-inline-draft {
+  background: var(--white); border-radius: var(--radius-md);
+  padding: 10px 12px; margin: 8px 0;
+  font-size: 13px; color: var(--gray-700); line-height: 1.6;
+  border-left: 3px solid var(--purple);
+}
+.agent-inline-options {
+  display: flex; flex-direction: column; gap: 4px; margin: 8px 0;
+}
+.agent-inline-option {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: var(--radius-md);
+  background: var(--white); font-size: 13px; color: var(--gray-700);
+  cursor: pointer; transition: all 0.1s; border: 1px solid var(--gray-200);
+}
+.agent-inline-option:hover { border-color: var(--purple); }
+.agent-inline-option.recommended {
+  border-color: var(--purple); font-weight: 500;
+}
+.agent-inline-option .rec-badge {
+  font-size: 10px; font-weight: 600; color: var(--purple);
+  background: var(--purple-light); padding: 1px 6px; border-radius: var(--radius-sm);
+  margin-left: auto;
+}
+.agent-inline-actions {
+  display: flex; gap: 8px; margin-top: 10px;
+}
+.agent-inline-actions button {
+  padding: 6px 14px; border-radius: var(--radius-md);
+  font-family: var(--font); font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all 0.12s; border: none;
+}
+.agent-inline-actions .btn-primary {
+  background: var(--purple); color: white;
+}
+.agent-inline-actions .btn-primary:hover { opacity: 0.9; }
+.agent-inline-actions .btn-secondary {
+  background: var(--white); color: var(--gray-700);
+  border: 1px solid var(--gray-200);
+}
+.agent-inline-actions .btn-secondary:hover { background: var(--gray-50); }
+
+/* Agent action card — agent took an action */
+.agent-action {
+  display: flex; align-items: center; gap: 10px;
+  margin: 6px 0; padding: 10px 14px;
+  background: var(--purple-light); border-radius: var(--radius-md);
+  font-size: 12px; color: var(--purple); font-weight: 500;
+}
+.agent-action svg { width: 14px; height: 14px; flex-shrink: 0; }
+.agent-action .undo-btn {
+  margin-left: auto; font-size: 11px; color: var(--gray-500);
+  cursor: pointer; border: none; background: none; font-family: var(--font);
+}
+.agent-action .undo-btn:hover { color: var(--gray-700); }
+
+/* Call card — first-class conversation object */
+.call-card {
+  margin: 10px 0;
+  padding: 16px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  background: var(--gray-50);
+}
+.call-card-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+}
+.call-card-icon {
+  width: 36px; height: 36px; border-radius: var(--radius-md);
+  background: var(--green-light); color: var(--green);
+  display: flex; align-items: center; justify-content: center;
+}
+.call-card-icon svg { width: 18px; height: 18px; }
+.call-card-title { font-size: 14px; font-weight: 600; color: var(--gray-900); }
+.call-card-meta { font-size: 12px; color: var(--gray-500); }
+.call-card-participants {
+  font-size: 12px; color: var(--gray-500); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.call-card-play {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); background: var(--white);
+  font-family: var(--font); font-size: 12px; font-weight: 500;
+  color: var(--gray-700); cursor: pointer; transition: all 0.1s;
+}
+.call-card-play:hover { border-color: var(--gray-300); }
+.call-card-play svg { width: 14px; height: 14px; }
+
+/* Waiting bar */
 .waiting-bar {
   display: flex; align-items: center; gap: 8px;
   background: var(--green-light);
   border-radius: var(--radius-md);
-  padding: 8px 14px;
-  margin: 8px 0;
+  padding: 8px 14px; margin: 8px 0;
   font-size: 12px; font-weight: 500; color: var(--green-dark);
 }
 .waiting-bar svg { width: 14px; height: 14px; }
@@ -413,15 +473,15 @@ body {
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-lg);
   display: flex; align-items: center; gap: 12px;
-  background: var(--white);
-  transition: border-color 0.12s; cursor: pointer;
+  background: var(--white); transition: border-color 0.12s; cursor: pointer;
 }
 .inline-card:hover { border-color: var(--gray-300); }
 .inline-card-icon {
   width: 36px; height: 36px; border-radius: var(--radius-md);
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0;
+  flex-shrink: 0;
 }
+.inline-card-icon svg { width: 18px; height: 18px; }
 .inline-card-content { flex: 1; }
 .inline-card-title { font-size: 13px; font-weight: 600; color: var(--gray-900); }
 .inline-card-desc { font-size: 12px; color: var(--gray-500); }
@@ -433,7 +493,7 @@ body {
 }
 .inline-card-action:hover { background: var(--green-light); }
 
-/* PDF attachment — matches Plain's file attachment cards */
+/* File attachment */
 .file-attachment {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 8px 12px; margin: 4px 0 4px 36px;
@@ -451,43 +511,64 @@ body {
 .file-attachment .file-name { font-weight: 500; }
 .file-attachment .file-size { color: var(--gray-500); }
 
-/* Action Bar — matches Plain's bottom action bar */
-.action-bar {
-  display: flex; align-items: center; gap: 2px;
-  padding: 8px 16px;
+/* ═══ Messaging Composer ═══ */
+.msg-composer {
   border-top: 1px solid var(--gray-200);
   background: var(--white);
 }
-.action-btn {
-  display: flex; align-items: center; gap: 6px;
-  padding: 7px 12px; border-radius: var(--radius-md);
-  border: none; background: none;
-  font-family: var(--font); font-size: 13px; font-weight: 500;
-  color: var(--gray-500); cursor: pointer; transition: all 0.12s;
+.composer-suggestions {
+  display: flex; gap: 6px; padding: 8px 20px 0;
+  flex-wrap: wrap;
 }
-.action-btn:hover { background: var(--gray-100); color: var(--gray-900); }
-.action-btn svg { width: 16px; height: 16px; }
-.action-key {
-  font-size: 10px; font-weight: 600; color: var(--gray-400);
-  background: var(--gray-100); border: 1px solid var(--gray-200);
-  border-radius: 3px; padding: 1px 4px; line-height: 1;
+.composer-suggestion {
+  font-size: 11px; padding: 5px 10px; border-radius: var(--radius-full);
+  border: 1px solid var(--gray-200); background: var(--white);
+  font-family: var(--font); color: var(--gray-500); cursor: pointer;
+  transition: all 0.1s; display: flex; align-items: center; gap: 4px;
 }
-.action-bar-spacer { flex: 1; }
-.action-btn-primary {
-  display: flex; align-items: center; gap: 6px;
-  padding: 7px 16px; border-radius: var(--radius-md);
-  border: none; background: var(--green);
+.composer-suggestion:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
+.composer-suggestion svg { width: 12px; height: 12px; }
+.composer-input-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 20px 12px;
+}
+.composer-input {
+  flex: 1; height: 38px; padding: 0 14px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius-full);
+  font-family: var(--font); font-size: 14px; color: var(--gray-900);
+  outline: none; transition: border-color 0.15s; background: var(--gray-50);
+}
+.composer-input:focus { border-color: var(--green); background: var(--white); }
+.composer-input::placeholder { color: var(--gray-400); }
+.composer-btn {
+  width: 32px; height: 32px; border-radius: var(--radius-full);
+  border: 1px solid var(--gray-200); background: var(--white);
+  color: var(--gray-500); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.12s;
+}
+.composer-btn:hover { background: var(--gray-50); color: var(--gray-700); }
+.composer-btn svg { width: 16px; height: 16px; }
+.composer-btn.agent {
+  border-color: var(--purple); color: var(--purple);
+  width: auto; padding: 0 12px; border-radius: var(--radius-full);
+  font-family: var(--font); font-size: 12px; font-weight: 500;
+  gap: 4px;
+}
+.composer-btn.agent:hover { background: var(--purple-light); }
+.composer-btn.agent svg { width: 14px; height: 14px; }
+.composer-send {
+  height: 38px; padding: 0 20px;
+  border-radius: var(--radius-full); border: none;
+  background: var(--green); color: var(--white);
   font-family: var(--font); font-size: 13px; font-weight: 600;
-  color: var(--white); cursor: pointer; transition: all 0.12s;
+  cursor: pointer; transition: all 0.12s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
 }
-.action-btn-primary:hover { background: var(--green-dark); }
-.action-btn-primary .dropdown-arrow {
-  margin-left: 4px; font-size: 10px;
-  border-left: 1px solid rgba(255,255,255,0.3);
-  padding-left: 8px;
-}
+.composer-send:hover { background: var(--green-dark); }
+.composer-send svg { width: 16px; height: 16px; }
 
-/* ═══ Right: Detail Panel — matches Plain's key-value metadata ═══ */
+/* ═══ Right: Contextual Panel ═══ */
 .detail-panel {
   width: var(--detail-w);
   border-left: 1px solid var(--gray-200);
@@ -500,30 +581,25 @@ body {
 .detail-header h4 { font-size: 14px; font-weight: 600; color: var(--gray-900); line-height: 1.3; }
 .detail-header .sub { font-size: 11px; color: var(--gray-500); margin-top: 2px; }
 .detail-section {
-  padding: 10px 16px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--gray-100);
 }
 .detail-section-title {
-  font-size: 12px; font-weight: 500; color: var(--gray-500);
+  font-size: 11px; font-weight: 600; color: var(--gray-500);
+  text-transform: uppercase; letter-spacing: 0.03em;
   margin-bottom: 8px;
   display: flex; align-items: center; justify-content: space-between;
 }
-.detail-section-title .count { font-size: 11px; color: var(--gray-400); }
-.detail-section-title .toggle {
-  font-size: 12px; color: var(--gray-400); cursor: pointer;
-}
-.detail-section-title .add-icon {
-  font-size: 14px; color: var(--gray-400); cursor: pointer;
-}
-.detail-section-title .add-icon:hover { color: var(--gray-700); }
+.detail-section-title .count { font-size: 11px; color: var(--gray-400); text-transform: none; }
 .detail-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 4px 0;
 }
 .detail-label {
   font-size: 12px; color: var(--gray-500); font-weight: 500;
-  min-width: 80px;
+  display: flex; align-items: center; gap: 6px;
 }
+.detail-label svg { width: 14px; height: 14px; }
 .detail-value {
   font-size: 13px; color: var(--gray-900); font-weight: 400;
   display: flex; align-items: center; gap: 6px;
@@ -532,36 +608,73 @@ body {
 .detail-value .status-dot {
   width: 8px; height: 8px; border-radius: var(--radius-full); flex-shrink: 0;
 }
-.detail-value .priority-icon {
-  width: 14px; height: 4px; border-radius: 1px; flex-shrink: 0;
+.stage-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: var(--radius-full);
+  font-size: 11px; font-weight: 500;
 }
-.detail-value .add-btn {
-  font-size: 12px; color: var(--gray-400); cursor: pointer;
-  display: flex; align-items: center; gap: 2px;
-}
-.detail-value .add-btn:hover { color: var(--gray-700); }
 
-/* Team members in detail panel */
-.team-member {
-  display: flex; align-items: center; gap: 8px; padding: 5px 0;
+/* Context card — interactive right-panel card */
+.context-card {
+  padding: 10px 12px; margin: 4px 0;
+  border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+  background: var(--white); cursor: pointer; transition: border-color 0.1s;
 }
-.team-member-avatar {
-  width: 24px; height: 24px; border-radius: var(--radius-full);
+.context-card:hover { border-color: var(--gray-300); }
+.context-card-title { font-size: 12px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
+.context-card-sub { font-size: 11px; color: var(--gray-500); }
+
+/* Step item in right panel (interview steps, scorecard rows) */
+.step-item {
+  display: flex; align-items: center; gap: 8px; padding: 6px 0;
+}
+.step-item .step-check {
+  width: 18px; height: 18px; border-radius: var(--radius-full);
+  border: 2px solid var(--gray-300);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 600; font-size: 9px; color: var(--white); flex-shrink: 0;
+  flex-shrink: 0; font-size: 10px; color: white;
 }
-.team-member-info { flex: 1; }
-.team-member-name { font-size: 12px; font-weight: 500; color: var(--gray-900); }
-.team-member-role { font-size: 11px; color: var(--gray-500); }
-.team-member .more-btn {
-  font-size: 14px; color: var(--gray-400); cursor: pointer;
-  visibility: hidden;
+.step-item .step-check.done { background: var(--green); border-color: var(--green); }
+.step-item .step-check.active { border-color: var(--blue); }
+.step-item .step-check svg { width: 12px; height: 12px; }
+.step-item .step-info { flex: 1; }
+.step-item .step-name { font-size: 12px; font-weight: 500; color: var(--gray-900); }
+.step-item .step-meta { font-size: 11px; color: var(--gray-500); }
+.step-item .ai-added {
+  font-size: 10px; color: var(--purple); font-weight: 600;
+  display: flex; align-items: center; gap: 3px;
 }
-.team-member:hover .more-btn { visibility: visible; }
+.step-item .ai-added svg { width: 10px; height: 10px; }
 
-/* Customer info in detail */
+/* Score row */
+.score-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 5px 0;
+}
+.score-label { font-size: 12px; color: var(--gray-700); }
+.score-value { font-size: 12px; font-weight: 600; color: var(--gray-900); }
+.score-bar {
+  flex: 1; height: 4px; background: var(--gray-100); border-radius: 2px;
+  margin: 0 10px; overflow: hidden;
+}
+.score-bar-fill { height: 100%; border-radius: 2px; }
+
+/* Participant row */
+.participant {
+  display: flex; align-items: center; gap: 8px; padding: 4px 0;
+}
+.participant-avatar {
+  width: 22px; height: 22px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 8px; color: var(--white); flex-shrink: 0;
+}
+.participant-name { font-size: 12px; color: var(--gray-700); flex: 1; }
+.participant-check { color: var(--green); }
+.participant-check svg { width: 14px; height: 14px; }
+
+/* Customer card in right panel */
 .customer-card {
-  padding: 10px 16px; border-bottom: 1px solid var(--gray-100);
+  padding: 12px 16px; border-bottom: 1px solid var(--gray-100);
 }
 .customer-card-header {
   display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
@@ -580,7 +693,22 @@ body {
 .customer-card-val { font-size: 12px; color: var(--gray-900); }
 .customer-card-val a { color: var(--blue); text-decoration: none; }
 
-/* Agent Session Panel — matches Plain's agent session sidebar */
+/* Detail action button */
+.detail-action-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; padding: 8px 14px; border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); background: var(--white);
+  font-family: var(--font); font-size: 12px; font-weight: 500;
+  color: var(--gray-700); cursor: pointer; transition: all 0.1s;
+  margin-top: 8px;
+}
+.detail-action-btn:hover { background: var(--gray-50); border-color: var(--gray-300); }
+.detail-action-btn.primary {
+  background: var(--green); border-color: var(--green); color: white;
+}
+.detail-action-btn.primary:hover { background: var(--green-dark); }
+
+/* Sidekick Panel */
 .agent-panel {
   width: var(--detail-w);
   border-left: 1px solid var(--gray-200);
@@ -597,12 +725,12 @@ body {
   font-size: 13px; font-weight: 600; color: var(--purple);
   display: flex; align-items: center; gap: 6px;
 }
+.agent-panel-header h4 svg { width: 14px; height: 14px; }
 .agent-panel-header .close-btn {
   font-size: 16px; color: var(--gray-400); cursor: pointer;
   border: none; background: none; padding: 4px;
 }
 .agent-panel-header .close-btn:hover { color: var(--gray-700); }
-.agent-panel-header .time { font-size: 11px; color: var(--gray-500); font-weight: 400; }
 .agent-panel-body {
   flex: 1; overflow-y: auto; padding: 16px;
   display: flex; flex-direction: column; gap: 12px;
@@ -614,106 +742,9 @@ body {
 .agent-msg.question {
   background: var(--gray-50); border: 1px solid var(--gray-200);
 }
-.agent-msg.thinking {
-  color: var(--purple); font-style: italic;
-  display: flex; align-items: center; gap: 8px;
-}
 .agent-msg.response {
   background: var(--purple-light); border: 1px solid rgba(124,58,237,0.15);
 }
-.agent-thinking-dots {
-  display: flex; gap: 3px;
-}
-.agent-thinking-dots span {
-  width: 5px; height: 5px; border-radius: var(--radius-full);
-  background: var(--purple); opacity: 0.4;
-  animation: dotPulse 1.2s ease-in-out infinite;
-}
-.agent-thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
-.agent-thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes dotPulse {
-  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
-  40% { opacity: 1; transform: scale(1); }
-}
-.agent-panel-input {
-  padding: 12px 16px; border-top: 1px solid var(--gray-100);
-  display: flex; gap: 8px;
-}
-.agent-panel-input input {
-  flex: 1; height: 36px; padding: 0 12px;
-  border: 1px solid var(--gray-200); border-radius: var(--radius-md);
-  font-family: var(--font); font-size: 13px; color: var(--gray-900);
-  outline: none; background: var(--gray-50);
-}
-.agent-panel-input input:focus { border-color: var(--purple); background: white; }
-.agent-panel-input input::placeholder { color: var(--gray-400); }
-
-/* ═══ AI Compose Overlay (Intercom-inspired) ═══ */
-.compose-overlay {
-  border-top: 1px solid var(--gray-200);
-  background: var(--white);
-  animation: slideUp 0.2s ease-out;
-}
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.compose-toolbar {
-  display: flex; align-items: center; gap: 4px;
-  padding: 6px 16px;
-  background: var(--gray-50);
-  border-bottom: 1px solid var(--gray-100);
-  font-size: 12px; color: var(--gray-500);
-}
-.compose-toolbar-label {
-  font-weight: 600; color: var(--purple);
-  display: flex; align-items: center; gap: 5px;
-  margin-right: auto;
-}
-.compose-toolbar-label svg { width: 14px; height: 14px; }
-.compose-toolbar-btn {
-  display: flex; align-items: center; gap: 4px;
-  padding: 4px 10px; border-radius: var(--radius-sm);
-  border: none; background: none;
-  font-family: var(--font); font-size: 12px; font-weight: 500;
-  color: var(--gray-500); cursor: pointer; transition: all 0.1s;
-}
-.compose-toolbar-btn:hover { background: var(--gray-100); color: var(--gray-700); }
-.compose-toolbar-btn.accept {
-  background: var(--green); color: white; font-weight: 600;
-}
-.compose-toolbar-btn.accept:hover { background: var(--green-dark); }
-.compose-toolbar-btn svg { width: 13px; height: 13px; }
-.compose-draft {
-  padding: 12px 20px;
-  max-height: 200px; overflow-y: auto;
-}
-.compose-draft-text {
-  font-size: 14px; line-height: 1.6; color: var(--gray-700);
-  background: var(--purple-light); border-radius: var(--radius-md);
-  padding: 12px 14px;
-  border-left: 3px solid var(--purple);
-  position: relative;
-}
-.compose-draft-text[contenteditable] { outline: none; }
-.compose-draft-text::after {
-  content: 'AI drafted — edit before sending';
-  display: block; margin-top: 8px;
-  font-size: 11px; color: var(--purple); font-weight: 500; font-style: italic;
-}
-.compose-slash-hint {
-  padding: 6px 16px 8px;
-  font-size: 11px; color: var(--gray-400);
-  display: flex; align-items: center; gap: 8px;
-}
-.compose-slash-hint code {
-  font-family: 'SF Mono', 'Menlo', monospace; font-size: 11px;
-  background: var(--gray-100); padding: 1px 6px;
-  border-radius: var(--radius-sm); color: var(--gray-500);
-  border: 1px solid var(--gray-200);
-}
-
-/* ═══ Enhanced Sidekick Panel ═══ */
 .agent-intro {
   font-size: 13px; color: var(--gray-500); line-height: 1.5;
   padding: 0 0 8px; margin-bottom: 4px;
@@ -729,86 +760,19 @@ body {
   cursor: pointer; transition: all 0.12s; text-align: left; width: 100%;
 }
 .agent-chip:hover { border-color: var(--purple); background: var(--purple-light); color: var(--purple); }
-.agent-chip .chip-icon { font-size: 15px; flex-shrink: 0; }
-
-.agent-thinking-state {
-  font-size: 12px; color: var(--gray-500);
-  padding: 6px 12px; border-radius: var(--radius-md);
-  background: var(--gray-50);
-  cursor: pointer; transition: background 0.1s;
-  display: flex; align-items: center; gap: 6px;
+.agent-chip svg { width: 16px; height: 16px; flex-shrink: 0; }
+.agent-panel-input {
+  padding: 12px 16px; border-top: 1px solid var(--gray-100);
+  display: flex; gap: 8px;
 }
-.agent-thinking-state:hover { background: var(--gray-100); }
-.agent-thinking-state .chevron { font-size: 10px; margin-left: auto; transition: transform 0.15s; }
-.agent-thinking-state.expanded .chevron { transform: rotate(180deg); }
-.agent-thinking-detail {
-  display: none; font-size: 12px; color: var(--gray-500);
-  padding: 6px 12px; line-height: 1.5;
+.agent-panel-input input {
+  flex: 1; height: 36px; padding: 0 12px;
+  border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+  font-family: var(--font); font-size: 13px; color: var(--gray-900);
+  outline: none; background: var(--gray-50);
 }
-.agent-thinking-state.expanded + .agent-thinking-detail { display: block; }
-
-.agent-sources {
-  padding: 6px 12px; font-size: 12px; color: var(--gray-500);
-  background: var(--gray-50); border-radius: var(--radius-md);
-  cursor: pointer; display: flex; align-items: center; gap: 6px;
-  margin-top: 4px;
-}
-.agent-sources:hover { background: var(--gray-100); }
-.agent-sources .chevron { font-size: 10px; margin-left: auto; transition: transform 0.15s; }
-.agent-sources.expanded .chevron { transform: rotate(180deg); }
-.agent-sources-list {
-  display: none; padding: 4px 12px 8px; font-size: 12px;
-}
-.agent-sources.expanded + .agent-sources-list { display: block; }
-.agent-source-item {
-  display: flex; align-items: center; gap: 8px;
-  padding: 4px 0; color: var(--gray-700);
-}
-.agent-source-item .source-icon {
-  width: 20px; height: 20px; border-radius: var(--radius-sm);
-  background: var(--gray-100); display: flex; align-items: center; justify-content: center;
-  font-size: 11px; flex-shrink: 0;
-}
-.agent-source-item .source-name { font-size: 12px; }
-.agent-source-item .source-url { font-size: 11px; color: var(--blue); }
-
-.agent-ref-chip {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 3px 8px; border-radius: var(--radius-sm);
-  background: var(--blue-light); color: var(--blue);
-  font-size: 11px; font-weight: 600; margin: 2px 2px;
-}
-
-.agent-insert-btn {
-  display: flex; align-items: center; gap: 6px;
-  padding: 7px 14px; border-radius: var(--radius-md);
-  border: 1px solid var(--purple); background: var(--purple-light);
-  font-family: var(--font); font-size: 12px; font-weight: 600;
-  color: var(--purple); cursor: pointer; transition: all 0.12s;
-  margin-top: 4px; width: fit-content;
-}
-.agent-insert-btn:hover { background: var(--purple); color: white; }
-.agent-insert-btn svg { width: 13px; height: 13px; }
-
-.agent-suggestion-chips {
-  display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;
-}
-.agent-suggestion {
-  font-size: 11px; padding: 5px 10px; border-radius: var(--radius-full);
-  border: 1px solid var(--gray-200); background: var(--white);
-  font-family: var(--font); color: var(--gray-600); cursor: pointer;
-  transition: all 0.1s;
-}
-.agent-suggestion:hover { border-color: var(--purple); color: var(--purple); background: var(--purple-light); }
-
-.agent-divider {
-  border: none; border-top: 1px solid var(--gray-100);
-  margin: 8px 0;
-}
-
-.agent-msg .msg-actions {
-  display: flex; gap: 4px; margin-top: 8px;
-}
+.agent-panel-input input:focus { border-color: var(--purple); background: white; }
+.agent-panel-input input::placeholder { color: var(--gray-400); }
 
 /* Activity log */
 .activity-item {
@@ -852,6 +816,7 @@ body {
   display: flex; align-items: center; justify-content: center;
 }
 .cand-header-actions button:hover { background: var(--gray-50); color: var(--gray-700); }
+.cand-header-actions button svg { width: 16px; height: 16px; }
 .cand-body {
   flex: 1; overflow-y: auto; padding: 20px;
   display: flex; flex-direction: column; gap: 14px;
@@ -876,7 +841,6 @@ body {
 .cand-msg.sent .cand-bubble {
   background: var(--green); color: var(--white); border-bottom-right-radius: 4px;
 }
-.cand-msg-time { font-size: 11px; color: var(--gray-500); padding: 0 36px; }
 .cand-msg-sender {
   font-size: 11px; font-weight: 600; color: var(--gray-700); padding: 0 36px;
   display: flex; align-items: center; gap: 4px;
@@ -894,6 +858,7 @@ body {
   font-size: 14px; font-weight: 600; margin-bottom: 4px;
   display: flex; align-items: center; gap: 8px;
 }
+.cand-card-title svg { width: 16px; height: 16px; flex-shrink: 0; }
 .cand-card-desc { font-size: 13px; color: var(--gray-500); margin-bottom: 10px; }
 .cand-card-actions { display: flex; gap: 8px; }
 .cand-card-btn {
@@ -915,6 +880,7 @@ body {
   font-size: 13px; font-weight: 600; color: var(--green-dark);
   display: flex; align-items: center; gap: 6px; margin-bottom: 4px;
 }
+.cand-schedule-title svg { width: 14px; height: 14px; }
 .cand-schedule-detail { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
 .cand-schedule-sub { font-size: 12px; color: var(--gray-500); }
 .cand-input {
@@ -934,12 +900,14 @@ body {
   cursor: pointer; display: flex; align-items: center; justify-content: center;
 }
 .cand-input-btn:hover { background: var(--green-dark); }
+.cand-input-btn svg { width: 18px; height: 18px; }
 .cand-input-attach {
   width: 38px; height: 38px; border-radius: var(--radius-full);
   border: 1px solid var(--gray-200); background: var(--white);
   color: var(--gray-500); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
 }
+.cand-input-attach svg { width: 18px; height: 18px; }
 .cand-powered {
   text-align: center; padding: 6px 0;
   font-size: 11px; color: var(--gray-400);
@@ -951,7 +919,8 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 .msg-group, .cand-msg, .cand-card, .cand-schedule, .inline-card, .ai-summary,
-.status-event, .waiting-bar, .msg-note, .file-attachment {
+.status-event, .waiting-bar, .msg-note, .file-attachment, .agent-inline,
+.agent-action, .call-card {
   animation: fadeIn 0.25s ease-out both;
 }
 </style>
@@ -964,13 +933,17 @@ body {
   <button class="view-btn active" onclick="showView('recruiter')">Recruiter</button>
   <button class="view-btn" onclick="showView('candidate')">Candidate</button>
   <div class="story-step-label">
-    Step <span id="step-num">1</span>/12
-    <span id="step-name">— Discover</span>
+    Step <span id="step-num">1</span>/6
+    <span id="step-name"></span>
   </div>
   <div class="step-dots" id="step-dots"></div>
   <div class="story-nav">
-    <button id="prev-btn" onclick="prevStep()" disabled>&#8592;</button>
-    <button id="next-btn" onclick="nextStep()">&#8594;</button>
+    <button id="prev-btn" onclick="prevStep()" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+    </button>
+    <button id="next-btn" onclick="nextStep()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </button>
   </div>
 </div>
 
@@ -1001,18 +974,10 @@ body {
     <div class="rail-icon" title="Help">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
     </div>
-    <div class="rail-icon" title="Team">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    <div class="rail-icon" title="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
     </div>
     <div class="rail-logo" style="margin-top:8px">A</div>
-  </div>
-
-  <!-- Navigation Sidebar (hidden — clean layout matching Plain) -->
-  <div class="nav-sidebar">
-    <div class="nav-workspace">
-      Recruiting<br>
-      <span class="sub">ABC Staffing</span>
-    </div>
   </div>
 
   <!-- Thread List -->
@@ -1020,25 +985,27 @@ body {
     <div class="thread-sidebar-header">
       <h2>Threads<br><span style="font-size:12px;font-weight:400;color:var(--gray-400)">Todo 4</span></h2>
       <div class="thread-header-controls">
-        <button class="thread-header-btn">&#9638; Display <span class="action-key" style="margin-left:2px">V</span></button>
+        <button class="thread-header-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+          Display
+        </button>
       </div>
     </div>
 
     <div class="thread-list">
-      <div class="thread-status-header">Needs first response &middot; 1</div>
+      <div class="thread-status-header">Needs first response</div>
 
       <div class="thread-item active" id="thread-sarah">
         <div class="thread-avatar" style="background:#4C6EF5">SC</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Sarah Chen</span>
-            <span class="thread-item-id">T-12</span>
             <span class="thread-item-time">Just now</span>
           </div>
-          <div class="thread-item-subject" id="thread-sarah-subject">Product Designer — Hyderabad</div>
+          <div class="thread-item-subject">Product Designer &middot; Hyderabad</div>
           <div class="thread-item-preview" id="thread-sarah-preview">Thanks! I'd love to know more about the role.</div>
           <div class="thread-item-meta">
-            <div class="thread-priority" id="thread-sarah-priority">
+            <div class="thread-priority">
               <span class="priority-bar" style="background:var(--amber)"></span>
               <span style="font-size:11px;color:var(--gray-500)">High</span>
             </div>
@@ -1049,17 +1016,16 @@ body {
         </div>
       </div>
 
-      <div class="thread-status-header">Active &middot; 3</div>
+      <div class="thread-status-header">Active</div>
 
       <div class="thread-item">
         <div class="thread-avatar" style="background:#37B24D">AK</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Arjun Kumar</span>
-            <span class="thread-item-id">T-15</span>
             <span class="thread-item-time">2h ago</span>
           </div>
-          <div class="thread-item-subject">Frontend Engineer — Bangalore</div>
+          <div class="thread-item-subject">Frontend Engineer &middot; Bangalore</div>
           <div class="thread-item-preview">When is the technical round?</div>
           <div class="thread-item-meta">
             <div class="thread-priority">
@@ -1068,7 +1034,9 @@ body {
             </div>
             <div class="thread-assignees">
               <div class="thread-assignee-dot" style="background:var(--green)" title="You">Y</div>
-              <div class="thread-assignee-dot" style="background:var(--purple)" title="AI">&#10024;</div>
+              <div class="thread-assignee-dot" style="background:var(--purple)" title="AI">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+              </div>
             </div>
           </div>
         </div>
@@ -1079,10 +1047,9 @@ body {
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Priya Mehta</span>
-            <span class="thread-item-id">T-8</span>
             <span class="thread-item-time">5h ago</span>
           </div>
-          <div class="thread-item-subject">Engineering Manager — Remote</div>
+          <div class="thread-item-subject">Engineering Manager &middot; Remote</div>
           <div class="thread-item-preview">I've accepted! Looking forward to starting.</div>
           <div class="thread-item-meta">
             <div class="thread-priority">
@@ -1101,10 +1068,9 @@ body {
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Rahul Verma</span>
-            <span class="thread-item-id">T-3</span>
             <span class="thread-item-time">1d ago</span>
           </div>
-          <div class="thread-item-subject">Data Analyst — Pune</div>
+          <div class="thread-item-subject">Data Analyst &middot; Pune</div>
           <div class="thread-item-preview">Could you share the compensation details?</div>
           <div class="thread-item-meta">
             <div class="thread-priority">
@@ -1124,198 +1090,61 @@ body {
   <div class="conversation-panel">
     <div class="conv-header">
       <div class="conv-header-info">
-        <h3>Product Designer — Hyderabad</h3>
-        <div class="sub">
-          <span style="color:var(--green)">&#9679;</span> T-12 &#9662; &middot;
-          <span class="channel-badge">&#9993; Email</span> &middot;
-          sarah.chen@gmail.com
-        </div>
+        <h3>Sarah Chen</h3>
+        <div class="sub">Product Designer &middot; Hyderabad</div>
+      </div>
+      <div class="conv-tabs">
+        <button class="conv-tab active" id="tab-candidate" onclick="switchTab('candidate')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Sarah Chen
+        </button>
+        <button class="conv-tab" id="tab-team" onclick="switchTab('team')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          Hiring Team
+          <span class="tab-dot" id="team-dot" style="display:none"></span>
+        </button>
       </div>
       <div class="conv-header-actions">
-        <button title="List view"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></button>
-        <button title="Details"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-        <button title="More">&middot;&middot;&middot;</button>
-        <button title="Split view"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 3v18"/></svg></button>
+        <button title="Details"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
       </div>
     </div>
     <div class="conv-body" id="conv-body"></div>
-    <div class="compose-overlay" id="compose-overlay" style="display:none">
-      <div class="compose-toolbar">
-        <span class="compose-toolbar-label">
+
+    <!-- Messaging Composer -->
+    <div class="msg-composer">
+      <div class="composer-suggestions" id="composer-suggestions"></div>
+      <div class="composer-input-row">
+        <button class="composer-btn" title="Attach">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+        </button>
+        <input class="composer-input" type="text" placeholder="Type a message..." id="composer-input">
+        <button class="composer-btn agent" onclick="toggleAgent()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-          Compose
-        </span>
-        <button class="compose-toolbar-btn" onclick="composeAction('try-again')">&#8635; Try again</button>
-        <button class="compose-toolbar-btn" onclick="composeAction('undo')">&#8617; Undo</button>
-        <button class="compose-toolbar-btn accept" onclick="composeAction('accept')">&#10003; Accept</button>
-      </div>
-      <div class="compose-draft">
-        <div class="compose-draft-text" id="compose-draft-text" contenteditable="true"></div>
-      </div>
-      <div class="compose-slash-hint">
-        Refine: <code>/make it shorter</code> <code>/more formal</code> <code>/add salary info</code>
-      </div>
-    </div>
-    <div class="action-bar">
-      <button class="action-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
-        Reply <span class="action-key">R</span>
-      </button>
-      <button class="action-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-        Note <span class="action-key">N</span>
-      </button>
-      <button class="action-btn">&middot;&middot;&middot; More</button>
-      <button class="action-btn" onclick="toggleAgent()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-        Sidekick <span class="action-key">B</span>
-      </button>
-      <div class="action-bar-spacer"></div>
-      <button class="action-btn-primary" id="reply-wait-btn">
-        Reply &amp; wait
-        <span class="dropdown-arrow">&#9662;</span>
-      </button>
-    </div>
-    <div style="display:flex;align-items:center;justify-content:flex-end;padding:2px 16px 4px;font-size:11px;color:var(--purple);cursor:pointer;opacity:0.7;" onclick="if(!agentVisible)toggleAgent()">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-      Agent session <span style="color:var(--gray-400);margin-left:4px" id="agent-status-time">Just now</span>
-    </div>
-  </div>
-
-  <!-- Detail Panel -->
-  <div class="detail-panel" id="detail-panel">
-    <div class="detail-header">
-      <h4>Product Designer — Hyderabad</h4>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-row">
-        <span class="detail-label">Status</span>
-        <span class="detail-value"><span class="status-dot" style="background:var(--blue)" id="detail-status-dot"></span> <span id="detail-status">Needs first response</span></span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Assignee</span>
-        <span class="detail-value" id="detail-assignee">You</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Priority</span>
-        <span class="detail-value"><span class="priority-icon" style="background:var(--amber)"></span> High</span>
-      </div>
-      <div class="detail-row" id="detail-stage-row">
-        <span class="detail-label">Stage</span>
-        <span class="detail-value" id="detail-stage">Outreach</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Labels</span>
-        <span class="detail-value"><span class="add-btn">+ Labels</span></span>
-      </div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Links <span class="count">(0)</span> <span class="toggle">&#8963;</span></div>
-      <div style="padding:2px 0;">
-        <div class="detail-row"><span class="detail-label" style="display:flex;align-items:center;gap:6px;min-width:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Thread links</span><span class="detail-value"><span class="action-key">I</span> <span class="add-btn" style="margin-left:4px">+</span></span></div>
-        <div class="detail-row"><span class="detail-label" style="display:flex;align-items:center;gap:6px;min-width:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg> Tasks</span><span class="detail-value"><span class="action-key">T</span> <span class="add-btn" style="margin-left:4px">+</span></span></div>
-      </div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Actions <span class="count">(0)</span> <span class="toggle">&#8963;</span></div>
-      <div style="padding:2px 0;">
-        <div class="detail-row" style="cursor:pointer" onclick="if(!agentVisible)toggleAgent()"><span class="detail-label" style="display:flex;align-items:center;gap:6px;min-width:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> Ask Sidekick</span><span class="detail-value"><span class="action-key">B</span> <span class="add-btn" style="margin-left:4px">+</span></span></div>
-        <div class="detail-row" style="cursor:pointer"><span class="detail-label" style="display:flex;align-items:center;gap:6px;min-width:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Discuss in</span><span class="detail-value"><span class="action-key">D</span> <span class="add-btn" style="margin-left:4px">+</span></span></div>
-        <div class="detail-row" style="cursor:pointer"><span class="detail-label" style="display:flex;align-items:center;gap:6px;min-width:auto"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Run workflow</span><span class="detail-value"><span class="add-btn">+</span></span></div>
-      </div>
-    </div>
-
-    <div class="detail-section" style="border-top:1px solid var(--gray-200);">
-      <div class="detail-section-title" style="font-size:13px;font-weight:600;color:var(--gray-900)">Flipkart <span style="font-weight:400;color:var(--gray-400);font-size:11px">&middot;&middot;&middot;</span></div>
-    </div>
-
-    <div class="customer-card">
-      <div class="customer-card-header">
-        <div class="customer-card-avatar" style="background:#4C6EF5">SC</div>
-        <span class="customer-card-name">Sarah Chen</span>
-        <span style="margin-left:auto;font-size:14px;color:var(--gray-400);cursor:pointer">&middot;&middot;&middot;</span>
-      </div>
-      <div class="customer-card-row">
-        <span class="customer-card-label">Email</span>
-        <span class="customer-card-val"><a href="#">sarah.chen@gmail.com</a></span>
-      </div>
-      <div class="customer-card-row">
-        <span class="customer-card-label">Groups</span>
-        <span class="customer-card-val"><span class="add-btn">Groups +</span></span>
-      </div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Team <span class="add-icon">+</span></div>
-      <div class="team-member">
-        <div class="team-member-avatar" style="background:#E65100">SP</div>
-        <div class="team-member-info">
-          <div class="team-member-name">Sachin Patel</div>
-          <div class="team-member-role">Hiring Manager</div>
-        </div>
-        <span class="more-btn">&middot;&middot;&middot;</span>
-      </div>
-      <div class="team-member">
-        <div class="team-member-avatar" style="background:#7C3AED">PG</div>
-        <div class="team-member-info">
-          <div class="team-member-name">Priya Gupta</div>
-          <div class="team-member-role">Interviewer</div>
-        </div>
-        <span class="more-btn">&middot;&middot;&middot;</span>
-      </div>
-      <div class="team-member">
-        <div class="team-member-avatar" style="background:var(--purple)">&#10024;</div>
-        <div class="team-member-info">
-          <div class="team-member-name">Recruiting Agent</div>
-          <div class="team-member-role">AI Assistant</div>
-        </div>
-        <span class="more-btn">&middot;&middot;&middot;</span>
-      </div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Documents <span class="toggle">&#9662;</span></div>
-      <div id="detail-docs">
-        <div class="detail-row"><span class="detail-label">&#128196;</span><span class="detail-value">Resume_SarahChen.pdf</span></div>
-      </div>
-    </div>
-
-    <div class="detail-section" id="recent-threads-section">
-      <div class="detail-section-title">Similar candidates <span class="count">(2)</span> <span class="toggle">&#8963;</span></div>
-      <div style="padding:2px 0;">
-        <div class="detail-row" style="cursor:pointer"><span class="detail-label" style="display:flex;align-items:center;gap:6px;min-width:auto;color:var(--blue)"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;flex-shrink:0"></span> T-15 Frontend Engineer</span><span class="detail-value" style="font-size:11px;color:var(--gray-400)">2h ago</span></div>
-        <div class="detail-row" style="cursor:pointer"><span class="detail-label" style="display:flex;align-items:center;gap:6px;min-width:auto;color:var(--blue)"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;flex-shrink:0"></span> T-8 Engineering Manager</span><span class="detail-value" style="font-size:11px;color:var(--gray-400)">5h ago</span></div>
-      </div>
-    </div>
-
-    <div class="detail-section">
-      <div class="detail-section-title">Activity <span class="toggle">&#8963;</span></div>
-      <div id="activity-log">
-        <div class="activity-item"><span class="activity-dot"></span><span class="activity-text">No activity yet</span></div>
+          Agent
+        </button>
+        <button class="composer-send">
+          Send
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Agent Session Panel (Plain Sidekick-inspired) -->
+  <!-- Right: Contextual Panel -->
+  <div class="detail-panel" id="detail-panel"></div>
+
+  <!-- Agent Session Panel -->
   <div class="agent-panel" id="agent-panel">
     <div class="agent-panel-header">
       <h4>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-        <span id="agent-title">Ask Sidekick</span>
-        <span class="time" id="agent-time">Just now</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+        Recruiting Agent
       </h4>
-      <button class="close-btn" onclick="toggleAgent()" title="esc">&times;</button>
+      <button class="close-btn" onclick="toggleAgent()">&times;</button>
     </div>
     <div class="agent-panel-body" id="agent-body"></div>
     <div class="agent-panel-input">
-      <input type="text" placeholder="Type your message..." id="agent-input">
-      <span style="display:flex;gap:4px;">
-        <button style="width:28px;height:28px;border-radius:var(--radius-sm);border:1px solid var(--gray-200);background:var(--white);color:var(--gray-500);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;" title="Summarize">&#128221;</button>
-        <button style="width:28px;height:28px;border-radius:var(--radius-sm);border:1px solid var(--gray-200);background:var(--white);color:var(--gray-500);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;" title="Ask a question">?</button>
-      </span>
+      <input type="text" placeholder="Ask the agent..." id="agent-input">
     </div>
   </div>
 </div>
@@ -1329,452 +1158,80 @@ body {
       <div class="sub">Product Designer &middot; Hyderabad</div>
     </div>
     <div class="cand-header-actions">
-      <button title="Voice">&#127908;</button>
-      <button title="Call">&#128222;</button>
+      <button title="Voice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></button>
+      <button title="Call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
     </div>
   </div>
   <div class="cand-body" id="cand-body"></div>
   <div class="cand-input">
     <button class="cand-input-attach" title="Attach">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
     </button>
     <input class="cand-input-field" placeholder="Type a message..." type="text">
     <button class="cand-input-btn">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
     </button>
   </div>
   <div class="cand-powered">Powered by ABC Staffing</div>
 </div>
 
 <script>
+/* ═══ Lucide icon constants ═══ */
+const IC = {
+  file: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>',
+  fileText: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>',
+  users: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  calendar: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4m8-4v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>',
+  bookOpen: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+  award: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>',
+  clipboard: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>',
+  messageSquare: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+  lightbulb: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>',
+  trendingUp: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
+  clock: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  search: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>',
+  video: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>',
+  star: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  alertTriangle: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
+  circleCheck: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>',
+  thumbsUp: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg>',
+  thumbsDown: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg>',
+  sparkles: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>',
+  phone: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+  play: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>',
+  check: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  chevronRight: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>',
+};
+
+/* ═══ STEPS ═══ */
 const STEPS = [
-  { name: "Discover", num: 1 },
-  { name: "Reach Out", num: 2 },
-  { name: "Engage", num: 3 },
-  { name: "Inform", num: 4 },
-  { name: "Assist", num: 5 },
-  { name: "Schedule", num: 6 },
-  { name: "Collaborate", num: 7 },
-  { name: "Interview", num: 8 },
-  { name: "Capture", num: 9 },
-  { name: "Decide", num: 10 },
-  { name: "Offer", num: 11 },
-  { name: "Close", num: 12 },
+  { name: "Outreach", num: 1 },
+  { name: "Engage", num: 2 },
+  { name: "Schedule", num: 3 },
+  { name: "Collaborate", num: 4 },
+  { name: "Interview", num: 5 },
+  { name: "Decide & Offer", num: 6 },
 ];
 
 let currentStep = 0;
 let currentView = 'recruiter';
+let currentTab = 'candidate';
 let agentVisible = false;
 
 const dotsEl = document.getElementById('step-dots');
 STEPS.forEach((s, i) => {
   const d = document.createElement('div');
   d.className = 'step-dot' + (i === 0 ? ' active' : '');
-  d.title = `${s.num}. ${s.name}`;
+  d.title = s.name;
   d.onclick = () => goToStep(i);
   dotsEl.appendChild(d);
 });
-
-/* ═══ RECRUITER CONVERSATION CONTENT ═══ */
-function recruiterHTML(step) {
-  let html = '';
-
-  if (step >= 0) {
-    html += statusEvent('green', 'Thread created &middot; Sarah Chen added from LinkedIn');
-    html += waitingBar('Sarah Chen is waiting for a first response');
-  }
-
-  if (step >= 1) {
-    html += msgGroup('You', 'Recruiter', '#37B24D', 'Just now', '',
-      `<p>Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad.</p>
-       <p>The team is building a new enterprise design system and we're looking for someone with your systems thinking background. Would you be interested in learning more?</p>`);
-    html += statusEvent('blue', 'You changed status to Waiting for candidate');
-    if (step === 1) {
-      html += `<div class="waiting-bar" style="background:#FFF3D0;color:#BF6C00;border-radius:var(--radius-md);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Waiting for Sarah Chen to respond &middot; Just now by you
-      </div>`;
-    }
-  }
-
-  if (step >= 2) {
-    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', '2 min ago', '',
-      `<p>Hi! Thanks for reaching out. I've been looking at design systems roles and this sounds interesting.</p>
-       <p>I'd definitely like to learn more about the role and team.</p>`);
-    html += statusEvent('green', 'Status changed to Active conversation');
-  }
-
-  if (step >= 3) {
-    html += msgGroup('You', 'Recruiter', '#37B24D', '1 min ago', '',
-      `<p>Great! I'm sharing the role details here so you have everything in one place.</p>`);
-    html += inlineCard('&#128196;', '#E7EDFF', 'Product Designer — Job Description',
-      'Design team &middot; Hyderabad &middot; Full-time', 'View');
-    html += inlineCard('&#128101;', '#E6F9ED', 'Team Overview',
-      '4 designers, 2 PMs &middot; Enterprise Design System', 'View');
-    html += msgGroup('You', 'Recruiter', '#37B24D', '1 min ago', '',
-      `<p>You'll be working with 4 designers and 2 PMs. The team is building the next generation of our enterprise design system — it's a greenfield project with a lot of ownership.</p>`);
-  }
-
-  if (step >= 4) {
-    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', '30 sec ago', '',
-      `<p>This looks great! What's the interview process like? And is there flexibility on remote work?</p>`);
-    html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', 'Just now', 'ai',
-      `<p>There are 4 stages in the interview process:</p>
-       <p><strong>1.</strong> Recruiter conversation (30 min)<br>
-       <strong>2.</strong> Portfolio review with hiring manager (45 min)<br>
-       <strong>3.</strong> Product thinking exercise (60 min)<br>
-       <strong>4.</strong> Final discussion with VP Design (30 min)</p>
-       <p>Regarding remote work: the role is hybrid with 2 days in the Hyderabad office. The team does async standups and has flexible hours.</p>`);
-    html += msgGroup('You', 'Recruiter', '#37B24D', 'Just now', '',
-      `<p>Yep, and I'll personally walk you through the first stage. It's very conversational — no trick questions!</p>`);
-  }
-
-  if (step >= 5) {
-    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', 'Just now', '',
-      `<p>Sounds good! I'm available Thursday afternoon if that works?</p>`);
-    html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', 'Just now', 'ai',
-      `<p>I've checked everyone's calendars. Thursday at 4:00 PM IST works for the recruiter conversation.</p>`);
-    html += inlineCard('&#128197;', '#E6F9ED', 'Interview Scheduled',
-      'Thursday, Oct 24 &middot; 4:00 PM IST &middot; Video Call', 'Confirmed');
-    html += statusEvent('purple', 'Stage changed to Interview');
-    html += inlineCard('&#128218;', '#F3EEFF', 'Interview Preparation Guide',
-      'Sent to Sarah Chen automatically', 'View');
-  }
-
-  if (step >= 6) {
-    html += noteBlock('You left a note &middot; 10 min ago', 'Sarah',
-      `<p>@Sachin — Sarah is confirmed for Thursday. Her portfolio has strong systems work from Flipkart. Worth paying attention to the checkout redesign case study.</p>`);
-    html += noteBlock('Sachin Patel left a note &middot; 5 min ago', 'Sarah',
-      `<p>Great, I looked at her case studies. Can you ask about the checkout redesign project specifically? I want to understand how she handles stakeholder alignment.</p>`);
-    html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', 'Just now', 'ai',
-      `<p>I've added "checkout redesign — stakeholder alignment" to the interview plan for the portfolio review stage.</p>`);
-  }
-
-  if (step >= 7) {
-    html += statusEvent('green', 'Interview completed &middot; Recruiter Conversation &middot; 32 min');
-    html += fileAttachment('Interview_Recording.mp4', '32 min');
-  }
-
-  if (step >= 8) {
-    html += aiSummary(
-      `Sarah demonstrated strong systems thinking and clear communication. Key highlights:
-       <br>&bull; Led the Flipkart checkout redesign serving 200M+ users
-       <br>&bull; Built a component library adopted by 12 product teams
-       <br>&bull; Comfortable with enterprise constraints and stakeholder management
-       <br>&bull; Salary expectation: &#8377;28-32 LPA (within our range)
-       <br><br><strong>Recommendation:</strong> Advance to Portfolio Review with Sachin.`);
-  }
-
-  if (step >= 9) {
-    html += noteBlock('Sachin Patel left a note &middot; 2h ago', 'Sarah',
-      `<p>Strong systems thinking. The checkout case study was impressive — she managed 6 stakeholder groups.</p>
-       <p>One concern: limited experience with enterprise B2B workflows. But she's a fast learner.</p>`);
-    html += noteBlock('Priya Gupta left a note &middot; 1h ago', 'Sarah',
-      `<p>Agreed. Her product thinking exercise was the strongest I've seen this quarter. She reframed the problem beautifully.</p>`);
-    html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', '30 min ago', 'ai',
-      `<p>All interviewers have submitted feedback. Average score: <strong>4.2/5</strong>.</p>
-       <p>Based on the team's assessment, Sarah is the top candidate for this role. Shall I prepare the offer package?</p>`);
-    html += statusEvent('green', 'Decision: Proceed to Offer');
-  }
-
-  if (step >= 10) {
-    html += msgGroup('You', 'Recruiter', '#37B24D', '15 min ago', '',
-      `<p>Sarah, great news! The team was really impressed with your interviews. We'd love to have you join us.</p>
-       <p>I'm sharing the offer details below:</p>`);
-    html += inlineCard('&#127881;', '#E6F9ED', 'Offer Letter — Product Designer',
-      '&#8377;30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer');
-    html += inlineCard('&#128203;', '#F3EEFF', 'Benefits & Equity Package',
-      'Health, RSUs, relocation support', 'View');
-  }
-
-  if (step >= 11) {
-    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', 'Just now', '',
-      `<p>This is amazing! I'm thrilled to accept. The team, the role, and the offer all feel right.</p>
-       <p>Thank you for making this process so smooth — having everything in one conversation made it so easy to stay on top of things.</p>`);
-    html += `<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;margin:8px 0;background:var(--green-light);border-radius:var(--radius-lg);">
-      <span style="font-size:18px">&#127881;</span>
-      <span style="font-size:14px;font-weight:600;color:var(--green-dark)">Offer Accepted — Sarah Chen joins as Product Designer</span>
-    </div>`;
-    html += statusEvent('green', 'Thread closed &middot; Candidate hired');
-    html += msgGroup('Recruiting Agent', 'AI Agent', '#7C3AED', 'Just now', 'ai',
-      `<p>Congratulations! I've triggered the onboarding workflow:</p>
-       <p>&bull; Welcome email scheduled for Dec 20<br>
-       &bull; IT equipment request submitted<br>
-       &bull; Team introduction channel created<br>
-       &bull; Day-1 orientation booked for Jan 6</p>`);
-  }
-
-  return html;
-}
-
-/* ═══ CANDIDATE CONVERSATION CONTENT ═══ */
-function candidateHTML(step) {
-  let html = '';
-
-  if (step >= 1) {
-    html += candMsg('received', 'Recruiter', '#37B24D', '',
-      'Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad.');
-  }
-  if (step >= 2) {
-    html += candMsg('sent', '', '#4C6EF5', '',
-      "Hi! Thanks for reaching out. I've been looking at design systems roles and this sounds interesting. I'd love to learn more!");
-  }
-  if (step >= 3) {
-    html += candMsg('received', 'Recruiter', '#37B24D', '',
-      "Great! Here are the role details:");
-    html += candCard('&#128196; Product Designer — Job Description',
-      'Design team &middot; Hyderabad &middot; Full-time', 'View', 'Save');
-    html += candCard('&#128101; Team Overview',
-      '4 designers, 2 PMs &middot; Enterprise Design System', 'View', '');
-  }
-  if (step >= 4) {
-    html += candMsg('sent', '', '#4C6EF5', '',
-      "This looks great! What's the interview process like? And is there flexibility on remote work?");
-    html += candMsg('received', 'Recruiting Agent', '#7C3AED', 'ai',
-      "There are 4 stages: recruiter conversation (30 min), portfolio review (45 min), product thinking exercise (60 min), and final discussion (30 min). The role is hybrid — 2 days in office with flexible hours.");
-    html += candMsg('received', 'Recruiter', '#37B24D', '',
-      "I'll walk you through the first stage personally — it's very conversational, no trick questions!");
-  }
-  if (step >= 5) {
-    html += candMsg('sent', '', '#4C6EF5', '',
-      "Sounds good! I'm available Thursday afternoon if that works?");
-    html += candSchedule('Interview Scheduled', 'Thursday, Oct 24 &middot; 4:00 PM IST', 'Video Call with Recruiter');
-    html += candCard('&#128218; Interview Preparation Guide',
-      'Tips and what to expect at each stage', 'Read Guide', '');
-  }
-  if (step >= 7) {
-    html += `<div style="text-align:center;padding:12px 0;font-size:12px;color:var(--gray-500);">Interview completed &middot; 32 min</div>`;
-  }
-  if (step >= 10) {
-    html += candMsg('received', 'Recruiter', '#37B24D', '',
-      "Sarah, great news! The team was really impressed. We'd love to have you join us:");
-    html += candCard('&#127881; Offer Letter — Product Designer',
-      '&#8377;30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer', '');
-    html += candCard('&#128203; Benefits & Equity Package',
-      'Health, RSUs, relocation support', 'View Details', '');
-  }
-  if (step >= 11) {
-    html += candMsg('sent', '', '#4C6EF5', '',
-      "This is amazing! I'm thrilled to accept. The team, the role, and the offer all feel right. Thank you for making this so smooth!");
-    html += `<div style="text-align:center;padding:14px;margin:8px 0;background:var(--green-light);border-radius:var(--radius-xl);">
-      <div style="font-size:18px;margin-bottom:4px">&#127881;</div>
-      <div style="font-size:14px;font-weight:600;color:var(--green-dark)">You're in! Welcome to ABC Staffing</div>
-      <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">Starting Jan 6 &middot; Hyderabad</div>
-    </div>`;
-  }
-
-  return html;
-}
-
-/* ═══ AGENT SESSION CONTENT ═══ */
-function agentHTML(step) {
-  let html = '';
-
-  // Steps 0-3: Initial sidekick state with quick actions
-  if (step <= 3) {
-    html += `<div class="agent-intro">Here are a few things I can do, or ask me a question below!</div>`;
-    html += `<div class="agent-quick-actions">
-      <button class="agent-chip"><span class="chip-icon">&#128172;</span> Suggest a reply based on our docs</button>
-      <button class="agent-chip"><span class="chip-icon">&#129300;</span> What should I do next?</button>
-      <button class="agent-chip"><span class="chip-icon">&#128200;</span> Should this be escalated?</button>
-      <button class="agent-chip"><span class="chip-icon">&#128221;</span> Summarize this thread</button>
-      <button class="agent-chip"><span class="chip-icon">&#128196;</span> Send helpful docs</button>
-    </div>`;
-    html += `<div style="font-size:12px;color:var(--gray-400);text-align:center;padding-top:4px;">
-      <span class="agent-ref-chip">T-12 Product Designer</span>
-    </div>`;
-    return html;
-  }
-
-  // Step 4: AI suggests a reply for candidate's questions
-  if (step >= 4) {
-    html += `<div class="agent-msg question">Suggest a reply based on our docs</div>`;
-
-    html += `<div class="agent-thinking-state${step > 4 ? ' expanded' : ''}" onclick="this.classList.toggle('expanded')">
-      &#9201; Thought for 3 seconds <span class="chevron">&#9662;</span>
-    </div>`;
-    html += `<div class="agent-thinking-detail">
-      Analyzing Sarah's questions about interview process and remote work policy. Checking role requirements and company handbook...
-    </div>`;
-
-    html += `<div class="agent-sources${step > 4 ? ' expanded' : ''}" onclick="this.classList.toggle('expanded')">
-      &#128269; Searched 4 docs <span class="chevron">&#9662;</span>
-    </div>`;
-    html += `<div class="agent-sources-list">
-      <div class="agent-source-item"><span class="source-icon">&#128196;</span><span class="source-name">Interview Process Guide</span></div>
-      <div class="agent-source-item"><span class="source-icon">&#128196;</span><span class="source-name">Remote Work Policy</span></div>
-      <div class="agent-source-item"><span class="source-icon">&#128196;</span><span class="source-name">Product Designer JD</span></div>
-      <div class="agent-source-item"><span class="source-icon">&#128196;</span><span class="source-name">Office & Culture FAQ</span></div>
-    </div>`;
-
-    if (step === 4) {
-      html += `<div class="agent-msg thinking"><div class="agent-thinking-dots"><span></span><span></span><span></span></div> Drafting reply...</div>`;
-    } else {
-      html += `<div class="agent-msg response">
-        <p>I've drafted a reply covering the 4-stage interview process and the hybrid remote policy. The draft is ready in your compose area.</p>
-        <button class="agent-insert-btn" onclick="showCompose('interview-info')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14m-7-7h14"/></svg>
-          Insert into reply
-        </button>
-      </div>`;
-      html += `<div class="agent-suggestion-chips">
-        <button class="agent-suggestion">Add salary range</button>
-        <button class="agent-suggestion">Include team bios</button>
-        <button class="agent-suggestion">Share office photos</button>
-      </div>`;
-    }
-    html += `<hr class="agent-divider">`;
-  }
-
-  // Step 5: Scheduling assistance
-  if (step >= 5) {
-    html += `<div class="agent-msg question">Help me schedule the interview</div>`;
-
-    html += `<div class="agent-thinking-state expanded" onclick="this.classList.toggle('expanded')">
-      &#9201; Thought for 2 seconds <span class="chevron">&#9662;</span>
-    </div>`;
-    html += `<div class="agent-thinking-detail">
-      Checking calendars for all participants: You (recruiter), Sachin Patel (hiring manager), Priya Gupta (interviewer). Matching against Sarah's availability (Thursday afternoon).
-    </div>`;
-
-    html += `<div class="agent-msg response">
-      <p>I've checked everyone's calendars. <strong>Thursday at 4:00 PM IST</strong> works for all parties.</p>
-      <p>&#128197; Recruiter conversation (30 min) — Video Call</p>
-      <p>I'll also send Sarah an interview preparation guide automatically after booking.</p>
-      <div class="msg-actions">
-        <button class="agent-insert-btn" onclick="showCompose('schedule')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14m-7-7h14"/></svg>
-          Confirm &amp; send
-        </button>
-      </div>
-    </div>`;
-    html += `<hr class="agent-divider">`;
-  }
-
-  // Step 6-7: Collaboration context
-  if (step >= 6) {
-    html += `<div class="agent-msg question">What context should I share with the interview panel?</div>`;
-
-    html += `<div class="agent-thinking-state expanded" onclick="this.classList.toggle('expanded')">
-      &#9201; Thought for 4 seconds <span class="chevron">&#9662;</span>
-    </div>`;
-    html += `<div class="agent-thinking-detail">
-      Analyzing thread history, resume, and conversation to build a candidate brief for the panel. Extracting key discussion points from Sachin's note.
-    </div>`;
-
-    html += `<div class="agent-sources expanded" onclick="this.classList.toggle('expanded')">
-      &#128269; Analyzed 3 sources <span class="chevron">&#9662;</span>
-    </div>`;
-    html += `<div class="agent-sources-list">
-      <div class="agent-source-item"><span class="source-icon">&#128196;</span><span class="source-name">Resume_SarahChen.pdf</span></div>
-      <div class="agent-source-item"><span class="source-icon">&#128172;</span><span class="source-name">Thread conversation (12 messages)</span></div>
-      <div class="agent-source-item"><span class="source-icon">&#128221;</span><span class="source-name">Sachin's internal note</span></div>
-    </div>`;
-
-    html += `<div class="agent-msg response">
-      <p><strong>Candidate brief for panel:</strong></p>
-      <p>&bull; 5 yrs at Flipkart — led checkout redesign (200M+ users)<br>
-      &bull; Built component library adopted by 12 teams<br>
-      &bull; Sachin wants to probe: stakeholder alignment approach<br>
-      &bull; Salary expectation: within our range</p>
-      <p>I've added "checkout redesign — stakeholder alignment" to the interview plan per Sachin's request.</p>
-    </div>`;
-    html += `<hr class="agent-divider">`;
-  }
-
-  // Step 8-9: Interview summary with deep analysis
-  if (step >= 8) {
-    html += `<div class="agent-msg question">Analyze the interview and generate a scorecard</div>`;
-
-    html += `<div class="agent-thinking-state expanded" onclick="this.classList.toggle('expanded')">
-      &#9201; Thought for 8 seconds <span class="chevron">&#9662;</span>
-    </div>`;
-    html += `<div class="agent-thinking-detail">
-      Transcribing and analyzing the 32-minute interview recording. Cross-referencing with role requirements, interview rubric, and panel feedback notes. Generating structured scorecard.
-    </div>`;
-
-    html += `<div class="agent-sources expanded" onclick="this.classList.toggle('expanded')">
-      &#128269; Analyzed 5 sources <span class="chevron">&#9662;</span>
-    </div>`;
-    html += `<div class="agent-sources-list">
-      <div class="agent-source-item"><span class="source-icon">&#127909;</span><span class="source-name">Interview_Recording.mp4 (32 min)</span></div>
-      <div class="agent-source-item"><span class="source-icon">&#128196;</span><span class="source-name">Product Designer Rubric</span></div>
-      <div class="agent-source-item"><span class="source-icon">&#128221;</span><span class="source-name">Sachin's feedback note</span></div>
-      <div class="agent-source-item"><span class="source-icon">&#128221;</span><span class="source-name">Priya's feedback note</span></div>
-      <div class="agent-source-item"><span class="source-icon">&#128196;</span><span class="source-name">Resume_SarahChen.pdf</span></div>
-    </div>`;
-
-    html += `<div class="agent-msg response">
-      <p><strong>Interview Scorecard — Sarah Chen</strong></p>
-      <p>&#11088; Systems Thinking: 4.5/5<br>
-      &#11088; Communication: 4.0/5<br>
-      &#11088; Stakeholder Management: 4.5/5<br>
-      &#11088; Product Thinking: 4.0/5<br>
-      <strong>Overall: 4.2/5</strong></p>
-      <p style="margin-top:4px">&#9888; One flag: limited enterprise B2B experience. Sachin notes she's a fast learner and this is addressable.</p>
-      <p><strong>Recommendation:</strong> Advance to offer.</p>
-    </div>`;
-    html += `<div class="agent-suggestion-chips">
-      <button class="agent-suggestion">Compare with other candidates</button>
-      <button class="agent-suggestion">Generate hiring report</button>
-    </div>`;
-    html += `<hr class="agent-divider">`;
-  }
-
-  // Step 10: Offer preparation with draft
-  if (step >= 10) {
-    html += `<div class="agent-msg question">Prepare the offer message for Sarah</div>`;
-
-    html += `<div class="agent-thinking-state expanded" onclick="this.classList.toggle('expanded')">
-      &#9201; Thought for 5 seconds <span class="chevron">&#9662;</span>
-    </div>`;
-    html += `<div class="agent-thinking-detail">
-      Pulling offer template, matching compensation to band, checking equity allocation, preparing benefits summary. Drafting personalized offer message based on conversation tone.
-    </div>`;
-
-    html += `<div class="agent-sources expanded" onclick="this.classList.toggle('expanded')">
-      &#128269; Used 3 templates <span class="chevron">&#9662;</span>
-    </div>`;
-    html += `<div class="agent-sources-list">
-      <div class="agent-source-item"><span class="source-icon">&#128196;</span><span class="source-name">Offer Letter Template (Product)</span></div>
-      <div class="agent-source-item"><span class="source-icon">&#128196;</span><span class="source-name">Benefits & Equity Guide</span></div>
-      <div class="agent-source-item"><span class="source-icon">&#128196;</span><span class="source-name">Compensation Bands 2024</span></div>
-    </div>`;
-
-    html += `<div class="agent-msg response">
-      <p>I've drafted the offer message and attached the offer letter (&#8377;30 LPA) and benefits package. Ready for your review:</p>
-      <button class="agent-insert-btn" onclick="showCompose('offer')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14m-7-7h14"/></svg>
-        Insert into reply
-      </button>
-    </div>`;
-    html += `<hr class="agent-divider">`;
-  }
-
-  // Step 11: Onboarding
-  if (step >= 11) {
-    html += `<div class="agent-msg response" style="background:var(--green-light);border-color:rgba(55,178,77,0.2);">
-      <p>&#127881; <strong>Offer accepted!</strong> Onboarding workflow triggered:</p>
-      <p>&bull; &#9989; Welcome email — scheduled Dec 20<br>
-      &bull; &#9989; IT equipment request — submitted<br>
-      &bull; &#9989; Team introduction channel — created<br>
-      &bull; &#9989; Day-1 orientation — booked Jan 6<br>
-      &bull; &#9989; Buddy assignment — Priya Gupta</p>
-    </div>`;
-    html += `<div class="agent-suggestion-chips">
-      <button class="agent-suggestion">View onboarding checklist</button>
-      <button class="agent-suggestion">Schedule 30-day check-in</button>
-    </div>`;
-  }
-
-  return html;
-}
 
 /* ═══ HTML HELPERS ═══ */
 function msgGroup(name, role, color, time, badge, content) {
   const badgeHTML = badge === 'ai' ? ' <span class="msg-sender-badge badge-ai">AI</span>'
     : badge === 'internal' ? ' <span class="msg-sender-badge badge-internal">Internal</span>' : '';
-  const initials = name.split(' ').map(w=>w[0]).join('').slice(0,2);
+  const initials = name.split(' ').map(w => w[0]).join('').slice(0, 2);
   return `<div class="msg-group">
     <div class="msg-sender">
       <div class="msg-sender-avatar" style="background:${color}">${initials}</div>
@@ -1782,17 +1239,6 @@ function msgGroup(name, role, color, time, badge, content) {
       <span class="msg-sender-time">${time}</span>
     </div>
     <div class="msg-bubble">${content}</div>
-  </div>`;
-}
-
-function noteBlock(header, candidateName, content) {
-  return `<div class="msg-note">
-    <div class="msg-note-header">${header}</div>
-    ${content.replace(/<\/?p>/g, function(m) { return m; })}
-    <div class="note-warning">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
-      Not visible to ${candidateName}
-    </div>
   </div>`;
 }
 
@@ -1807,14 +1253,56 @@ function waitingBar(text) {
   </div>`;
 }
 
-function inlineCard(icon, bgColor, title, desc, actionText) {
+function inlineCard(iconSvg, bgColor, title, desc, actionText) {
   return `<div class="inline-card">
-    <div class="inline-card-icon" style="background:${bgColor}">${icon}</div>
+    <div class="inline-card-icon" style="background:${bgColor}">${iconSvg}</div>
     <div class="inline-card-content">
       <div class="inline-card-title">${title}</div>
       <div class="inline-card-desc">${desc}</div>
     </div>
     <button class="inline-card-action">${actionText}</button>
+  </div>`;
+}
+
+function agentInline(body, actions) {
+  const actionsHTML = actions ? `<div class="agent-inline-actions">${actions}</div>` : '';
+  return `<div class="agent-inline">
+    <div class="agent-inline-header">
+      ${IC.sparkles} Recruiting Agent
+    </div>
+    <div class="agent-inline-body">${body}</div>
+    ${actionsHTML}
+  </div>`;
+}
+
+function agentActionCard(text) {
+  return `<div class="agent-action">
+    ${IC.sparkles} ${text}
+  </div>`;
+}
+
+function callCard(title, duration, time, participants) {
+  return `<div class="call-card">
+    <div class="call-card-header">
+      <div class="call-card-icon">${IC.phone}</div>
+      <div>
+        <div class="call-card-title">${title}</div>
+        <div class="call-card-meta">${duration} &middot; ${time}</div>
+      </div>
+    </div>
+    <div class="call-card-participants">${participants}</div>
+    <button class="call-card-play">${IC.play} Play recording</button>
+  </div>`;
+}
+
+function noteBlock(header, candidateName, content) {
+  return `<div class="msg-note">
+    <div class="msg-note-header">${header}</div>
+    ${content}
+    <div class="note-warning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+      Not visible to ${candidateName}
+    </div>
   </div>`;
 }
 
@@ -1830,32 +1318,32 @@ function aiSummary(text) {
   return `<div class="ai-summary">
     <div class="ai-summary-label">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-      Summary
+      AI Summary
     </div>
     <div class="ai-summary-text">${text}</div>
     <div class="ai-summary-footer">
-      <span>&#128077; Helpful</span>
-      <span>&#128078; Not helpful</span>
-      <span>Show conversation details &#8250;</span>
+      <span>${IC.thumbsUp} Helpful</span>
+      <span>${IC.thumbsDown} Not helpful</span>
+      <span>Details ${IC.chevronRight}</span>
     </div>
   </div>`;
 }
 
 function candMsg(dir, sender, color, badge, text) {
-  const initials = sender ? sender.split(' ').map(w=>w[0]).join('').slice(0,2) : '';
+  const initials = sender ? sender.split(' ').map(w => w[0]).join('').slice(0, 2) : '';
   const avatarHTML = dir === 'received' ? `<div class="cand-msg-avatar-sm" style="background:${color}">${initials}</div>` : '';
   const senderHTML = dir === 'received' && sender ?
-    `<div class="cand-msg-sender">${sender}${badge==='ai' ? ' <span class="ai-tag">AI</span>' : ''}</div>` : '';
+    `<div class="cand-msg-sender">${sender}${badge === 'ai' ? ' <span class="ai-tag">AI</span>' : ''}</div>` : '';
   return `<div class="cand-msg ${dir}">
     ${senderHTML}
     <div class="cand-msg-row">${avatarHTML}<div class="cand-bubble">${text}</div></div>
   </div>`;
 }
 
-function candCard(title, desc, primary, secondary) {
+function candCard(iconSvg, title, desc, primary, secondary) {
   const secHTML = secondary ? `<button class="cand-card-btn secondary">${secondary}</button>` : '';
   return `<div class="cand-card">
-    <div class="cand-card-title">${title}</div>
+    <div class="cand-card-title">${iconSvg} ${title}</div>
     <div class="cand-card-desc">${desc}</div>
     <div class="cand-card-actions"><button class="cand-card-btn primary">${primary}</button>${secHTML}</div>
   </div>`;
@@ -1863,84 +1351,447 @@ function candCard(title, desc, primary, secondary) {
 
 function candSchedule(title, detail, sub) {
   return `<div class="cand-schedule">
-    <div class="cand-schedule-title">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 2v4m8-4v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-      ${title}
-    </div>
+    <div class="cand-schedule-title">${IC.calendar} ${title}</div>
     <div class="cand-schedule-detail">${detail}</div>
     <div class="cand-schedule-sub">${sub}</div>
   </div>`;
 }
 
-/* ═══ STEP NAVIGATION ═══ */
-function updateDetailPanel(step) {
-  const stages = ['Outreach','Outreach','Active','Active','Active','Interview','Interview','Interview','Interview','Decision','Offer','Hired'];
-  const statuses = ['Needs first response','Outreach sent','Active conversation','Sharing information','AI assisting','Interview scheduled','Team collaborating','Interview in progress','Reviewing feedback','Making decision','Offer extended','Hired!'];
-  const statusColors = ['var(--blue)','var(--blue)','var(--green)','var(--green)','var(--purple)','var(--purple)','var(--amber)','var(--purple)','var(--amber)','var(--amber)','var(--green)','var(--green)'];
+/* ═══ RECRUITER CONVERSATION — Candidate Tab ═══ */
+function recruiterHTML(step) {
+  let html = '';
 
-  document.getElementById('detail-status').textContent = statuses[step] || statuses[0];
-  document.getElementById('detail-status-dot').style.background = statusColors[step] || statusColors[0];
-  document.getElementById('detail-stage').textContent = stages[step] || stages[0];
-
-  const previews = ['Thanks! I\'d love to know more about the role.','Outreach message sent','I\'d definitely like to learn more!','Sharing role details...','What\'s the interview process?','Thursday at 4 PM confirmed','Internal: Team discussion','Interview completed — 32 min','AI Summary generated','Decision: Proceed to Offer','Offer letter shared','Offer Accepted!'];
-  document.getElementById('thread-sarah-preview').textContent = previews[step] || previews[0];
-
-  const docsEl = document.getElementById('detail-docs');
-  let docsHTML = '<div class="detail-row"><span class="detail-label">&#128196;</span><span class="detail-value">Resume_SarahChen.pdf</span></div>';
-  if (step >= 3) docsHTML += '<div class="detail-row"><span class="detail-label">&#128196;</span><span class="detail-value">JobDescription.pdf</span></div>';
-  if (step >= 5) docsHTML += '<div class="detail-row"><span class="detail-label">&#128218;</span><span class="detail-value">InterviewGuide.pdf</span></div>';
-  if (step >= 7) docsHTML += '<div class="detail-row"><span class="detail-label">&#127909;</span><span class="detail-value">Interview_Recording.mp4</span></div>';
-  if (step >= 10) docsHTML += '<div class="detail-row"><span class="detail-label">&#127881;</span><span class="detail-value">OfferLetter_SarahChen.pdf</span></div>';
-  docsEl.innerHTML = docsHTML;
-
-  const logEl = document.getElementById('activity-log');
-  const logs = [];
-  if (step >= 0) logs.push('Thread created');
-  if (step >= 1) logs.push('Outreach sent');
-  if (step >= 2) logs.push('Sarah responded');
-  if (step >= 3) logs.push('JD & team info shared');
-  if (step >= 4) logs.push('AI Agent answered questions');
-  if (step >= 5) logs.push('Interview scheduled — Oct 24');
-  if (step >= 6) logs.push('Internal discussion started');
-  if (step >= 7) logs.push('Interview completed');
-  if (step >= 8) logs.push('AI Summary generated');
-  if (step >= 9) logs.push('Decision: Proceed to Offer');
-  if (step >= 10) logs.push('Offer sent');
-  if (step >= 11) logs.push('Offer accepted!');
-  logEl.innerHTML = logs.map(l => `<div class="activity-item"><span class="activity-dot"></span><span class="activity-text">${l}</span></div>`).join('');
-}
-
-const COMPOSE_DRAFTS = {
-  'interview-info': `There are 4 stages in the interview process:\n\n1. Recruiter conversation (30 min)\n2. Portfolio review with hiring manager (45 min)\n3. Product thinking exercise (60 min)\n4. Final discussion with VP Design (30 min)\n\nRegarding remote work: the role is hybrid with 2 days in the Hyderabad office. The team does async standups and has flexible hours.`,
-  'schedule': `I've checked everyone's calendars and Thursday at 4:00 PM IST works perfectly for the recruiter conversation.\n\nI'm sending you an interview preparation guide — it covers what to expect at each stage so you feel well prepared.`,
-  'offer': `Sarah, great news! The team was really impressed with your interviews. We'd love to have you join us.\n\nI'm sharing the offer details below — let me know if you have any questions!`
-};
-
-let composeVisible = false;
-
-function showCompose(draftKey) {
-  const overlay = document.getElementById('compose-overlay');
-  const draftText = document.getElementById('compose-draft-text');
-  draftText.textContent = COMPOSE_DRAFTS[draftKey] || '';
-  overlay.style.display = 'block';
-  composeVisible = true;
-}
-
-function composeAction(action) {
-  const overlay = document.getElementById('compose-overlay');
-  if (action === 'accept') {
-    overlay.style.display = 'none';
-    composeVisible = false;
-  } else if (action === 'undo') {
-    overlay.style.display = 'none';
-    composeVisible = false;
-  } else if (action === 'try-again') {
-    document.getElementById('compose-draft-text').textContent = 'Regenerating...';
-    setTimeout(() => {
-      document.getElementById('compose-draft-text').textContent =
-        'Here\'s a revised version of the reply — let me know if you\'d like further changes.';
-    }, 800);
+  if (step >= 0) {
+    html += statusEvent('green', 'Thread created &middot; Sarah Chen found on LinkedIn');
+    html += agentInline(
+      `<p>I've drafted a personalized outreach based on Sarah's profile at Flipkart and the Product Designer role.</p>
+       <div class="agent-inline-draft">Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad. The team is building a new enterprise design system and we're looking for someone with your systems thinking background. Would you be interested in learning more?</div>`,
+      `<button class="btn-primary" onclick="return false">Send as-is</button>
+       <button class="btn-secondary" onclick="return false">Edit first</button>`
+    );
   }
+
+  if (step >= 0) {
+    html += msgGroup('You', 'Recruiter', '#37B24D', 'Just now', '',
+      `<p>Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad.</p>
+       <p>The team is building a new enterprise design system and we're looking for someone with your systems thinking background. Would you be interested in learning more?</p>`);
+    html += statusEvent('blue', 'Waiting for Sarah Chen');
+    if (step === 0) {
+      html += `<div class="waiting-bar" style="background:#FFF3D0;color:#BF6C00;">
+        ${IC.clock} Waiting for Sarah Chen to respond
+      </div>`;
+    }
+  }
+
+  if (step >= 1) {
+    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', '2 min ago', '',
+      `<p>Hi! Thanks for reaching out. I've been looking at design systems roles and this sounds interesting.</p>
+       <p>What's the interview process like? And is there flexibility on remote work?</p>`);
+
+    html += agentInline(
+      `<p>Sarah asked about remote work and the interview process. I found the answers:</p>
+       <p><strong>Remote:</strong> Hybrid, 2 days/week in Hyderabad office. Async standups, flexible hours.</p>
+       <p><strong>Interview:</strong> 4 stages, ~3 hours total &mdash; recruiter conversation, portfolio review, product exercise, final discussion.</p>`,
+      `<button class="btn-primary" onclick="return false">Send answer</button>
+       <button class="btn-secondary" onclick="return false">Edit first</button>`
+    );
+
+    html += msgGroup('You', 'Recruiter', '#37B24D', '1 min ago', '',
+      `<p>Great questions! I'll walk you through the first stage personally &mdash; it's very conversational, no trick questions.</p>`);
+    html += inlineCard(IC.fileText, '#E7EDFF', 'Product Designer &mdash; Job Description',
+      'Design team &middot; Hyderabad &middot; Full-time', 'View');
+    html += inlineCard(IC.users, '#E6F9ED', 'Team Overview',
+      '4 designers, 2 PMs &middot; Enterprise Design System', 'View');
+  }
+
+  if (step >= 2) {
+    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', 'Just now', '',
+      `<p>Sounds good! I'm available Thursday afternoon if that works?</p>`);
+
+    html += agentInline(
+      `<p>I checked everyone's calendars. 3 times work for all participants:</p>
+       <div class="agent-inline-options">
+         <div class="agent-inline-option">Thu 3:30 PM IST &middot; 30 min</div>
+         <div class="agent-inline-option recommended">Thu 4:00 PM IST &middot; 30 min <span class="rec-badge">Recommended</span></div>
+         <div class="agent-inline-option">Thu 4:30 PM IST &middot; 30 min</div>
+       </div>`,
+      `<button class="btn-primary" onclick="return false">Send 4:00 PM</button>
+       <button class="btn-secondary" onclick="return false">Show all options</button>`
+    );
+
+    html += inlineCard(IC.calendar, '#E6F9ED', 'Interview Scheduled',
+      'Thursday, Oct 24 &middot; 4:00 PM IST &middot; Video Call', 'Confirmed');
+    html += agentActionCard('Sent interview prep guide to Sarah automatically');
+    html += statusEvent('purple', 'Stage &rarr; Interview');
+  }
+
+  if (step >= 3) {
+    // Nothing new in candidate tab for collaborate step
+  }
+
+  if (step >= 4) {
+    html += callCard('Recruiter conversation', '32 min', 'Today, 4:00 PM IST', 'Sarah Chen + You');
+
+    html += aiSummary(
+      `Sarah demonstrated strong systems thinking and clear communication. Key highlights:
+       <br>&bull; Led the Flipkart checkout redesign serving 200M+ users
+       <br>&bull; Built a component library adopted by 12 product teams
+       <br>&bull; Comfortable with enterprise constraints and stakeholder management
+       <br>&bull; Salary expectation: &#8377;28&ndash;32 LPA (within our range)
+       <br><br><strong>Recommendation:</strong> Advance to Portfolio Review with Sachin.`);
+  }
+
+  if (step >= 5) {
+    html += msgGroup('You', 'Recruiter', '#37B24D', '15 min ago', '',
+      `<p>Sarah, great news! The team was really impressed with your interviews. We'd love to have you join us.</p>`);
+    html += inlineCard(IC.award, '#E6F9ED', 'Offer Letter &mdash; Product Designer',
+      '&#8377;30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer');
+    html += inlineCard(IC.clipboard, '#F3EEFF', 'Benefits &amp; Equity Package',
+      'Health, RSUs, relocation support', 'View');
+
+    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', 'Just now', '',
+      `<p>This is amazing! I'm thrilled to accept. The team, the role, and the offer all feel right.</p>
+       <p>Thank you for making this process so smooth &mdash; having everything in one conversation made it so easy to stay on top of things.</p>`);
+
+    html += `<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;margin:8px 0;background:var(--green-light);border-radius:var(--radius-lg);">
+      <span style="color:var(--green)">${IC.award}</span>
+      <span style="font-size:14px;font-weight:600;color:var(--green-dark)">Offer Accepted &mdash; Sarah Chen joins as Product Designer</span>
+    </div>`;
+
+    html += agentInline(
+      `<p>Onboarding workflow triggered:</p>
+       <p>${IC.circleCheck} Welcome email &mdash; scheduled Dec 20<br>
+       ${IC.circleCheck} IT equipment request &mdash; submitted<br>
+       ${IC.circleCheck} Team introduction channel &mdash; created<br>
+       ${IC.circleCheck} Day-1 orientation &mdash; booked Jan 6<br>
+       ${IC.circleCheck} Buddy assignment &mdash; Priya Gupta</p>`,
+      ''
+    );
+  }
+
+  return html;
+}
+
+/* ═══ RECRUITER CONVERSATION — Team Tab ═══ */
+function teamHTML(step) {
+  let html = '';
+
+  if (step < 2) {
+    html += `<div style="display:flex;align-items:center;justify-content:center;height:200px;color:var(--gray-400);font-size:13px">No team messages yet</div>`;
+    return html;
+  }
+
+  if (step >= 2) {
+    html += msgGroup('You', 'Recruiter', '#37B24D', '30 min ago', '',
+      `<p>@Sachin &mdash; Sarah confirmed for Thursday 4 PM. Her portfolio has strong systems work from Flipkart.</p>`);
+  }
+
+  if (step >= 3) {
+    html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '20 min ago', '',
+      `<p>Great. Can you ask about the checkout redesign specifically? I want to understand how she handles stakeholder alignment.</p>`);
+
+    html += agentActionCard('Added "checkout redesign &mdash; stakeholder alignment" to portfolio interview plan');
+
+    html += msgGroup('Priya Gupta', 'Interviewer', '#7C3AED', '15 min ago', '',
+      `<p>I'll probe her B2B enterprise experience too. That's the one gap I see on the resume.</p>`);
+
+    html += agentActionCard('Updated plan: added B2B enterprise workflow questions');
+  }
+
+  if (step >= 4) {
+    html += agentInline(
+      `<p>Interview completed. Sarah scored <strong>4.2/5</strong> overall. One concern flagged: limited enterprise B2B experience.</p>`,
+      `<button class="btn-secondary" onclick="return false">View scorecard</button>`
+    );
+
+    html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '2h ago', '',
+      `<p>The checkout case study was impressive &mdash; she managed 6 stakeholder groups. I'm comfortable with the B2B gap; she's a fast learner.</p>`);
+
+    html += msgGroup('Priya Gupta', 'Interviewer', '#7C3AED', '1h ago', '',
+      `<p>Agreed. Her product thinking exercise was the strongest I've seen this quarter. She reframed the problem beautifully.</p>`);
+  }
+
+  if (step >= 5) {
+    html += agentInline(
+      `<p>All interviews complete. Sarah is the top candidate.</p>
+       <p>Avg score: <strong>4.2/5</strong> &middot; 2 concerns resolved &middot; Salary within band</p>`,
+      ``
+    );
+
+    html += msgGroup('You', 'Recruiter', '#37B24D', '30 min ago', '',
+      `<p>@Recruiting Agent &mdash; prepare the offer.</p>`);
+
+    html += agentInline(
+      `<p>I've drafted the offer at <strong>&#8377;30 LPA</strong> based on approved compensation bands. Benefits package included.</p>`,
+      `<button class="btn-primary" onclick="return false">Review draft</button>
+       <button class="btn-secondary" onclick="return false">Edit</button>`
+    );
+
+    html += msgGroup('Sachin Patel', 'Hiring Manager', '#E65100', '15 min ago', '',
+      `<p>Approved. Send it.</p>`);
+  }
+
+  return html;
+}
+
+/* ═══ CONTEXTUAL RIGHT PANEL ═══ */
+function contextPanelHTML(step) {
+  let html = '';
+
+  // Ambient stage indicator
+  const stages = ['Outreach', 'Active', 'Interview', 'Interview', 'Review', 'Hired'];
+  const stageColors = ['var(--blue)', 'var(--green)', 'var(--purple)', 'var(--purple)', 'var(--amber)', 'var(--green)'];
+  html += `<div class="detail-section" style="padding:12px 16px 8px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <span class="stage-pill" style="background:${stageColors[step]}15;color:${stageColors[step]}">${stages[step]}</span>
+      <span style="font-size:11px;color:var(--gray-400)">${step + 1} of 6</span>
+    </div>
+  </div>`;
+
+  // Customer card (always visible)
+  html += `<div class="customer-card">
+    <div class="customer-card-header">
+      <div class="customer-card-avatar" style="background:#4C6EF5">SC</div>
+      <span class="customer-card-name">Sarah Chen</span>
+    </div>
+    <div class="customer-card-row">
+      <span class="customer-card-label">Role</span>
+      <span class="customer-card-val">Product Designer</span>
+    </div>
+    <div class="customer-card-row">
+      <span class="customer-card-label">Company</span>
+      <span class="customer-card-val">Flipkart</span>
+    </div>
+    <div class="customer-card-row">
+      <span class="customer-card-label">Email</span>
+      <span class="customer-card-val"><a href="#">sarah.chen@gmail.com</a></span>
+    </div>
+    <div class="customer-card-row">
+      <span class="customer-card-label">Source</span>
+      <span class="customer-card-val">LinkedIn</span>
+    </div>
+  </div>`;
+
+  // Step-specific context
+  if (step === 0) {
+    html += `<div class="detail-section">
+      <div class="detail-section-title">Role</div>
+      <div class="context-card">
+        <div class="context-card-title">Product Designer &mdash; Hyderabad</div>
+        <div class="context-card-sub">Design team &middot; Full-time &middot; Hybrid</div>
+      </div>
+      <div style="margin-top:8px">
+        <div class="detail-row"><span class="detail-label">Team</span><span class="detail-value">4 designers, 2 PMs</span></div>
+        <div class="detail-row"><span class="detail-label">Manager</span><span class="detail-value">Sachin Patel</span></div>
+        <div class="detail-row"><span class="detail-label">Band</span><span class="detail-value">&#8377;25&ndash;32 LPA</span></div>
+      </div>
+    </div>`;
+  }
+
+  if (step === 1) {
+    html += `<div class="detail-section">
+      <div class="detail-section-title">Interview process</div>
+      <div class="step-item"><div class="step-check"></div><div class="step-info"><div class="step-name">Recruiter conversation</div><div class="step-meta">30 min &middot; Video call</div></div></div>
+      <div class="step-item"><div class="step-check"></div><div class="step-info"><div class="step-name">Portfolio review</div><div class="step-meta">45 min &middot; Sachin Patel</div></div></div>
+      <div class="step-item"><div class="step-check"></div><div class="step-info"><div class="step-name">Product thinking exercise</div><div class="step-meta">60 min</div></div></div>
+      <div class="step-item"><div class="step-check"></div><div class="step-info"><div class="step-name">Final discussion</div><div class="step-meta">30 min &middot; VP Design</div></div></div>
+      <div style="font-size:11px;color:var(--gray-500);margin-top:8px;">4 stages &middot; ~3 hours total</div>
+      <button class="detail-action-btn">Share with Sarah</button>
+    </div>`;
+  }
+
+  if (step === 2) {
+    html += `<div class="detail-section">
+      <div class="detail-section-title">Interview</div>
+      <div class="context-card" style="border-color:var(--green);background:var(--green-light);">
+        <div class="context-card-title" style="color:var(--green-dark)">Recruiter conversation</div>
+        <div class="context-card-sub">Thu, Oct 24 &middot; 4:00 PM IST</div>
+        <div class="context-card-sub">30 min &middot; Video call</div>
+      </div>
+      <div style="margin-top:8px">
+        <div class="participant"><div class="participant-avatar" style="background:#4C6EF5">SC</div><span class="participant-name">Sarah Chen</span><span class="participant-check">${IC.circleCheck}</span></div>
+        <div class="participant"><div class="participant-avatar" style="background:#37B24D">Y</div><span class="participant-name">You</span><span class="participant-check">${IC.circleCheck}</span></div>
+        <div class="participant"><div class="participant-avatar" style="background:#E65100">SP</div><span class="participant-name">Sachin Patel</span><span class="participant-check">${IC.circleCheck}</span></div>
+      </div>
+    </div>`;
+  }
+
+  if (step === 3) {
+    html += `<div class="detail-section">
+      <div class="detail-section-title">Interview plan</div>
+      <div style="font-size:12px;font-weight:500;color:var(--gray-900);margin-bottom:6px">Recruiter Conversation &middot; 30 min</div>
+      <div class="step-item"><div class="step-check" style="width:14px;height:14px;border-width:1.5px;"></div><div class="step-info"><div class="step-name">Background &amp; motivation</div></div></div>
+      <div class="step-item"><div class="step-check" style="width:14px;height:14px;border-width:1.5px;"></div><div class="step-info"><div class="step-name">Technical skills</div></div></div>
+      <div class="step-item"><div class="step-check" style="width:14px;height:14px;border-width:1.5px;border-color:var(--purple)"></div><div class="step-info"><div class="step-name">Checkout redesign &mdash; stakeholder alignment</div><div class="ai-added">${IC.sparkles} Added by agent via Sachin</div></div></div>
+      <div class="step-item"><div class="step-check" style="width:14px;height:14px;border-width:1.5px;border-color:var(--purple)"></div><div class="step-info"><div class="step-name">B2B enterprise experience</div><div class="ai-added">${IC.sparkles} Added by agent via Priya</div></div></div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">Panel</div>
+      <div class="participant"><div class="participant-avatar" style="background:#37B24D">Y</div><span class="participant-name">You &mdash; Recruiter</span></div>
+      <div class="participant"><div class="participant-avatar" style="background:#E65100">SP</div><span class="participant-name">Sachin &mdash; Portfolio</span></div>
+      <div class="participant"><div class="participant-avatar" style="background:#7C3AED">PG</div><span class="participant-name">Priya &mdash; Exercise</span></div>
+      <div class="participant"><div class="participant-avatar" style="background:var(--gray-500)">VP</div><span class="participant-name">VP Design &mdash; Final</span></div>
+    </div>`;
+  }
+
+  if (step === 4) {
+    html += `<div class="detail-section">
+      <div class="detail-section-title">Interview scorecard</div>`;
+    const scores = [
+      ['Systems Thinking', 4.5, '#37B24D'],
+      ['Communication', 4.0, '#4C6EF5'],
+      ['Stakeholder Mgmt', 4.5, '#37B24D'],
+      ['Product Thinking', 4.0, '#4C6EF5'],
+    ];
+    scores.forEach(([label, score, color]) => {
+      const pct = (score / 5) * 100;
+      html += `<div class="score-row">
+        <span class="score-label">${label}</span>
+        <div class="score-bar"><div class="score-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+        <span class="score-value">${score}/5</span>
+      </div>`;
+    });
+    html += `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0 4px;border-top:1px solid var(--gray-100);margin-top:8px">
+      <span style="font-size:13px;font-weight:600">Overall</span>
+      <span style="font-size:13px;font-weight:700;color:var(--green)">4.2/5</span>
+    </div>`;
+    html += `<div style="display:flex;align-items:flex-start;gap:6px;margin-top:8px;padding:8px 10px;background:var(--amber-bg);border-radius:var(--radius-md);font-size:12px;color:#BF6C00">
+      ${IC.alertTriangle} Limited B2B experience (Sachin: fast learner, addressable)
+    </div>`;
+    html += `<div style="margin-top:8px;font-size:12px;font-weight:600;color:var(--green)">Recommendation: Advance to offer</div>
+    </div>`;
+  }
+
+  if (step === 5) {
+    html += `<div class="detail-section">
+      <div class="detail-section-title">Compensation</div>
+      <div class="detail-row"><span class="detail-label">Expectation</span><span class="detail-value">&#8377;28&ndash;32 LPA</span></div>
+      <div class="detail-row"><span class="detail-label">Approved</span><span class="detail-value">&#8377;25&ndash;32 LPA</span></div>
+      <div class="detail-row"><span class="detail-label" style="font-weight:600;color:var(--gray-900)">Offer</span><span class="detail-value" style="font-weight:600;color:var(--green)">&#8377;30 LPA</span></div>
+      <div class="detail-row"><span class="detail-label">Start</span><span class="detail-value">Jan 6 &middot; Hyderabad</span></div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">Benefits</div>
+      <div class="detail-row"><span class="detail-label">${IC.circleCheck}</span><span class="detail-value">Health insurance</span></div>
+      <div class="detail-row"><span class="detail-label">${IC.circleCheck}</span><span class="detail-value">RSU equity</span></div>
+      <div class="detail-row"><span class="detail-label">${IC.circleCheck}</span><span class="detail-value">Relocation support</span></div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">Status</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--green)">
+        ${IC.circleCheck} Offer accepted
+      </div>
+    </div>`;
+  }
+
+  // Documents (always)
+  html += `<div class="detail-section">
+    <div class="detail-section-title">Documents</div>`;
+  html += `<div class="detail-row"><span class="detail-label">${IC.file}</span><span class="detail-value" style="font-size:12px">Resume_SarahChen.pdf</span></div>`;
+  if (step >= 1) html += `<div class="detail-row"><span class="detail-label">${IC.fileText}</span><span class="detail-value" style="font-size:12px">JobDescription.pdf</span></div>`;
+  if (step >= 2) html += `<div class="detail-row"><span class="detail-label">${IC.bookOpen}</span><span class="detail-value" style="font-size:12px">InterviewGuide.pdf</span></div>`;
+  if (step >= 4) html += `<div class="detail-row"><span class="detail-label">${IC.video}</span><span class="detail-value" style="font-size:12px">Interview_Recording.mp4</span></div>`;
+  if (step >= 5) html += `<div class="detail-row"><span class="detail-label">${IC.award}</span><span class="detail-value" style="font-size:12px">OfferLetter_SarahChen.pdf</span></div>`;
+  html += `</div>`;
+
+  return html;
+}
+
+/* ═══ CANDIDATE VIEW CONTENT ═══ */
+function candidateHTML(step) {
+  let html = '';
+
+  if (step >= 0) {
+    html += candMsg('received', 'Recruiter', '#37B24D', '',
+      'Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad.');
+  }
+  if (step >= 1) {
+    html += candMsg('sent', '', '#4C6EF5', '',
+      "Hi! Thanks for reaching out. What's the interview process like? And is remote work possible?");
+    html += candMsg('received', 'Recruiting Assistant', '#7C3AED', 'ai',
+      "There are 4 stages: recruiter conversation (30 min), portfolio review (45 min), product thinking exercise (60 min), and final discussion (30 min). The role is hybrid &mdash; 2 days in office with flexible hours.");
+    html += candMsg('received', 'Recruiter', '#37B24D', '',
+      "I'll walk you through the first stage personally &mdash; it's very conversational!");
+    html += candCard(IC.fileText, 'Product Designer &mdash; Job Description',
+      'Design team &middot; Hyderabad &middot; Full-time', 'View', 'Save');
+  }
+  if (step >= 2) {
+    html += candMsg('sent', '', '#4C6EF5', '',
+      "Sounds good! I'm available Thursday afternoon.");
+    html += candSchedule('Interview Scheduled', 'Thursday, Oct 24 &middot; 4:00 PM IST', 'Video Call with Recruiter');
+    html += candCard(IC.bookOpen, 'Interview Preparation Guide',
+      'Tips and what to expect at each stage', 'Read Guide', '');
+  }
+  if (step >= 4) {
+    html += `<div style="text-align:center;padding:12px 0;font-size:12px;color:var(--gray-500);">Interview completed &middot; 32 min</div>`;
+  }
+  if (step >= 5) {
+    html += candMsg('received', 'Recruiter', '#37B24D', '',
+      "Sarah, great news! The team was really impressed. We'd love to have you join us:");
+    html += candCard(IC.award, 'Offer Letter &mdash; Product Designer',
+      '&#8377;30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer', '');
+    html += candCard(IC.clipboard, 'Benefits &amp; Equity Package',
+      'Health, RSUs, relocation support', 'View Details', '');
+    html += candMsg('sent', '', '#4C6EF5', '',
+      "This is amazing! I'm thrilled to accept. Thank you for making this so smooth!");
+    html += `<div style="text-align:center;padding:14px;margin:8px 0;background:var(--green-light);border-radius:var(--radius-xl);">
+      <div style="color:var(--green);margin-bottom:4px">${IC.award}</div>
+      <div style="font-size:14px;font-weight:600;color:var(--green-dark)">You're in! Welcome to ABC Staffing</div>
+      <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">Starting Jan 6 &middot; Hyderabad</div>
+    </div>`;
+  }
+
+  return html;
+}
+
+/* ═══ AGENT PANEL CONTENT ═══ */
+function agentPanelHTML(step) {
+  let html = '';
+  html += `<div class="agent-intro">I have context on Sarah's thread. Here are some things I can help with:</div>`;
+  html += `<div class="agent-quick-actions">
+    <button class="agent-chip">${IC.messageSquare} Draft a reply</button>
+    <button class="agent-chip">${IC.lightbulb} What should I do next?</button>
+    <button class="agent-chip">${IC.trendingUp} Should this be escalated?</button>
+    <button class="agent-chip">${IC.fileText} Summarize this thread</button>
+    <button class="agent-chip">${IC.search} Find relevant docs</button>
+  </div>`;
+  return html;
+}
+
+/* ═══ COMPOSER SUGGESTIONS ═══ */
+function composerSuggestionsHTML(step, tab) {
+  if (tab === 'team') {
+    if (step === 2) return `<button class="composer-suggestion">${IC.users} @Sachin share context</button>`;
+    return '';
+  }
+  const suggestions = {
+    0: '',
+    1: `<button class="composer-suggestion">${IC.fileText} Share JD</button><button class="composer-suggestion">${IC.calendar} Schedule</button>`,
+    2: `<button class="composer-suggestion">${IC.bookOpen} Send prep guide</button>`,
+    3: '',
+    4: `<button class="composer-suggestion">${IC.award} Prepare offer</button><button class="composer-suggestion">${IC.users} Share with team</button>`,
+    5: '',
+  };
+  return suggestions[step] || '';
+}
+
+/* ═══ STEP NAVIGATION ═══ */
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tab-candidate').classList.toggle('active', tab === 'candidate');
+  document.getElementById('tab-team').classList.toggle('active', tab === 'team');
+  renderConversation();
+}
+
+function renderConversation() {
+  const convBody = document.getElementById('conv-body');
+  if (currentTab === 'candidate') {
+    convBody.innerHTML = recruiterHTML(currentStep);
+  } else {
+    convBody.innerHTML = teamHTML(currentStep);
+  }
+  document.getElementById('composer-suggestions').innerHTML = composerSuggestionsHTML(currentStep, currentTab);
+  setTimeout(() => { convBody.scrollTop = convBody.scrollHeight; }, 50);
 }
 
 function toggleAgent() {
@@ -1948,40 +1799,35 @@ function toggleAgent() {
   document.getElementById('agent-panel').classList.toggle('visible', agentVisible);
   document.getElementById('detail-panel').style.display = agentVisible ? 'none' : 'block';
   if (agentVisible) {
-    document.getElementById('agent-body').innerHTML = agentHTML(currentStep);
-    document.getElementById('agent-title').textContent = currentStep <= 3 ? 'Ask Sidekick' : 'Agent session';
-    document.getElementById('agent-time').textContent = currentStep <= 3 ? '' : 'Just now';
-    const agentBody = document.getElementById('agent-body');
-    setTimeout(() => { agentBody.scrollTop = agentBody.scrollHeight; }, 50);
+    document.getElementById('agent-body').innerHTML = agentPanelHTML(currentStep);
   }
 }
 
 function render() {
-  const convBody = document.getElementById('conv-body');
-  const candBody = document.getElementById('cand-body');
-
-  convBody.innerHTML = recruiterHTML(currentStep);
-  candBody.innerHTML = candidateHTML(currentStep);
-
-  // Reset compose overlay on step change
-  document.getElementById('compose-overlay').style.display = 'none';
-  composeVisible = false;
-
-  // Auto-open sidekick at step 4+ and keep it open
-  if (currentStep >= 4 && !agentVisible) {
-    agentVisible = true;
-    document.getElementById('agent-panel').classList.add('visible');
-    document.getElementById('detail-panel').style.display = 'none';
+  // Auto-switch to team tab at step 3
+  if (currentStep === 3 && currentTab === 'candidate') {
+    currentTab = 'team';
+    document.getElementById('tab-candidate').classList.remove('active');
+    document.getElementById('tab-team').classList.add('active');
+  }
+  // Switch back to candidate tab at step 4+ if on team
+  if (currentStep >= 4 && currentStep <= 4 && currentTab === 'team') {
+    currentTab = 'candidate';
+    document.getElementById('tab-candidate').classList.add('active');
+    document.getElementById('tab-team').classList.remove('active');
   }
 
-  if (agentVisible) {
-    document.getElementById('agent-body').innerHTML = agentHTML(currentStep);
-    document.getElementById('agent-title').textContent = currentStep <= 3 ? 'Ask Sidekick' : 'Agent session';
-    document.getElementById('agent-time').textContent = currentStep <= 3 ? '' : 'Just now';
-    const agentBody = document.getElementById('agent-body');
-    setTimeout(() => { agentBody.scrollTop = agentBody.scrollHeight; }, 80);
-  }
+  // Show team dot indicator
+  document.getElementById('team-dot').style.display = currentStep >= 2 ? 'block' : 'none';
 
+  // Render conversations
+  renderConversation();
+  document.getElementById('cand-body').innerHTML = candidateHTML(currentStep);
+
+  // Render contextual right panel
+  document.getElementById('detail-panel').innerHTML = contextPanelHTML(currentStep);
+
+  // Update step indicators
   document.getElementById('step-num').textContent = currentStep + 1;
   document.getElementById('step-name').textContent = '— ' + STEPS[currentStep].name;
 
@@ -1992,11 +1838,25 @@ function render() {
   document.getElementById('prev-btn').disabled = currentStep === 0;
   document.getElementById('next-btn').disabled = currentStep === STEPS.length - 1;
 
-  updateDetailPanel(currentStep);
+  // Update thread preview
+  const previews = [
+    'Outreach message sent',
+    "What's the interview process?",
+    'Thursday 4 PM confirmed',
+    'Team discussing interview plan',
+    'Interview completed — 4.2/5',
+    'Offer Accepted!'
+  ];
+  document.getElementById('thread-sarah-preview').textContent = previews[currentStep] || previews[0];
 
+  // Update agent panel if visible
+  if (agentVisible) {
+    document.getElementById('agent-body').innerHTML = agentPanelHTML(currentStep);
+  }
+
+  // Scroll candidate view
   setTimeout(() => {
-    convBody.scrollTop = convBody.scrollHeight;
-    candBody.scrollTop = candBody.scrollHeight;
+    document.getElementById('cand-body').scrollTop = document.getElementById('cand-body').scrollHeight;
   }, 50);
 }
 
