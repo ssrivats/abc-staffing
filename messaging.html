@@ -1439,6 +1439,12 @@ function recruiterHTML(step) {
        <br>&bull; Comfortable with enterprise constraints and stakeholder management
        <br>&bull; Salary expectation: &#8377;28&ndash;32 LPA (within our range)
        <br><br><strong>Recommendation:</strong> Advance to Portfolio Review with Sachin.`);
+
+    html += msgGroup('You', 'Recruiter', '#37B24D', '30 min ago', '',
+      `<p>Thanks for speaking with us today, Sarah. The team is reviewing feedback and I'll be in touch shortly.</p>`);
+
+    html += msgGroup('Sarah Chen', 'Candidate', '#4C6EF5', '25 min ago', '',
+      `<p>Thank you! I really enjoyed learning about the design system work. Looking forward to hearing back.</p>`);
   }
 
   if (step >= 5) {
@@ -1724,6 +1730,12 @@ function candidateHTML(step) {
   }
   if (step >= 4) {
     html += `<div style="text-align:center;padding:12px 0;font-size:12px;color:var(--gray-500);">Interview completed &middot; 32 min</div>`;
+    html += candMsg('received', 'Recruiter', '#37B24D', '',
+      "Thanks for taking the time today, Sarah. It was great speaking with you &mdash; I'll be in touch shortly with next steps.");
+    html += candMsg('sent', '', '#4C6EF5', '',
+      "Thank you! I really enjoyed learning about the design system work. Looking forward to hearing back.");
+    html += candMsg('received', 'Recruiter', '#37B24D', '',
+      "We're reviewing the team's feedback now. Should have an update for you by end of day.");
   }
   if (step >= 5) {
     html += candMsg('received', 'Recruiter', '#37B24D', '',
