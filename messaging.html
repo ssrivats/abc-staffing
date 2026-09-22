@@ -8,31 +8,37 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --green: #37B24D;
-  --green-light: #E6F9ED;
-  --green-dark: #2F9E44;
-  --amber: #F59F00;
-  --amber-bg: #FFF3D0;
-  --red: #E03131;
+  /* Primary — Indigo */
+  --green: #4F46E5;
+  --green-light: #EEF2FF;
+  --green-dark: #4338CA;
 
-  /* AI-specific palette — distinct from amber internal notes */
-  --ai: #7C5CFC;
-  --ai-light: #F0ECFF;
-  --ai-dark: #6344E0;
-  --ai-text: #5B3FD9;
+  /* Success — Emerald (online, checkmarks, completed) */
+  --success: #059669;
+  --success-light: #ECFDF5;
 
-  --sand-50: #FAF9F7;
-  --sand-100: #F3F1ED;
-  --sand-200: #E8E4DD;
+  --amber: #D97706;
+  --amber-bg: #FFFBEB;
+  --red: #DC2626;
 
-  --gray-900: #1A1A1A;
-  --gray-700: #4A4A4A;
-  --gray-500: #8C8C8C;
-  --gray-400: #ADB5BD;
-  --gray-300: #D1D1D1;
-  --gray-200: #E5E5E5;
-  --gray-100: #F5F5F5;
-  --gray-50: #FAFAFA;
+  /* AI — Violet */
+  --ai: #8B5CF6;
+  --ai-light: #F5F3FF;
+  --ai-dark: #7C3AED;
+  --ai-text: #7C3AED;
+
+  --sand-50: #FAFAF9;
+  --sand-100: #F5F5F4;
+  --sand-200: #E7E5E4;
+
+  --gray-900: #111827;
+  --gray-700: #374151;
+  --gray-500: #6B7280;
+  --gray-400: #9CA3AF;
+  --gray-300: #D1D5DB;
+  --gray-200: #E5E7EB;
+  --gray-100: #F3F4F6;
+  --gray-50: #F9FAFB;
   --white: #FFFFFF;
 
   --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -154,7 +160,7 @@ body {
 .rail-icon .badge-dot {
   position: absolute; top: 6px; right: 8px;
   width: 8px; height: 8px; border-radius: var(--radius-full);
-  background: var(--green); border: 2px solid var(--sand-50);
+  background: var(--success); border: 2px solid var(--sand-50);
 }
 .rail-divider {
   width: 28px; height: 1px; background: var(--sand-200);
@@ -163,7 +169,7 @@ body {
 .rail-spacer { flex: 1; }
 .rail-avatar {
   width: 30px; height: 30px; border-radius: var(--radius-full);
-  background: #6B7E6A; color: white;
+  background: #6366F1; color: white;
   display: flex; align-items: center; justify-content: center;
   font-weight: 600; font-size: 11px; cursor: pointer;
   position: relative; flex-shrink: 0;
@@ -171,7 +177,7 @@ body {
 .rail-avatar .online-dot {
   position: absolute; bottom: -1px; right: -1px;
   width: 10px; height: 10px; border-radius: var(--radius-full);
-  background: var(--green); border: 2px solid var(--sand-50);
+  background: var(--success); border: 2px solid var(--sand-50);
 }
 
 /* Thread List */
@@ -608,10 +614,10 @@ body {
 /* Waiting bar */
 .waiting-bar {
   display: flex; align-items: center; gap: 8px;
-  background: var(--green-light);
+  background: var(--gray-100);
   border-radius: var(--radius-md);
   padding: 8px 14px; margin: 8px 0;
-  font-size: 12px; font-weight: 500; color: var(--green-dark);
+  font-size: 12px; font-weight: 500; color: var(--gray-500);
 }
 .waiting-bar svg { width: 14px; height: 14px; }
 
@@ -653,7 +659,7 @@ body {
 .file-attachment:hover { border-color: var(--gray-300); }
 .file-attachment .file-icon {
   width: 28px; height: 28px; border-radius: var(--radius-sm);
-  background: #8B7E74; color: white;
+  background: #78859B; color: white;
   display: flex; align-items: center; justify-content: center;
   font-size: 9px; font-weight: 700;
 }
@@ -783,7 +789,7 @@ body {
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; font-size: 10px; color: white;
 }
-.step-item .step-check.done { background: var(--green); border-color: var(--green); }
+.step-item .step-check.done { background: var(--success); border-color: var(--success); }
 .step-item .step-check.active { border-color: var(--green); }
 .step-item .step-check svg { width: 12px; height: 12px; }
 .step-item .step-info { flex: 1; }
@@ -818,7 +824,7 @@ body {
   font-weight: 600; font-size: 8px; color: var(--white); flex-shrink: 0;
 }
 .participant-name { font-size: 12px; color: var(--gray-700); flex: 1; }
-.participant-check { color: var(--green); }
+.participant-check { color: var(--success); }
 .participant-check svg { width: 14px; height: 14px; }
 
 /* Customer card in right panel */
@@ -1076,11 +1082,11 @@ body {
 }
 .cand-card-btn.secondary:hover { background: var(--gray-50); }
 .cand-schedule {
-  border: 1px solid var(--green); border-radius: var(--radius-xl);
-  padding: 14px; background: var(--green-light);
+  border: 1px solid var(--success); border-radius: var(--radius-xl);
+  padding: 14px; background: var(--success-light);
 }
 .cand-schedule-title {
-  font-size: 13px; font-weight: 600; color: var(--green-dark);
+  font-size: 13px; font-weight: 600; color: var(--success);
   display: flex; align-items: center; gap: 6px; margin-bottom: 4px;
 }
 .cand-schedule-title svg { width: 14px; height: 14px; }
@@ -1189,9 +1195,18 @@ body {
     --sand-50: #1A1A18;
     --sand-100: #222220;
     --sand-200: #333330;
-    --green-light: #1A2E1F;
+    --green: #818CF8;
+    --green-light: #1E1B4B;
+    --green-dark: #A5B4FC;
+    --success: #34D399;
+    --success-light: #064E3B;
+    --amber: #FBBF24;
     --amber-bg: #2A2418;
+    --ai: #A78BFA;
     --ai-light: #1E1A2E;
+    --ai-dark: #C4B5FD;
+    --ai-text: #C4B5FD;
+    --red: #F87171;
   }
 }
 :root[data-theme="dark"] {
@@ -1207,9 +1222,18 @@ body {
   --sand-50: #1A1A18;
   --sand-100: #222220;
   --sand-200: #333330;
-  --green-light: #1A2E1F;
+  --green: #818CF8;
+  --green-light: #1E1B4B;
+  --green-dark: #A5B4FC;
+  --success: #34D399;
+  --success-light: #064E3B;
+  --amber: #FBBF24;
   --amber-bg: #2A2418;
+  --ai: #A78BFA;
   --ai-light: #1E1A2E;
+  --ai-dark: #C4B5FD;
+  --ai-text: #C4B5FD;
+  --red: #F87171;
 }
 
 /* ═══ Responsive ═══ */
@@ -1352,7 +1376,7 @@ body {
       <div class="thread-status-header">Needs first response</div>
 
       <div class="thread-item active" id="thread-sarah">
-        <div class="thread-avatar" style="background:#8B7E74">SC</div>
+        <div class="thread-avatar" style="background:#78859B">SC</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Sarah Chen</span>
@@ -1400,7 +1424,7 @@ body {
       </div>
 
       <div class="thread-item" aria-disabled="true">
-        <div class="thread-avatar" style="background:#9B8EA0">PM</div>
+        <div class="thread-avatar" style="background:#9492AD">PM</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Priya Mehta</span>
@@ -1421,7 +1445,7 @@ body {
       </div>
 
       <div class="thread-item unread" aria-disabled="true">
-        <div class="thread-avatar" style="background:#8A9488">RV</div>
+        <div class="thread-avatar" style="background:#8892A0">RV</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
             <span class="thread-item-name">Rahul Verma</span>
@@ -1435,7 +1459,7 @@ body {
               <span style="font-size:11px;color:var(--gray-500)">Urgent</span>
             </div>
             <div class="thread-assignees">
-              <div class="thread-assignee-dot" style="background:#8E7E6A" title="Sachin">SP</div>
+              <div class="thread-assignee-dot" style="background:#7B8697" title="Sachin">SP</div>
               <div class="thread-unread-badge">1</div>
             </div>
           </div>
@@ -1780,7 +1804,7 @@ function recruiterHTML(step) {
   }
 
   if (step >= 0) {
-    html += msgGroup('You', 'Recruiter', '#37B24D', 'Just now', '',
+    html += msgGroup('You', 'Recruiter', '#4F46E5', 'Just now', '',
       `<p>Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad.</p>
        <p>The team is building a new enterprise design system and we're looking for someone with your systems thinking background. Would you be interested in learning more?</p>`);
     html += statusEvent('blue', 'Waiting for Sarah Chen');
@@ -1792,7 +1816,7 @@ function recruiterHTML(step) {
   }
 
   if (step >= 1) {
-    html += msgGroup('Sarah Chen', 'Candidate', '#8B7E74', '10 min ago', '',
+    html += msgGroup('Sarah Chen', 'Candidate', '#78859B', '10 min ago', '',
       `<p>Hi! Thanks for reaching out. I've been looking at design systems roles and this sounds interesting.</p>
        <p>What's the interview process like? And is there flexibility on remote work?</p>`);
 
@@ -1806,11 +1830,11 @@ function recruiterHTML(step) {
        </div>`,
       `<button class="btn-primary" onclick="return false">It's hybrid &mdash; send</button>
        <button class="btn-secondary" onclick="return false">Edit first</button>`,
-      sourceCard('#94888B', 'PDF', 'JobDescription.pdf', 'Remote policy &middot; Interview stages')
-        + sourceCard('#6B7E6A', 'HR', 'Company Handbook', 'Hybrid work policy &middot; Section 4.2')
+      sourceCard('#8F919C', 'PDF', 'JobDescription.pdf', 'Remote policy &middot; Interview stages')
+        + sourceCard('#6366F1', 'HR', 'Company Handbook', 'Hybrid work policy &middot; Section 4.2')
     );
 
-    html += msgGroup('You', 'Recruiter', '#37B24D', '5 min ago', '',
+    html += msgGroup('You', 'Recruiter', '#4F46E5', '5 min ago', '',
       `<p>Great questions! I'll walk you through the first stage personally &mdash; it's very conversational, no trick questions.</p>`);
     html += inlineCard(IC.fileText, 'var(--gray-100)', 'Product Designer &mdash; Job Description',
       'Design team &middot; Hyderabad &middot; Full-time', 'View');
@@ -1819,7 +1843,7 @@ function recruiterHTML(step) {
   }
 
   if (step >= 2) {
-    html += msgGroup('Sarah Chen', 'Candidate', '#8B7E74', 'Just now', '',
+    html += msgGroup('Sarah Chen', 'Candidate', '#78859B', 'Just now', '',
       `<p>Sounds good! I'm available Thursday afternoon if that works?</p>`);
 
     html += agentInline(
@@ -1834,7 +1858,7 @@ function recruiterHTML(step) {
       sourceCard('#7E8B94', 'Cal', 'Google Calendar', 'Checked 3 participants &middot; 6 slots')
     );
 
-    html += eventCard(IC.calendar, 'var(--green-light)', 'Interview Scheduled', 'Recruiter Conversation',
+    html += eventCard(IC.calendar, 'var(--success-light)', 'Interview Scheduled', 'Recruiter Conversation',
       [['Date', 'Thursday, Oct 24'], ['Time', '4:00 PM IST'], ['Format', 'Video Call &middot; 30 min']],
       `<button class="event-card-btn">Add to calendar</button><button class="event-card-btn primary">Join call</button>`
     );
@@ -1848,7 +1872,7 @@ function recruiterHTML(step) {
   }
 
   if (step >= 4) {
-    html += eventCard(IC.video, 'var(--green-light)', 'Interview Completed', 'Recruiter Conversation with Sarah Chen',
+    html += eventCard(IC.video, 'var(--success-light)', 'Interview Completed', 'Recruiter Conversation with Sarah Chen',
       [['Duration', '32 minutes'], ['Scorecards', '3 submitted'], ['Overall', '4.2 / 5']],
       `<button class="event-card-btn">${IC.play} Play recording</button><button class="event-card-btn">View scorecard</button>`
     );
@@ -1861,28 +1885,28 @@ function recruiterHTML(step) {
        <br>&bull; Salary expectation: &#8377;28&ndash;32 LPA (within our range)
        <br><br><strong>Recommendation:</strong> Advance to Portfolio Review with Sachin.`);
 
-    html += msgGroup('You', 'Recruiter', '#37B24D', '30 min ago', '',
+    html += msgGroup('You', 'Recruiter', '#4F46E5', '30 min ago', '',
       `<p>Thanks for speaking with us today, Sarah. The team is reviewing feedback and I'll be in touch shortly.</p>`);
 
-    html += msgGroup('Sarah Chen', 'Candidate', '#8B7E74', '25 min ago', '',
+    html += msgGroup('Sarah Chen', 'Candidate', '#78859B', '25 min ago', '',
       `<p>Thank you! I really enjoyed learning about the design system work. Looking forward to hearing back.</p>`);
   }
 
   if (step >= 5) {
-    html += msgGroup('You', 'Recruiter', '#37B24D', '15 min ago', '',
+    html += msgGroup('You', 'Recruiter', '#4F46E5', '15 min ago', '',
       `<p>Sarah, great news! The team was really impressed with your interviews. We'd love to have you join us.</p>`);
     html += inlineCard(IC.award, '#E6F9ED', 'Offer Letter &mdash; Product Designer',
       '&#8377;30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer');
     html += inlineCard(IC.clipboard, 'var(--amber-bg)', 'Benefits &amp; Equity Package',
       'Health, RSUs, relocation support', 'View');
 
-    html += msgGroup('Sarah Chen', 'Candidate', '#8B7E74', 'Just now', '',
+    html += msgGroup('Sarah Chen', 'Candidate', '#78859B', 'Just now', '',
       `<p>This is amazing! I'm thrilled to accept. The team, the role, and the offer all feel right.</p>
        <p>Thank you for making this process so smooth &mdash; having everything in one conversation made it so easy to stay on top of things.</p>`);
 
-    html += `<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;margin:8px 0;background:var(--green-light);border-radius:var(--radius-lg);">
-      <span style="color:var(--green)">${IC.award}</span>
-      <span style="font-size:14px;font-weight:600;color:var(--green-dark)">Offer Accepted &mdash; Sarah Chen joins as Product Designer</span>
+    html += `<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;margin:8px 0;background:var(--success-light);border-radius:var(--radius-lg);">
+      <span style="color:var(--success)">${IC.award}</span>
+      <span style="font-size:14px;font-weight:600;color:var(--success)">Offer Accepted &mdash; Sarah Chen joins as Product Designer</span>
     </div>`;
 
     html += agentInline(
@@ -1909,17 +1933,17 @@ function teamHTML(step) {
   }
 
   if (step >= 2) {
-    html += msgGroup('You', 'Recruiter', '#37B24D', '30 min ago', '',
+    html += msgGroup('You', 'Recruiter', '#4F46E5', '30 min ago', '',
       `<p>@Sachin &mdash; Sarah confirmed for Thursday 4 PM. Her portfolio has strong systems work from Flipkart.</p>`);
   }
 
   if (step >= 3) {
-    html += msgGroup('Sachin Patel', 'Hiring Manager', '#8E7E6A', '20 min ago', '',
+    html += msgGroup('Sachin Patel', 'Hiring Manager', '#7B8697', '20 min ago', '',
       `<p>Great. Can you ask about the checkout redesign specifically? I want to understand how she handles stakeholder alignment.</p>`);
 
     html += agentActionCard('Added "checkout redesign &mdash; stakeholder alignment" to interview plan');
 
-    html += msgGroup('Priya Gupta', 'Interviewer', '#9B8EA0', '15 min ago', '',
+    html += msgGroup('Priya Gupta', 'Interviewer', '#9492AD', '15 min ago', '',
       `<p>I'll probe her B2B enterprise experience too. That's the one gap I see on the resume.</p>`);
 
     html += agentActionCard('Updated plan: added B2B enterprise workflow questions');
@@ -1931,10 +1955,10 @@ function teamHTML(step) {
       `<button class="event-card-btn">View full scorecard</button>`
     );
 
-    html += msgGroup('Sachin Patel', 'Hiring Manager', '#8E7E6A', '2h ago', '',
+    html += msgGroup('Sachin Patel', 'Hiring Manager', '#7B8697', '2h ago', '',
       `<p>The checkout case study was impressive &mdash; she managed 6 stakeholder groups. I'm comfortable with the B2B gap; she's a fast learner.</p>`);
 
-    html += msgGroup('Priya Gupta', 'Interviewer', '#9B8EA0', '1h ago', '',
+    html += msgGroup('Priya Gupta', 'Interviewer', '#9492AD', '1h ago', '',
       `<p>Agreed. Her product thinking exercise was the strongest I've seen this quarter. She reframed the problem beautifully.</p>`);
   }
 
@@ -1945,17 +1969,17 @@ function teamHTML(step) {
       ``
     );
 
-    html += msgGroup('You', 'Recruiter', '#37B24D', '30 min ago', '',
+    html += msgGroup('You', 'Recruiter', '#4F46E5', '30 min ago', '',
       `<p>@Recruiting Agent &mdash; prepare the offer.</p>`);
 
     html += agentInline(
       `<p>I've drafted the offer at <strong>&#8377;30 LPA</strong> based on approved compensation bands. Benefits package included.</p>`,
       `<button class="btn-primary" onclick="return false">Review draft</button>
        <button class="btn-secondary" onclick="return false">Edit</button>`,
-      sourceCard('#6B7E6A', 'HR', 'Compensation Bands 2024', 'Product Designer &middot; L4 &middot; Hyderabad')
+      sourceCard('#6366F1', 'HR', 'Compensation Bands 2024', 'Product Designer &middot; L4 &middot; Hyderabad')
     );
 
-    html += msgGroup('Sachin Patel', 'Hiring Manager', '#8E7E6A', '15 min ago', '',
+    html += msgGroup('Sachin Patel', 'Hiring Manager', '#7B8697', '15 min ago', '',
       `<p>Approved. Send it.</p>`);
   }
 
@@ -1977,7 +2001,7 @@ function contextPanelHTML(step) {
 
   html += `<div class="customer-card">
     <div class="customer-card-header">
-      <div class="customer-card-avatar" style="background:#8B7E74">SC</div>
+      <div class="customer-card-avatar" style="background:#78859B">SC</div>
       <span class="customer-card-name">Sarah Chen</span>
     </div>
     <div class="customer-card-row">
@@ -2028,15 +2052,15 @@ function contextPanelHTML(step) {
   if (step === 2) {
     html += `<div class="detail-section">
       <div class="detail-section-title">Interview</div>
-      <div class="context-card" style="border-color:var(--green);background:var(--green-light);">
-        <div class="context-card-title" style="color:var(--green-dark)">Recruiter conversation</div>
+      <div class="context-card" style="border-color:var(--success);background:var(--success-light);">
+        <div class="context-card-title" style="color:var(--success)">Recruiter conversation</div>
         <div class="context-card-sub">Thu, Oct 24 &middot; 4:00 PM IST</div>
         <div class="context-card-sub">30 min &middot; Video call</div>
       </div>
       <div style="margin-top:8px">
-        <div class="participant"><div class="participant-avatar" style="background:#8B7E74">SC</div><span class="participant-name">Sarah Chen</span><span class="participant-check">${IC.circleCheck}</span></div>
-        <div class="participant"><div class="participant-avatar" style="background:#6B7E6A">Y</div><span class="participant-name">You</span><span class="participant-check">${IC.circleCheck}</span></div>
-        <div class="participant"><div class="participant-avatar" style="background:#8E7E6A">SP</div><span class="participant-name">Sachin Patel</span><span class="participant-check">${IC.circleCheck}</span></div>
+        <div class="participant"><div class="participant-avatar" style="background:#78859B">SC</div><span class="participant-name">Sarah Chen</span><span class="participant-check">${IC.circleCheck}</span></div>
+        <div class="participant"><div class="participant-avatar" style="background:#6366F1">Y</div><span class="participant-name">You</span><span class="participant-check">${IC.circleCheck}</span></div>
+        <div class="participant"><div class="participant-avatar" style="background:#7B8697">SP</div><span class="participant-name">Sachin Patel</span><span class="participant-check">${IC.circleCheck}</span></div>
       </div>
     </div>`;
   }
@@ -2052,9 +2076,9 @@ function contextPanelHTML(step) {
     </div>
     <div class="detail-section">
       <div class="detail-section-title">Panel</div>
-      <div class="participant"><div class="participant-avatar" style="background:#6B7E6A">Y</div><span class="participant-name">You &mdash; Recruiter</span></div>
-      <div class="participant"><div class="participant-avatar" style="background:#8E7E6A">SP</div><span class="participant-name">Sachin &mdash; Portfolio</span></div>
-      <div class="participant"><div class="participant-avatar" style="background:#9B8EA0">PG</div><span class="participant-name">Priya &mdash; Exercise</span></div>
+      <div class="participant"><div class="participant-avatar" style="background:#6366F1">Y</div><span class="participant-name">You &mdash; Recruiter</span></div>
+      <div class="participant"><div class="participant-avatar" style="background:#7B8697">SP</div><span class="participant-name">Sachin &mdash; Portfolio</span></div>
+      <div class="participant"><div class="participant-avatar" style="background:#9492AD">PG</div><span class="participant-name">Priya &mdash; Exercise</span></div>
       <div class="participant"><div class="participant-avatar" style="background:#7E8B94">VP</div><span class="participant-name">VP Design &mdash; Final</span></div>
     </div>`;
   }
@@ -2063,10 +2087,10 @@ function contextPanelHTML(step) {
     html += `<div class="detail-section">
       <div class="detail-section-title">Interview scorecard</div>`;
     const scores = [
-      ['Systems Thinking', 4.5, 'var(--green)'],
-      ['Communication', 4.0, 'var(--green)'],
-      ['Stakeholder Mgmt', 4.5, 'var(--green)'],
-      ['Product Thinking', 4.0, 'var(--green)'],
+      ['Systems Thinking', 4.5, 'var(--success)'],
+      ['Communication', 4.0, 'var(--success)'],
+      ['Stakeholder Mgmt', 4.5, 'var(--success)'],
+      ['Product Thinking', 4.0, 'var(--success)'],
     ];
     scores.forEach(([label, score, color]) => {
       const pct = (score / 5) * 100;
@@ -2078,12 +2102,12 @@ function contextPanelHTML(step) {
     });
     html += `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0 4px;border-top:1px solid var(--gray-100);margin-top:8px">
       <span style="font-size:13px;font-weight:600">Overall</span>
-      <span style="font-size:13px;font-weight:700;color:var(--green)">4.2/5</span>
+      <span style="font-size:13px;font-weight:700;color:var(--success)">4.2/5</span>
     </div>`;
     html += `<div style="display:flex;align-items:flex-start;gap:6px;margin-top:8px;padding:8px 10px;background:var(--amber-bg);border-radius:var(--radius-md);font-size:12px;color:var(--amber)">
       ${IC.alertTriangle} Limited B2B experience (Sachin: fast learner, addressable)
     </div>`;
-    html += `<div style="margin-top:8px;font-size:12px;font-weight:600;color:var(--green)">Recommendation: Advance to offer</div>
+    html += `<div style="margin-top:8px;font-size:12px;font-weight:600;color:var(--success)">Recommendation: Advance to offer</div>
     </div>`;
   }
 
@@ -2092,7 +2116,7 @@ function contextPanelHTML(step) {
       <div class="detail-section-title">Compensation</div>
       <div class="detail-row"><span class="detail-label">Expectation</span><span class="detail-value">&#8377;28&ndash;32 LPA</span></div>
       <div class="detail-row"><span class="detail-label">Approved</span><span class="detail-value">&#8377;25&ndash;32 LPA</span></div>
-      <div class="detail-row"><span class="detail-label" style="font-weight:600;color:var(--gray-900)">Offer</span><span class="detail-value" style="font-weight:600;color:var(--green)">&#8377;30 LPA</span></div>
+      <div class="detail-row"><span class="detail-label" style="font-weight:600;color:var(--gray-900)">Offer</span><span class="detail-value" style="font-weight:600;color:var(--success)">&#8377;30 LPA</span></div>
       <div class="detail-row"><span class="detail-label">Start</span><span class="detail-value">Jan 6 &middot; Hyderabad</span></div>
     </div>
     <div class="detail-section">
@@ -2103,7 +2127,7 @@ function contextPanelHTML(step) {
     </div>
     <div class="detail-section">
       <div class="detail-section-title">Status</div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--green)">
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--success)">
         ${IC.circleCheck} Offer accepted
       </div>
     </div>`;
@@ -2126,21 +2150,21 @@ function candidateHTML(step) {
   let html = '';
 
   if (step >= 0) {
-    html += candMsg('received', 'Recruiter', '#37B24D', '',
+    html += candMsg('received', 'Recruiter', '#4F46E5', '',
       'Hi Sarah, I came across your profile and thought your experience at Flipkart would be a great fit for our Product Designer role in Hyderabad.');
   }
   if (step >= 1) {
-    html += candMsg('sent', '', '#8B7E74', '',
+    html += candMsg('sent', '', '#78859B', '',
       "Hi! Thanks for reaching out. What's the interview process like? And is remote work possible?");
-    html += candMsg('received', 'Recruiting Assistant', '#9B8EA0', 'ai',
+    html += candMsg('received', 'Recruiting Assistant', '#9492AD', 'ai',
       "There are 4 stages: recruiter conversation (30 min), portfolio review (45 min), product thinking exercise (60 min), and final discussion (30 min). The role is hybrid &mdash; 2 days in office with flexible hours.");
-    html += candMsg('received', 'Recruiter', '#37B24D', '',
+    html += candMsg('received', 'Recruiter', '#4F46E5', '',
       "I'll walk you through the first stage personally &mdash; it's very conversational!");
     html += candCard(IC.fileText, 'Product Designer &mdash; Job Description',
       'Design team &middot; Hyderabad &middot; Full-time', 'View', 'Save');
   }
   if (step >= 2) {
-    html += candMsg('sent', '', '#8B7E74', '',
+    html += candMsg('sent', '', '#78859B', '',
       "Sounds good! I'm available Thursday afternoon.");
     html += candSchedule('Interview Scheduled', 'Thursday, Oct 24 &middot; 4:00 PM IST', 'Video Call with Recruiter');
     html += candCard(IC.bookOpen, 'Interview Preparation Guide',
@@ -2148,25 +2172,25 @@ function candidateHTML(step) {
   }
   if (step >= 4) {
     html += candEvent(IC.video, 'Interview Completed', '32 min &middot; Thank you for your time!');
-    html += candMsg('received', 'Recruiter', '#37B24D', '',
+    html += candMsg('received', 'Recruiter', '#4F46E5', '',
       "Thanks for taking the time today, Sarah. It was great speaking with you &mdash; I'll be in touch shortly with next steps.");
-    html += candMsg('sent', '', '#8B7E74', '',
+    html += candMsg('sent', '', '#78859B', '',
       "Thank you! I really enjoyed learning about the design system work. Looking forward to hearing back.");
-    html += candMsg('received', 'Recruiter', '#37B24D', '',
+    html += candMsg('received', 'Recruiter', '#4F46E5', '',
       "We're reviewing the team's feedback now. Should have an update for you by end of day.");
   }
   if (step >= 5) {
-    html += candMsg('received', 'Recruiter', '#37B24D', '',
+    html += candMsg('received', 'Recruiter', '#4F46E5', '',
       "Sarah, great news! The team was really impressed. We'd love to have you join us:");
     html += candCard(IC.award, 'Offer Letter &mdash; Product Designer',
       '&#8377;30 LPA &middot; Hyderabad &middot; Starting Jan 6', 'View Offer', '');
     html += candCard(IC.clipboard, 'Benefits &amp; Equity Package',
       'Health, RSUs, relocation support', 'View Details', '');
-    html += candMsg('sent', '', '#8B7E74', '',
+    html += candMsg('sent', '', '#78859B', '',
       "This is amazing! I'm thrilled to accept. Thank you for making this so smooth!");
-    html += `<div style="text-align:center;padding:14px;margin:8px 0;background:var(--green-light);border-radius:var(--radius-xl);">
-      <div style="color:var(--green);margin-bottom:4px">${IC.award}</div>
-      <div style="font-size:14px;font-weight:600;color:var(--green-dark)">You're in! Welcome to ABC Staffing</div>
+    html += `<div style="text-align:center;padding:14px;margin:8px 0;background:var(--success-light);border-radius:var(--radius-xl);">
+      <div style="color:var(--success);margin-bottom:4px">${IC.award}</div>
+      <div style="font-size:14px;font-weight:600;color:var(--success)">You're in! Welcome to ABC Staffing</div>
       <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">Starting Jan 6 &middot; Hyderabad</div>
     </div>`;
   }
@@ -2185,7 +2209,7 @@ function agentPanelHTML(step) {
       <p>Sarah Chen is a Product Designer at Flipkart with 8 years of experience. She led the checkout redesign (200M+ users) and built a component library used by 12 teams.</p>
     </div>`;
     html += agentSource(IC.file, '#7E8B94', 'Sarah Chen &mdash; LinkedIn', '8 yrs &middot; Flipkart &middot; IIT Delhi');
-    html += agentSource(IC.fileText, '#94888B', 'JobDescription.pdf', 'Product Designer &middot; Hyderabad');
+    html += agentSource(IC.fileText, '#8F919C', 'JobDescription.pdf', 'Product Designer &middot; Hyderabad');
     html += `<div style="margin-top:8px">`;
     html += agentActionButton(IC.messageSquare, 'Draft another version');
     html += agentActionButton(IC.search, 'Find similar candidates');
@@ -2205,8 +2229,8 @@ function agentPanelHTML(step) {
       </p>
       <p style="font-size:12px;color:var(--ai-text)">Which version should I share with Sarah?</p>
     </div>`;
-    html += agentSource(IC.fileText, '#94888B', 'JobDescription.pdf', 'Remote policy &middot; Interview stages');
-    html += agentSource(IC.bookOpen, '#6B7E6A', 'Company Handbook', 'Section 4.2 &middot; Hybrid work policy');
+    html += agentSource(IC.fileText, '#8F919C', 'JobDescription.pdf', 'Remote policy &middot; Interview stages');
+    html += agentSource(IC.bookOpen, '#6366F1', 'Company Handbook', 'Section 4.2 &middot; Hybrid work policy');
     html += `<div style="margin-top:8px">`;
     html += agentActionButton(IC.messageSquare, 'Draft response for Sarah');
     html += agentActionButton(IC.lightbulb, 'What else do candidates usually ask?');
@@ -2239,11 +2263,11 @@ function agentPanelHTML(step) {
       <p style="margin:2px 0"><strong>3. B2B enterprise workflows</strong><br><span style="color:var(--gray-500)">Depth check on enterprise experience</span> <span style="font-size:11px;color:var(--ai-text)">(Priya flagged)</span></p>
       <p style="margin:2px 0"><strong>4. Technical skills</strong><br><span style="color:var(--gray-500)">Design tokens, component APIs, documentation</span></p>
     </div>`;
-    html += agentSource(IC.file, '#94888B', 'Resume_SarahChen.pdf', 'Work history &middot; Skills');
-    html += agentSource(IC.users, '#8E7E6A', 'Hiring Team Thread', "Sachin + Priya's requests");
+    html += agentSource(IC.file, '#8F919C', 'Resume_SarahChen.pdf', 'Work history &middot; Skills');
+    html += agentSource(IC.users, '#7B8697', 'Hiring Team Thread', "Sachin + Priya's requests");
     html += `<div class="agent-msg question" style="margin-top:8px">Also send Sarah a prep guide so she knows what to expect.</div>`;
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:6px">ACTION COMPLETED</p>
+      <p style="font-size:11px;color:var(--success);font-weight:600;margin-bottom:6px">ACTION COMPLETED</p>
       <p>Done. I've sent Sarah an interview preparation guide covering:</p>
       <p style="color:var(--gray-500)">&bull; What to expect at each stage<br>&bull; Who she'll be speaking with<br>&bull; Tips for the product thinking exercise</p>
     </div>`;
@@ -2262,7 +2286,7 @@ function agentPanelHTML(step) {
       <p>&bull; Systems Thinking: 4.5/5<br>&bull; Communication: 4.0/5<br>&bull; Stakeholder Mgmt: 4.5/5<br>&bull; Product Thinking: 4.0/5</p>
       <p style="margin-top:6px;padding:6px 8px;background:var(--ai-light);border-radius:var(--radius-sm);font-size:12px;color:var(--ai-text)">Limited B2B experience &mdash; Sachin noted she's a fast learner</p>
     </div>`;
-    html += agentSource(IC.barChart, '#6B7E6A', 'Interview Scorecard', '3 reviewers &middot; 4 dimensions');
+    html += agentSource(IC.barChart, '#6366F1', 'Interview Scorecard', '3 reviewers &middot; 4 dimensions');
     html += agentSource(IC.video, '#7E8B94', 'Interview Recording', '32 min &middot; Recruiter conversation');
     html += `<div class="agent-msg response" style="margin-top:8px">
       <p style="font-size:11px;color:var(--ai-text);font-weight:600;margin-bottom:6px">RECOMMENDATION</p>
@@ -2283,10 +2307,10 @@ function agentPanelHTML(step) {
       <p style="margin:6px 0"><strong>&#8377;30 LPA</strong> &mdash; base salary<br>RSU equity grant &middot; Health insurance &middot; Relocation support</p>
       <p>This is within the approved L4 band (&#8377;25&ndash;32 LPA) and matches Sarah's expectation (&#8377;28&ndash;32 LPA).</p>
     </div>`;
-    html += agentSource(IC.award, '#6B7E6A', 'Compensation Bands 2024', 'Product Designer &middot; L4 &middot; Hyderabad');
-    html += agentSource(IC.clipboard, '#9B8EA0', 'Benefits Package', 'Health, RSUs, relocation');
+    html += agentSource(IC.award, '#6366F1', 'Compensation Bands 2024', 'Product Designer &middot; L4 &middot; Hyderabad');
+    html += agentSource(IC.clipboard, '#9492AD', 'Benefits Package', 'Health, RSUs, relocation');
     html += `<div class="agent-msg response" style="margin-top:8px">
-      <p style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:6px">ACTION COMPLETED</p>
+      <p style="font-size:11px;color:var(--success);font-weight:600;margin-bottom:6px">ACTION COMPLETED</p>
       <p>${IC.circleCheck} Offer letter generated<br>${IC.circleCheck} Benefits package attached<br>${IC.circleCheck} Sachin approved<br>${IC.circleCheck} Sent to Sarah</p>
     </div>`;
     html += `<div style="margin-top:8px">`;
