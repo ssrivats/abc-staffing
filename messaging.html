@@ -15,6 +15,12 @@
   --amber-bg: #FFF3D0;
   --red: #E03131;
 
+  /* AI-specific palette — distinct from amber internal notes */
+  --ai: #7C5CFC;
+  --ai-light: #F0ECFF;
+  --ai-dark: #6344E0;
+  --ai-text: #5B3FD9;
+
   --sand-50: #FAF9F7;
   --sand-100: #F3F1ED;
   --sand-200: #E8E4DD;
@@ -48,7 +54,7 @@
 html, body { height: 100%; }
 body {
   font-family: var(--font);
-  background: var(--white);
+  background-color: var(--white);
   color: var(--gray-900);
   font-size: 14px;
   line-height: 1.5;
@@ -370,7 +376,7 @@ body {
   font-size: 10px; font-weight: 600; padding: 1px 6px;
   border-radius: var(--radius-sm); margin-left: 2px;
 }
-.badge-ai { background: var(--amber-bg); color: #BF6C00; }
+.badge-ai { background: var(--ai-light); color: var(--ai-text); }
 .badge-internal { background: var(--amber-bg); color: #BF6C00; }
 .msg-bubble {
   padding: 0 0 0 36px;
@@ -400,12 +406,12 @@ body {
 
 /* AI Summary card */
 .ai-summary {
-  background: var(--amber-bg);
+  background: var(--ai-light);
   border-radius: var(--radius-lg);
   padding: 12px 16px; margin: 8px 0;
 }
 .ai-summary-label {
-  font-size: 12px; font-weight: 600; color: #BF6C00;
+  font-size: 12px; font-weight: 600; color: var(--ai-text);
   display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
 }
 .ai-summary-label svg { width: 14px; height: 14px; }
@@ -473,12 +479,12 @@ body {
 .agent-inline {
   margin: 8px 0 8px 0;
   padding: 14px 16px;
-  border: 1px solid rgba(245,159,0,0.2);
+  border: 1px solid rgba(124,92,252,0.2);
   border-radius: var(--radius-lg);
-  background: var(--amber-bg);
+  background: var(--ai-light);
 }
 .agent-inline-header {
-  font-size: 12px; font-weight: 600; color: #BF6C00;
+  font-size: 12px; font-weight: 600; color: var(--ai-text);
   display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
 }
 .agent-inline-header svg { width: 14px; height: 14px; }
@@ -491,7 +497,7 @@ body {
   background: var(--white); border-radius: var(--radius-md);
   padding: 10px 12px; margin: 8px 0;
   font-size: 13px; color: var(--gray-700); line-height: 1.6;
-  border-left: 3px solid var(--amber);
+  border-left: 3px solid var(--ai);
 }
 .agent-inline-options {
   display: flex; flex-direction: column; gap: 4px; margin: 8px 0;
@@ -502,13 +508,13 @@ body {
   background: var(--white); font-size: 13px; color: var(--gray-700);
   cursor: pointer; transition: all 0.1s; border: 1px solid var(--gray-200);
 }
-.agent-inline-option:hover { border-color: var(--amber); }
+.agent-inline-option:hover { border-color: var(--ai); }
 .agent-inline-option.recommended {
-  border-color: var(--amber); font-weight: 500;
+  border-color: var(--ai); font-weight: 500;
 }
 .agent-inline-option .rec-badge {
-  font-size: 10px; font-weight: 600; color: #BF6C00;
-  background: var(--amber-bg); padding: 1px 6px; border-radius: var(--radius-sm);
+  font-size: 10px; font-weight: 600; color: var(--ai-text);
+  background: var(--ai-light); padding: 1px 6px; border-radius: var(--radius-sm);
   margin-left: auto;
 }
 .agent-inline-actions {
@@ -556,8 +562,8 @@ body {
 .agent-action {
   display: flex; align-items: center; gap: 10px;
   margin: 6px 0; padding: 10px 14px;
-  background: var(--amber-bg); border-radius: var(--radius-md);
-  font-size: 12px; color: #BF6C00; font-weight: 500;
+  background: var(--ai-light); border-radius: var(--radius-md);
+  font-size: 12px; color: var(--ai-text); font-weight: 500;
 }
 .agent-action svg { width: 14px; height: 14px; flex-shrink: 0; }
 .agent-action .undo-btn {
@@ -693,12 +699,12 @@ body {
 .composer-btn:hover { background: var(--gray-50); color: var(--gray-700); }
 .composer-btn svg { width: 16px; height: 16px; }
 .composer-btn.agent {
-  border-color: var(--amber); color: #BF6C00;
+  border-color: var(--ai); color: var(--ai-text);
   width: auto; padding: 0 12px; border-radius: var(--radius-full);
   font-family: var(--font); font-size: 12px; font-weight: 500;
   gap: 4px;
 }
-.composer-btn.agent:hover { background: var(--amber-bg); }
+.composer-btn.agent:hover { background: var(--ai-light); }
 .composer-btn.agent svg { width: 14px; height: 14px; }
 .composer-send {
   height: 38px; padding: 0 20px;
@@ -784,7 +790,7 @@ body {
 .step-item .step-name { font-size: 12px; font-weight: 500; color: var(--gray-900); }
 .step-item .step-meta { font-size: 11px; color: var(--gray-500); }
 .step-item .ai-added {
-  font-size: 10px; color: #BF6C00; font-weight: 600;
+  font-size: 10px; color: var(--ai-text); font-weight: 600;
   display: flex; align-items: center; gap: 3px;
 }
 .step-item .ai-added svg { width: 10px; height: 10px; }
@@ -865,7 +871,7 @@ body {
   display: flex; align-items: center; justify-content: space-between;
 }
 .agent-panel-header h4 {
-  font-size: 13px; font-weight: 600; color: #BF6C00;
+  font-size: 13px; font-weight: 600; color: var(--ai-text);
   display: flex; align-items: center; gap: 6px;
 }
 .agent-panel-header h4 svg { width: 14px; height: 14px; }
@@ -889,7 +895,7 @@ body {
   align-self: flex-end; max-width: 90%;
 }
 .agent-msg.response {
-  background: var(--amber-bg); border: 1px solid rgba(245,159,0,0.2);
+  background: var(--ai-light); border: 1px solid rgba(124,92,252,0.15);
 }
 .agent-msg.response p { margin-bottom: 4px; }
 .agent-msg.response p:last-child { margin-bottom: 0; }
@@ -901,7 +907,7 @@ body {
   border: 1px solid var(--gray-200); border-radius: var(--radius-md);
   background: var(--white); cursor: pointer; transition: all 0.12s;
 }
-.agent-source:hover { border-color: var(--amber); }
+.agent-source:hover { border-color: var(--ai); }
 .agent-source-icon {
   width: 24px; height: 24px; border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
@@ -916,12 +922,12 @@ body {
 .agent-action-btn {
   display: flex; align-items: center; gap: 8px;
   padding: 8px 12px; border-radius: var(--radius-md);
-  border: 1px solid rgba(245,159,0,0.25); background: var(--white);
+  border: 1px solid rgba(124,92,252,0.2); background: var(--white);
   font-family: var(--font); font-size: 12px; font-weight: 500;
-  color: #BF6C00; cursor: pointer; transition: all 0.12s;
+  color: var(--ai-text); cursor: pointer; transition: all 0.12s;
   margin: 2px 0; width: 100%; text-align: left;
 }
-.agent-action-btn:hover { background: var(--amber-bg); border-color: var(--amber); }
+.agent-action-btn:hover { background: var(--ai-light); border-color: var(--ai); }
 .agent-action-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
 .agent-intro {
@@ -938,7 +944,7 @@ body {
   font-family: var(--font); font-size: 13px; color: var(--gray-700);
   cursor: pointer; transition: all 0.12s; text-align: left; width: 100%;
 }
-.agent-chip:hover { border-color: var(--amber); background: var(--amber-bg); color: #BF6C00; }
+.agent-chip:hover { border-color: var(--ai); background: var(--ai-light); color: var(--ai-text); }
 .agent-chip svg { width: 16px; height: 16px; flex-shrink: 0; }
 
 /* Agent panel input */
@@ -952,11 +958,11 @@ body {
   font-family: var(--font); font-size: 13px; color: var(--gray-900);
   outline: none; background: var(--gray-50);
 }
-.agent-panel-input input:focus { border-color: var(--amber); background: white; }
+.agent-panel-input input:focus { border-color: var(--ai); background: white; }
 .agent-panel-input input::placeholder { color: var(--gray-400); }
 .agent-panel-send {
   width: 32px; height: 32px; border-radius: var(--radius-md);
-  border: none; background: var(--amber); color: white;
+  border: none; background: var(--ai); color: white;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: all 0.12s; flex-shrink: 0;
 }
@@ -981,6 +987,14 @@ body {
   background: var(--white);
   border-left: 1px solid var(--gray-200);
   border-right: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+.candidate-view::before {
+  content: 'Candidate view (mobile)';
+  position: absolute; top: -24px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; color: var(--gray-400); font-weight: 500;
+  white-space: nowrap;
 }
 .candidate-view.hidden { display: none; }
 .cand-header {
@@ -1035,8 +1049,8 @@ body {
   display: flex; align-items: center; gap: 4px;
 }
 .cand-msg-sender .ai-tag {
-  font-size: 9px; padding: 1px 5px;
-  background: var(--amber-bg); color: #BF6C00;
+  font-size: 10px; padding: 1px 5px;
+  background: var(--ai-light); color: var(--ai-text);
   border-radius: var(--radius-sm); font-weight: 600;
 }
 .cand-card {
@@ -1124,6 +1138,103 @@ body {
 .agent-action, .call-card, .event-card, .source-card, .cand-event {
   animation: fadeIn 0.25s ease-out both;
 }
+
+/* ═══ Focus & Accessibility ═══ */
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+.agent-panel :focus-visible {
+  outline-color: var(--ai);
+}
+.thread-item[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+.thread-item[aria-disabled="true"]::after {
+  content: 'Demo only';
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 10px; color: var(--gray-400); font-weight: 500;
+  background: var(--gray-100); padding: 2px 6px; border-radius: var(--radius-sm);
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ═══ Minimum font sizes ═══ */
+.rail-icon-label { font-size: 10px; }
+.participant-avatar { font-size: 9px; }
+.thread-assignee-dot { font-size: 9px; }
+
+/* ═══ Consistent border-radius for candidate bubbles ═══ */
+.cand-bubble { border-radius: var(--radius-xl); }
+.cand-msg.received .cand-bubble { border-bottom-left-radius: var(--radius-sm); }
+.cand-msg.sent .cand-bubble { border-bottom-right-radius: var(--radius-sm); }
+
+/* ═══ Dark Mode ═══ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --gray-900: #F0F0F0;
+    --gray-700: #C8C8C8;
+    --gray-500: #8C8C8C;
+    --gray-400: #6B6B6B;
+    --gray-300: #444444;
+    --gray-200: #333333;
+    --gray-100: #252525;
+    --gray-50: #1E1E1E;
+    --white: #161616;
+    --sand-50: #1A1A18;
+    --sand-100: #222220;
+    --sand-200: #333330;
+    --green-light: #1A2E1F;
+    --amber-bg: #2A2418;
+    --ai-light: #1E1A2E;
+  }
+}
+:root[data-theme="dark"] {
+  --gray-900: #F0F0F0;
+  --gray-700: #C8C8C8;
+  --gray-500: #8C8C8C;
+  --gray-400: #6B6B6B;
+  --gray-300: #444444;
+  --gray-200: #333333;
+  --gray-100: #252525;
+  --gray-50: #1E1E1E;
+  --white: #161616;
+  --sand-50: #1A1A18;
+  --sand-100: #222220;
+  --sand-200: #333330;
+  --green-light: #1A2E1F;
+  --amber-bg: #2A2418;
+  --ai-light: #1E1A2E;
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 1100px) {
+  .detail-panel, .agent-panel { width: 260px; }
+}
+@media (max-width: 960px) {
+  .detail-panel, .agent-panel { display: none !important; }
+  .thread-sidebar { width: 260px; }
+}
+@media (max-width: 720px) {
+  .icon-rail { width: 48px; }
+  .icon-rail .rail-icon-label { display: none; }
+  .thread-sidebar { width: 220px; }
+  .conv-tabs { display: none; }
+  .view-switcher { height: 36px; }
+  .view-switcher .story-step-label { display: none; }
+  .recruiter-view { height: calc(100vh - 36px); margin-top: 36px; }
+  .candidate-view { height: calc(100vh - 36px); margin-top: 36px; }
+}
+@media (max-width: 540px) {
+  .thread-sidebar { display: none; }
+  .icon-rail { display: none; }
+  .candidate-view { max-width: 100%; border: none; }
+}
 </style>
 </head>
 <body>
@@ -1131,8 +1242,8 @@ body {
 <!-- View Switcher -->
 <div class="view-switcher">
   <span class="label">View</span>
-  <button class="view-btn active" onclick="showView('recruiter')">Recruiter</button>
-  <button class="view-btn" onclick="showView('candidate')">Candidate</button>
+  <button class="view-btn active" onclick="showView('recruiter', event)">Recruiter</button>
+  <button class="view-btn" onclick="showView('candidate', event)">Candidate</button>
   <div class="story-step-label">
     Step <span id="step-num">1</span>/6
     <span id="step-name"></span>
@@ -1152,7 +1263,7 @@ body {
 <div class="recruiter-view" id="recruiter-view">
 
   <!-- Icon Rail — WhatsApp + Slack hybrid -->
-  <div class="icon-rail">
+  <div class="icon-rail" role="navigation" aria-label="Main navigation">
     <div class="rail-logo">A</div>
 
     <!-- Primary nav (WhatsApp-style) -->
@@ -1237,7 +1348,7 @@ body {
       <button class="thread-filter-tab">Groups</button>
     </div>
 
-    <div class="thread-list">
+    <div class="thread-list" role="listbox" aria-label="Conversation threads">
       <div class="thread-status-header">Needs first response</div>
 
       <div class="thread-item active" id="thread-sarah">
@@ -1263,7 +1374,7 @@ body {
 
       <div class="thread-status-header">Active</div>
 
-      <div class="thread-item unread">
+      <div class="thread-item unread" aria-disabled="true">
         <div class="thread-avatar" style="background:#7E8B94">AK</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
@@ -1288,7 +1399,7 @@ body {
         </div>
       </div>
 
-      <div class="thread-item">
+      <div class="thread-item" aria-disabled="true">
         <div class="thread-avatar" style="background:#9B8EA0">PM</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
@@ -1309,7 +1420,7 @@ body {
         </div>
       </div>
 
-      <div class="thread-item unread">
+      <div class="thread-item unread" aria-disabled="true">
         <div class="thread-avatar" style="background:#8A9488">RV</div>
         <div class="thread-item-content">
           <div class="thread-item-top">
@@ -1347,7 +1458,7 @@ body {
         </button>
         <button class="conv-tab" id="tab-team" onclick="switchTab('team')">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-          Hiring Team
+          Team Notes
           <span class="tab-dot" id="team-dot" style="display:none"></span>
         </button>
       </div>
@@ -1358,7 +1469,7 @@ body {
         <button title="Details"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
       </div>
     </div>
-    <div class="conv-body" id="conv-body"></div>
+    <div class="conv-body" id="conv-body" role="log" aria-label="Conversation messages" aria-live="polite"></div>
 
     <!-- Messaging Composer -->
     <div class="msg-composer">
@@ -1381,7 +1492,7 @@ body {
   </div>
 
   <!-- Right: Contextual Panel -->
-  <div class="detail-panel" id="detail-panel"></div>
+  <div class="detail-panel" id="detail-panel" role="complementary" aria-label="Candidate details"></div>
 
   <!-- Agent Session Panel -->
   <div class="agent-panel" id="agent-panel">
@@ -1674,28 +1785,32 @@ function recruiterHTML(step) {
        <p>The team is building a new enterprise design system and we're looking for someone with your systems thinking background. Would you be interested in learning more?</p>`);
     html += statusEvent('blue', 'Waiting for Sarah Chen');
     if (step === 0) {
-      html += `<div class="waiting-bar" style="background:#FFF3D0;color:#BF6C00;">
+      html += `<div class="waiting-bar" style="background:var(--amber-bg);color:#BF6C00;">
         ${IC.clock} Waiting for Sarah Chen to respond
       </div>`;
     }
   }
 
   if (step >= 1) {
-    html += msgGroup('Sarah Chen', 'Candidate', '#8B7E74', '2 min ago', '',
+    html += msgGroup('Sarah Chen', 'Candidate', '#8B7E74', '10 min ago', '',
       `<p>Hi! Thanks for reaching out. I've been looking at design systems roles and this sounds interesting.</p>
        <p>What's the interview process like? And is there flexibility on remote work?</p>`);
 
     html += agentInline(
-      `<p>Sarah asked about remote work and the interview process. I found the answers:</p>
-       <p><strong>Remote:</strong> Hybrid, 2 days/week in Hyderabad office. Async standups, flexible hours.</p>
-       <p><strong>Interview:</strong> 4 stages, ~3 hours total &mdash; recruiter conversation, portfolio review, product exercise, final discussion.</p>`,
-      `<button class="btn-primary" onclick="return false">Send answer</button>
+      `<p>Sarah asked about remote work and the interview process. I found the interview details but <strong>need your help on remote policy:</strong></p>
+       <p><strong>Remote:</strong> The handbook says "hybrid, 2 days/week" but the JD says "flexible." Which should I tell Sarah?</p>
+       <p><strong>Interview:</strong> 4 stages, ~3 hours total &mdash; recruiter conversation, portfolio review, product exercise, final discussion.</p>
+       <div style="display:flex;align-items:center;gap:6px;margin-top:8px;padding:8px 10px;background:var(--white);border-radius:var(--radius-md);border:1px solid var(--gray-200);font-size:12px;">
+         <span style="color:var(--ai-text);font-weight:600">Clarification needed</span>
+         <span style="color:var(--gray-500)">&mdash; conflicting info in 2 sources</span>
+       </div>`,
+      `<button class="btn-primary" onclick="return false">It's hybrid &mdash; send</button>
        <button class="btn-secondary" onclick="return false">Edit first</button>`,
       sourceCard('#94888B', 'PDF', 'JobDescription.pdf', 'Remote policy &middot; Interview stages')
         + sourceCard('#6B7E6A', 'HR', 'Company Handbook', 'Hybrid work policy &middot; Section 4.2')
     );
 
-    html += msgGroup('You', 'Recruiter', '#37B24D', '1 min ago', '',
+    html += msgGroup('You', 'Recruiter', '#37B24D', '5 min ago', '',
       `<p>Great questions! I'll walk you through the first stage personally &mdash; it's very conversational, no trick questions.</p>`);
     html += inlineCard(IC.fileText, 'var(--gray-100)', 'Product Designer &mdash; Job Description',
       'Design team &middot; Hyderabad &middot; Full-time', 'View');
@@ -1965,7 +2080,7 @@ function contextPanelHTML(step) {
       <span style="font-size:13px;font-weight:600">Overall</span>
       <span style="font-size:13px;font-weight:700;color:var(--green)">4.2/5</span>
     </div>`;
-    html += `<div style="display:flex;align-items:flex-start;gap:6px;margin-top:8px;padding:8px 10px;background:var(--amber-bg);border-radius:var(--radius-md);font-size:12px;color:#BF6C00">
+    html += `<div style="display:flex;align-items:flex-start;gap:6px;margin-top:8px;padding:8px 10px;background:var(--amber-bg);border-radius:var(--radius-md);font-size:12px;color:var(--amber)">
       ${IC.alertTriangle} Limited B2B experience (Sachin: fast learner, addressable)
     </div>`;
     html += `<div style="margin-top:8px;font-size:12px;font-weight:600;color:var(--green)">Recommendation: Advance to offer</div>
@@ -2066,7 +2181,7 @@ function agentPanelHTML(step) {
   if (step === 0) {
     // Outreach: agent gathered context, drafted outreach
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">CONTEXT</p>
+      <p style="font-size:11px;color:var(--ai-text);font-weight:600;margin-bottom:6px">CONTEXT</p>
       <p>Sarah Chen is a Product Designer at Flipkart with 8 years of experience. She led the checkout redesign (200M+ users) and built a component library used by 12 teams.</p>
     </div>`;
     html += agentSource(IC.file, '#7E8B94', 'Sarah Chen &mdash; LinkedIn', '8 yrs &middot; Flipkart &middot; IIT Delhi');
@@ -2078,12 +2193,17 @@ function agentPanelHTML(step) {
   }
 
   else if (step === 1) {
-    // Engage: agent answered Sarah's questions, pulled from docs
+    // Engage: agent found conflicting info, asks for clarification
     html += `<div class="agent-msg question">Sarah asked about remote work and interview process. What should I tell her?</div>`;
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">ANSWER</p>
-      <p><strong>Remote:</strong> Hybrid model &mdash; 2 days/week in Hyderabad office with async standups and flexible hours.</p>
+      <p style="font-size:11px;color:var(--ai-text);font-weight:600;margin-bottom:6px">ANSWER (needs clarification)</p>
       <p><strong>Interview:</strong> 4 stages totaling ~3 hours: recruiter conversation, portfolio review, product exercise, final discussion.</p>
+      <p style="margin-top:6px"><strong>Remote:</strong> I found conflicting information:</p>
+      <p style="padding:6px 8px;background:var(--white);border-radius:var(--radius-sm);border:1px solid var(--gray-200);margin:4px 0;font-size:12px">
+        <span style="color:var(--gray-500)">JD:</span> "Flexible remote arrangement"<br>
+        <span style="color:var(--gray-500)">Handbook S4.2:</span> "Hybrid, 2 days/week in office"
+      </p>
+      <p style="font-size:12px;color:var(--ai-text)">Which version should I share with Sarah?</p>
     </div>`;
     html += agentSource(IC.fileText, '#94888B', 'JobDescription.pdf', 'Remote policy &middot; Interview stages');
     html += agentSource(IC.bookOpen, '#6B7E6A', 'Company Handbook', 'Section 4.2 &middot; Hybrid work policy');
@@ -2097,7 +2217,7 @@ function agentPanelHTML(step) {
     // Schedule: agent checked calendars, found slots
     html += `<div class="agent-msg question">Sarah wants Thursday afternoon. What times work?</div>`;
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">ANSWER</p>
+      <p style="font-size:11px;color:var(--ai-text);font-weight:600;margin-bottom:6px">ANSWER</p>
       <p>I checked calendars for you, Sarah, and Sachin. Three slots work:</p>
       <p>&bull; 3:30 PM IST<br>&bull; <strong>4:00 PM IST</strong> (recommended &mdash; no conflicts after)<br>&bull; 4:30 PM IST</p>
     </div>`;
@@ -2112,11 +2232,11 @@ function agentPanelHTML(step) {
     // Collaborate: real multi-turn conversation preparing for interview
     html += `<div class="agent-msg question">Help me prepare for Sarah's interview. She has strong systems experience but I want to probe the B2B gap.</div>`;
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">ANSWER</p>
+      <p style="font-size:11px;color:var(--ai-text);font-weight:600;margin-bottom:6px">ANSWER</p>
       <p>I've pulled together a plan based on Sarah's profile and the team's input:</p>
       <p style="margin:6px 0 2px"><strong>1. Background &amp; motivation</strong><br><span style="color:var(--gray-500)">Why design systems, why now</span></p>
-      <p style="margin:2px 0"><strong>2. Flipkart checkout redesign</strong><br><span style="color:var(--gray-500)">Stakeholder alignment across 6 groups</span> <span style="font-size:11px;color:#BF6C00">(Sachin asked)</span></p>
-      <p style="margin:2px 0"><strong>3. B2B enterprise workflows</strong><br><span style="color:var(--gray-500)">Depth check on enterprise experience</span> <span style="font-size:11px;color:#BF6C00">(Priya flagged)</span></p>
+      <p style="margin:2px 0"><strong>2. Flipkart checkout redesign</strong><br><span style="color:var(--gray-500)">Stakeholder alignment across 6 groups</span> <span style="font-size:11px;color:var(--ai-text)">(Sachin asked)</span></p>
+      <p style="margin:2px 0"><strong>3. B2B enterprise workflows</strong><br><span style="color:var(--gray-500)">Depth check on enterprise experience</span> <span style="font-size:11px;color:var(--ai-text)">(Priya flagged)</span></p>
       <p style="margin:2px 0"><strong>4. Technical skills</strong><br><span style="color:var(--gray-500)">Design tokens, component APIs, documentation</span></p>
     </div>`;
     html += agentSource(IC.file, '#94888B', 'Resume_SarahChen.pdf', 'Work history &middot; Skills');
@@ -2136,16 +2256,16 @@ function agentPanelHTML(step) {
   else if (step === 4) {
     // Interview complete: agent summarizes, shows scorecard
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">CONTEXT</p>
+      <p style="font-size:11px;color:var(--ai-text);font-weight:600;margin-bottom:6px">CONTEXT</p>
       <p>Interview completed. 3 scorecards submitted. Here's the summary:</p>
       <p style="margin:6px 0 2px"><strong>Overall: 4.2/5</strong></p>
       <p>&bull; Systems Thinking: 4.5/5<br>&bull; Communication: 4.0/5<br>&bull; Stakeholder Mgmt: 4.5/5<br>&bull; Product Thinking: 4.0/5</p>
-      <p style="margin-top:6px;padding:6px 8px;background:var(--amber-bg);border-radius:4px;font-size:12px;color:#BF6C00">Limited B2B experience &mdash; Sachin noted she's a fast learner</p>
+      <p style="margin-top:6px;padding:6px 8px;background:var(--ai-light);border-radius:var(--radius-sm);font-size:12px;color:var(--ai-text)">Limited B2B experience &mdash; Sachin noted she's a fast learner</p>
     </div>`;
     html += agentSource(IC.barChart, '#6B7E6A', 'Interview Scorecard', '3 reviewers &middot; 4 dimensions');
     html += agentSource(IC.video, '#7E8B94', 'Interview Recording', '32 min &middot; Recruiter conversation');
     html += `<div class="agent-msg response" style="margin-top:8px">
-      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">RECOMMENDATION</p>
+      <p style="font-size:11px;color:var(--ai-text);font-weight:600;margin-bottom:6px">RECOMMENDATION</p>
       <p>Advance to Portfolio Review with Sachin. Sarah's strengths in systems thinking and stakeholder management outweigh the B2B gap.</p>
     </div>`;
     html += `<div style="margin-top:8px">`;
@@ -2158,7 +2278,7 @@ function agentPanelHTML(step) {
     // Decide & Offer: agent prepared the offer
     html += `<div class="agent-msg question">Prepare the offer for Sarah.</div>`;
     html += `<div class="agent-msg response">
-      <p style="font-size:11px;color:#BF6C00;font-weight:600;margin-bottom:6px">ANSWER</p>
+      <p style="font-size:11px;color:var(--ai-text);font-weight:600;margin-bottom:6px">ANSWER</p>
       <p>I've drafted the offer based on approved compensation bands:</p>
       <p style="margin:6px 0"><strong>&#8377;30 LPA</strong> &mdash; base salary<br>RSU equity grant &middot; Health insurance &middot; Relocation support</p>
       <p>This is within the approved L4 band (&#8377;25&ndash;32 LPA) and matches Sarah's expectation (&#8377;28&ndash;32 LPA).</p>
@@ -2224,23 +2344,13 @@ function toggleAgent() {
 }
 
 function render() {
-  if (currentStep === 3 && currentTab === 'candidate') {
-    currentTab = 'team';
-    document.getElementById('tab-candidate').classList.remove('active');
-    document.getElementById('tab-team').classList.add('active');
-  }
-  if (currentStep >= 4 && currentStep <= 4 && currentTab === 'team') {
+  if (currentStep >= 4 && currentTab === 'team') {
     currentTab = 'candidate';
     document.getElementById('tab-candidate').classList.add('active');
     document.getElementById('tab-team').classList.remove('active');
   }
 
-  if (currentStep === 3) {
-    agentVisible = true;
-    document.getElementById('agent-panel').classList.add('visible');
-    document.getElementById('detail-panel').style.display = 'none';
-    document.getElementById('agent-body').innerHTML = agentPanelHTML(currentStep);
-  } else if (agentVisible) {
+  if (agentVisible && currentStep !== 3) {
     agentVisible = false;
     document.getElementById('agent-panel').classList.remove('visible');
     document.getElementById('detail-panel').style.display = 'block';
@@ -2285,10 +2395,10 @@ function nextStep() { if (currentStep < STEPS.length - 1) { currentStep++; rende
 function prevStep() { if (currentStep > 0) { currentStep--; render(); } }
 function goToStep(i) { currentStep = i; render(); }
 
-function showView(view) {
+function showView(view, e) {
   currentView = view;
   document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  (e ? e.currentTarget : document.querySelector(`.view-btn[onclick*="${view}"]`)).classList.add('active');
   document.getElementById('recruiter-view').classList.toggle('hidden', view !== 'recruiter');
   document.getElementById('candidate-view').classList.toggle('hidden', view !== 'candidate');
 }
@@ -2296,6 +2406,7 @@ function showView(view) {
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') nextStep();
   if (e.key === 'ArrowLeft') prevStep();
+  if (e.key === 'Escape' && agentVisible) toggleAgent();
 });
 
 render();
