@@ -1,0 +1,846 @@
+<title>Sarah Chen's Hiring Story</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #FAF7F2;
+    --bg-alt: #F0EDE6;
+    --bg-dark: #1A2E23;
+    --bg-dark-alt: #152419;
+    --text: #2C2A26;
+    --text-secondary: #6B6760;
+    --text-on-dark: #E8E4DC;
+    --text-on-dark-secondary: #9BA398;
+    --accent: #37B24D;
+    --accent-light: #E6F9ED;
+    --amber: #C49B1A;
+    --amber-light: #FFF6DC;
+    --red-muted: #A0534B;
+    --border: #DDD8CF;
+    --border-dark: #2A4A35;
+    --step-line: #C8C3BA;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141210;
+      --bg-alt: #1C1A17;
+      --bg-dark: #0A1A10;
+      --bg-dark-alt: #071208;
+      --text: #E2DED6;
+      --text-secondary: #8A857C;
+      --text-on-dark: #E2DED6;
+      --text-on-dark-secondary: #7A8B7A;
+      --accent: #4ACD63;
+      --accent-light: #1A2E23;
+      --amber: #D4AA2A;
+      --amber-light: #2A2410;
+      --red-muted: #C06B63;
+      --border: #2E2B26;
+      --border-dark: #1A3025;
+      --step-line: #3A3630;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141210;
+    --bg-alt: #1C1A17;
+    --bg-dark: #0A1A10;
+    --bg-dark-alt: #071208;
+    --text: #E2DED6;
+    --text-secondary: #8A857C;
+    --text-on-dark: #E2DED6;
+    --text-on-dark-secondary: #7A8B7A;
+    --accent: #4ACD63;
+    --accent-light: #1A2E23;
+    --amber: #D4AA2A;
+    --amber-light: #2A2410;
+    --red-muted: #C06B63;
+    --border: #2E2B26;
+    --border-dark: #1A3025;
+    --step-line: #3A3630;
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    padding-inline: 24px;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .story {
+    max-width: 680px;
+    margin: 0 auto;
+    padding-block: 48px 80px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(32px, 6vw, 48px);
+    font-weight: 300;
+    line-height: 1.15;
+    margin: 0 0 20px;
+    text-wrap: balance;
+    color: var(--text);
+    font-optical-sizing: auto;
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-size: 17px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 48px;
+    max-width: 560px;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .meta-label {
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: var(--text-secondary);
+    opacity: 0.7;
+  }
+
+  .prose {
+    margin-bottom: 32px;
+  }
+  .prose p {
+    margin: 0 0 16px;
+  }
+
+  .step-section {
+    margin-bottom: 56px;
+    position: relative;
+  }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .narrative {
+    padding-left: 50px;
+  }
+  @media (max-width: 500px) {
+    .narrative { padding-left: 0; }
+  }
+
+  .moment {
+    background: var(--bg-alt);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-left: 3px solid var(--accent);
+  }
+  .moment-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .moment p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .moment .speaker {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .concept-card {
+    background: var(--bg-dark);
+    color: var(--text-on-dark);
+    border-radius: 12px;
+    padding: 28px 28px 24px;
+    margin: 28px 0;
+  }
+  .concept-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .concept-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .concept-card p {
+    font-size: 14px;
+    color: var(--text-on-dark-secondary);
+    line-height: 1.65;
+    margin: 0;
+  }
+  .concept-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-dark);
+  }
+  .concept-field {
+    display: flex;
+    gap: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .concept-field-label {
+    font-weight: 600;
+    color: var(--text-on-dark);
+    min-width: 72px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    padding-top: 1px;
+  }
+  .concept-field-value {
+    color: var(--text-on-dark-secondary);
+  }
+  .concept-field-value.highlight {
+    color: var(--amber);
+  }
+  .concept-field-value.resolved {
+    color: var(--accent);
+  }
+
+  .decision-moment {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .decision-moment:last-child { border-bottom: none; }
+  .decision-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .decision-text {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .decision-text strong {
+    color: var(--text);
+  }
+  .decision-actor {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  .provenance-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+    vertical-align: middle;
+  }
+  .prov-linkedin { background: #E8F4FD; color: #0A66C2; }
+  .prov-resume { background: #F3E8FF; color: #7C3AED; }
+  .prov-interview { background: var(--accent-light); color: var(--accent); }
+  .prov-team { background: #FFF0E6; color: #C2590A; }
+  .prov-hr { background: #E6F0FF; color: #2563EB; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .prov-linkedin { background: #0A2540; color: #4A9FE5; }
+    :root:not([data-theme="light"]) .prov-resume { background: #2A1A3E; color: #A78BFA; }
+    :root:not([data-theme="light"]) .prov-interview { background: #1A2E23; color: #4ACD63; }
+    :root:not([data-theme="light"]) .prov-team { background: #2A1A0A; color: #E8854A; }
+    :root:not([data-theme="light"]) .prov-hr { background: #0A1A30; color: #5A9BF5; }
+  }
+  :root[data-theme="dark"] .prov-linkedin { background: #0A2540; color: #4A9FE5; }
+  :root[data-theme="dark"] .prov-resume { background: #2A1A3E; color: #A78BFA; }
+  :root[data-theme="dark"] .prov-interview { background: #1A2E23; color: #4ACD63; }
+  :root[data-theme="dark"] .prov-team { background: #2A1A0A; color: #E8854A; }
+  :root[data-theme="dark"] .prov-hr { background: #0A1A30; color: #5A9BF5; }
+
+  .facts-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    font-size: 13px;
+    margin: 16px 0;
+    padding: 16px 20px;
+    background: var(--bg-alt);
+    border-radius: 8px;
+  }
+  .fact-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .fact-value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .separator {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 56px 0;
+  }
+
+  .coda {
+    text-align: center;
+    padding: 48px 0 0;
+    border-top: 1px solid var(--border);
+    margin-top: 56px;
+  }
+  .coda-quote {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(20px, 4vw, 26px);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--text);
+    max-width: 540px;
+    margin: 0 auto 16px;
+    text-wrap: balance;
+  }
+  .coda-attribution {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+  }
+  .coda-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+
+  .score-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  .score-bar-label {
+    min-width: 120px;
+    color: var(--text-on-dark-secondary);
+    font-size: 12px;
+  }
+  .score-bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border-dark);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+  }
+  .score-bar-val {
+    font-weight: 600;
+    color: var(--text-on-dark);
+    font-size: 13px;
+    min-width: 32px;
+    text-align: right;
+  }
+
+  .internal-flag {
+    font-size: 10px;
+    color: var(--red-muted);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--red-muted);
+    border-radius: 4px;
+    padding: 1px 6px;
+    opacity: 0.8;
+  }
+  .shared-flag {
+    font-size: 10px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 1px 6px;
+    opacity: 0.8;
+  }
+
+  .timeline-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 24px 0;
+  }
+  .timeline-chip {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .timeline-chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+</style>
+
+<div class="story">
+
+  <div class="eyebrow">ABC Staffing &middot; Connect</div>
+  <h1>How Sarah Chen got hired in <em>four days</em></h1>
+  <p class="subtitle">A hiring story in six steps &mdash; and what happens when the platform remembers everything so the people don't have to.</p>
+
+  <div class="meta-row">
+    <div class="meta-item">
+      <span class="meta-label">Role</span>
+      <span>Product Designer</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Team</span>
+      <span>Design &middot; Hyderabad</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Hiring Manager</span>
+      <span>Sachin Patel</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Timeline</span>
+      <span>Oct 22&ndash;25</span>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>This is the story of one hire. Not the org chart version &mdash; the version where a recruiter spots someone on LinkedIn at 9 AM and, four days later, that person has accepted an offer. Every fact verified, every decision attributed, every handoff seamless.</p>
+    <p>It's also the story of what a hiring platform looks like when it stops thinking in chat threads and starts thinking in <strong>hiring cases</strong>.</p>
+  </div>
+
+  <div class="timeline-summary">
+    <span class="timeline-chip active">Outreach</span>
+    <span class="timeline-chip">Engage</span>
+    <span class="timeline-chip">Schedule</span>
+    <span class="timeline-chip">Collaborate</span>
+    <span class="timeline-chip">Interview</span>
+    <span class="timeline-chip">Decide &amp; Offer</span>
+  </div>
+
+  <!-- ═══ STEP 1 ═══ -->
+  <div class="step-section">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div class="step-title">Outreach</div>
+    </div>
+    <div class="narrative">
+      <div class="prose">
+        <p>You find Sarah Chen on LinkedIn. Eight years of product design, currently Senior Designer at Flipkart, IIT Delhi graduate. Her checkout redesign served 200 million users. Her component library is used by 12 teams.</p>
+        <p>The platform opens a <strong>hiring case</strong> &mdash; not a chat thread, but a persistent record that will follow this candidacy from first message to onboarding. Every fact pulled from her profile lands with its source attached.</p>
+      </div>
+
+      <div class="facts-grid">
+        <span class="fact-label">Experience</span>
+        <span class="fact-value">8 yrs product design <span class="provenance-badge prov-linkedin">LinkedIn</span></span>
+        <span class="fact-label">Current</span>
+        <span class="fact-value">Sr. Designer at Flipkart <span class="provenance-badge prov-linkedin">LinkedIn</span></span>
+        <span class="fact-label">Education</span>
+        <span class="fact-value">IIT Delhi, B.Des <span class="provenance-badge prov-linkedin">LinkedIn</span></span>
+        <span class="fact-label">Location</span>
+        <span class="fact-value">Hyderabad <span class="provenance-badge prov-linkedin">LinkedIn</span></span>
+      </div>
+
+      <div class="prose">
+        <p>The agent drafts an outreach message from Sarah's profile and the job description. You send it. And then you wait.</p>
+      </div>
+
+      <div class="moment">
+        <div class="moment-label">What the hiring case captures</div>
+        <p>Four verified facts, each tagged to LinkedIn. One open question: <em>interest level unknown</em>. No decisions yet. The case is a single source of truth before anything has even happened.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 2 ═══ -->
+  <div class="step-section">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div class="step-title">Engage</div>
+    </div>
+    <div class="narrative">
+      <div class="prose">
+        <p>Sarah replies. She's interested &mdash; specifically in enterprise design systems work, not consumer products. She asks about the interview process and remote flexibility.</p>
+      </div>
+
+      <div class="moment">
+        <div class="moment-label">Sarah Chen</div>
+        <p>Hi! Thanks for reaching out. I've been looking at design systems roles and this sounds interesting. What's the interview process like? And is there flexibility on remote work?</p>
+      </div>
+
+      <div class="prose">
+        <p>The agent finds answers quietly &mdash; not in a loud panel, but as a small gray suggestion inline with the conversation. Hybrid, 2 days a week. Four interview stages, about three hours total. You send the answer and share the job description.</p>
+        <p>Two pieces of <strong>nuance</strong> enter the hiring case, both visible to the candidate:</p>
+      </div>
+
+      <div class="facts-grid">
+        <span class="fact-label">Interest</span>
+        <span class="fact-value">Enterprise design systems, not consumer <span class="provenance-badge prov-interview">Interview</span> <span class="shared-flag">Candidate</span></span>
+        <span class="fact-label">Remote</span>
+        <span class="fact-value">Hybrid 2 days/wk is acceptable <span class="provenance-badge prov-interview">Interview</span> <span class="shared-flag">Candidate</span></span>
+      </div>
+
+      <div class="prose">
+        <p>Your first decision is logged: <em>Engage candidate &mdash; profile matches requirements.</em> The case knows who decided, when, and why.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 3 ═══ -->
+  <div class="step-section">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div class="step-title">Schedule</div>
+    </div>
+    <div class="narrative">
+      <div class="prose">
+        <p>Sarah says she's available Thursday afternoon. The agent checks calendars and suggests 4:00 PM IST &mdash; no conflicts. You confirm, and an interview card appears in the conversation with date, time, format, and calendar links.</p>
+        <p>The stage shifts: <em>Engaged → Interview.</em></p>
+        <p>A new fact enters the case: <em>Availability: Thursday afternoons</em>, sourced from the call. A new decision: <em>Schedule Thu 4 PM interview.</em> And a new open question, surfaced by Priya Gupta before she's even spoken to Sarah: <em>B2B enterprise experience depth?</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 4 ═══ -->
+  <div class="step-section">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <div class="step-title">Collaborate</div>
+    </div>
+    <div class="narrative">
+      <div class="prose">
+        <p>This is where most hiring processes break.</p>
+        <p>The recruiter has context. The hiring manager doesn't. The interviewer has a resume and a calendar invite. The nuance &mdash; that Sarah specifically wants enterprise design systems, that her remote question was already answered, that her checkout redesign is the work sample worth probing &mdash; lives in the recruiter's head.</p>
+        <p>In Connect, the handoff is a <strong>context packet</strong>.</p>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-label">Context Packet &mdash; Candidate Briefing</div>
+        <div class="concept-title">You shared Sarah Chen with the hiring team</div>
+        <div class="concept-fields">
+          <div class="concept-field">
+            <span class="concept-field-label">Candidate</span>
+            <span class="concept-field-value">Sarah Chen &mdash; 8 yrs product design, Flipkart</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Highlight</span>
+            <span class="concept-field-value">Led checkout redesign (200M+ users), built component library for 12 teams</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Interest</span>
+            <span class="concept-field-value">Specifically looking for enterprise design systems roles</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Gap</span>
+            <span class="concept-field-value highlight">Limited B2B enterprise experience</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Interview</span>
+            <span class="concept-field-value">Scheduled Thu 4 PM &mdash; recruiter conversation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>Sachin Patel, the hiring manager, responds immediately. He wants to probe the checkout redesign for stakeholder alignment depth. Priya Gupta, the interviewer, flags the B2B enterprise gap as the main risk area.</p>
+        <p>Both of these become <strong>internal nuance</strong> &mdash; context that shapes the interview plan but is never visible to Sarah.</p>
+      </div>
+
+      <div class="facts-grid">
+        <span class="fact-label">Sachin</span>
+        <span class="fact-value">Probe checkout redesign for stakeholder alignment <span class="provenance-badge prov-team">Hiring Team</span> <span class="internal-flag">Internal</span></span>
+        <span class="fact-label">Priya</span>
+        <span class="fact-value">B2B enterprise gap is main risk area <span class="provenance-badge prov-team">Hiring Team</span> <span class="internal-flag">Internal</span></span>
+      </div>
+
+      <div class="prose">
+        <p>Two decisions are logged: Sachin adds the B2B probe to the interview plan. Priya adds enterprise experience questions. The interview guide now reflects the team's actual concerns, not a generic template.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 5 ═══ -->
+  <div class="step-section">
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <div class="step-title">Interview</div>
+    </div>
+    <div class="narrative">
+      <div class="prose">
+        <p>The second context packet fires &mdash; this time from you to the full hiring team: Sachin and Priya. It carries everything the team needs to evaluate Sarah, structured as WHAT / WHY / NUANCE / GAP / NEXT.</p>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-label">Context Packet &mdash; Recruiter → Hiring Team</div>
+        <div class="concept-title">Candidate context with Sachin Patel, Priya Gupta</div>
+        <div class="concept-fields">
+          <div class="concept-field">
+            <span class="concept-field-label">What</span>
+            <span class="concept-field-value">Sarah Chen &mdash; Product Designer candidate, 8 yrs at Flipkart</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Why</span>
+            <span class="concept-field-value">Strong systems thinker. Led checkout redesign for 200M+ users.</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Nuance</span>
+            <span class="concept-field-value highlight">Interested in enterprise design systems specifically, not consumer.</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Gap</span>
+            <span class="concept-field-value highlight">Limited B2B enterprise experience &mdash; needs probing.</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Next</span>
+            <span class="concept-field-value">Recruiter conversation Thu 4 PM. Panel to review after.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>The interview runs 32 minutes. Three scorecards come back. The numbers are strong.</p>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-label">Scorecard</div>
+        <div class="concept-title">Overall: 4.2 / 5</div>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-dark)">
+          <div class="score-bar-row">
+            <span class="score-bar-label">Systems Thinking</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+            <span class="score-bar-val">4.5</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">Communication</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+            <span class="score-bar-val">4.0</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">Stakeholder Mgmt</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+            <span class="score-bar-val">4.5</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="score-bar-label">Product Thinking</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+            <span class="score-bar-val">4.0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>Sachin's assessment is decisive: the checkout case study was impressive &mdash; Sarah managed six stakeholder groups. He's comfortable with the B2B gap. She's a fast learner.</p>
+        <p>Priya calls it the strongest product thinking exercise she's seen this quarter. She reframed the problem beautifully.</p>
+        <p>The open questions resolve one by one. <em>B2B gap manageable?</em> Resolved &mdash; fast learner per Sachin. <em>Salary within approved band?</em> Resolved &mdash; ₹28&ndash;32 LPA expectation, band is ₹25&ndash;32 LPA.</p>
+      </div>
+
+      <div class="moment">
+        <div class="moment-label">Decision</div>
+        <p><span class="speaker">Sachin + Priya:</span> Advance to offer &mdash; strong scores, B2B gap addressable. <em>Oct 24.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 6 ═══ -->
+  <div class="step-section">
+    <div class="step-header">
+      <div class="step-num">6</div>
+      <div class="step-title">Decide &amp; Offer</div>
+    </div>
+    <div class="narrative">
+      <div class="prose">
+        <p>The final context packet assembles itself &mdash; a complete hiring case summary for the offer decision. Candidate, score, strengths, concern, salary, decision. Every source tagged. Every fact traced.</p>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-label">Context Packet &mdash; Full Hiring Case Summary</div>
+        <div class="concept-title">Complete context for offer decision</div>
+        <div class="concept-fields">
+          <div class="concept-field">
+            <span class="concept-field-label">Candidate</span>
+            <span class="concept-field-value">Sarah Chen &mdash; 8 yrs, Flipkart, IIT Delhi</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Score</span>
+            <span class="concept-field-value">4.2/5 overall &mdash; 3 scorecards, all positive</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Strengths</span>
+            <span class="concept-field-value">Systems thinking, stakeholder mgmt, component library experience</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Concern</span>
+            <span class="concept-field-value resolved">B2B gap &mdash; resolved: fast learner per Sachin</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Salary</span>
+            <span class="concept-field-value">Expectation ₹28&ndash;32 LPA, band ₹25&ndash;32 LPA, offering ₹30 LPA</span>
+          </div>
+          <div class="concept-field">
+            <span class="concept-field-label">Decision</span>
+            <span class="concept-field-value resolved">Offer approved by Sachin Patel</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>Sachin approves the offer at ₹30 LPA &mdash; within the L4 band, matching Sarah's expectation. You send the offer letter and benefits package.</p>
+      </div>
+
+      <div class="moment">
+        <div class="moment-label">Sarah Chen</div>
+        <p>This is amazing! I'm thrilled to accept. The team, the role, and the offer all feel right.</p>
+        <p style="margin-top:8px">Thank you for making this process so smooth &mdash; having everything in one conversation made it so easy to stay on top of things.</p>
+      </div>
+
+      <div class="prose">
+        <p>The hiring case closes. Onboarding triggers automatically: welcome email December 20, IT equipment, team channel, Day-1 orientation January 6. Buddy assigned: Priya Gupta.</p>
+        <p>The case holds 13 verified facts, 7 pieces of context and nuance, 6 decisions with attribution, and 6 questions &mdash; all resolved.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="separator">
+
+  <!-- ═══ DECISIONS TIMELINE ═══ -->
+  <div class="step-section">
+    <div class="step-header">
+      <div class="step-num" style="background:var(--text);font-size:13px;">&#10003;</div>
+      <div class="step-title">The Decision Trail</div>
+    </div>
+    <div class="narrative">
+      <div class="prose">
+        <p>Every decision in Sarah's hiring case, in order. Every one has an owner, a date, and a reason. Nothing was lost in a thread. Nothing was assumed.</p>
+      </div>
+
+      <div class="decision-moment">
+        <div class="decision-dot"></div>
+        <div>
+          <div class="decision-text"><strong>Engage candidate</strong> &mdash; profile matches role requirements</div>
+          <div class="decision-actor">You &middot; Oct 22</div>
+        </div>
+      </div>
+      <div class="decision-moment">
+        <div class="decision-dot"></div>
+        <div>
+          <div class="decision-text"><strong>Schedule Thu 4 PM interview</strong> &mdash; best slot for all participants</div>
+          <div class="decision-actor">You &middot; Oct 23</div>
+        </div>
+      </div>
+      <div class="decision-moment">
+        <div class="decision-dot"></div>
+        <div>
+          <div class="decision-text"><strong>Add B2B probe to interview plan</strong> &mdash; address enterprise experience gap</div>
+          <div class="decision-actor">Sachin Patel &middot; Oct 23</div>
+        </div>
+      </div>
+      <div class="decision-moment">
+        <div class="decision-dot"></div>
+        <div>
+          <div class="decision-text"><strong>Advance to offer</strong> &mdash; strong scores, B2B gap addressable</div>
+          <div class="decision-actor">Sachin + Priya &middot; Oct 24</div>
+        </div>
+      </div>
+      <div class="decision-moment">
+        <div class="decision-dot"></div>
+        <div>
+          <div class="decision-text"><strong>Offer at ₹30 LPA</strong> &mdash; within L4 band, matches expectation</div>
+          <div class="decision-actor">Sachin Patel &middot; Oct 25</div>
+        </div>
+      </div>
+      <div class="decision-moment">
+        <div class="decision-dot"></div>
+        <div>
+          <div class="decision-text"><strong>Offer accepted</strong> &mdash; role, team, and compensation all aligned</div>
+          <div class="decision-actor">Sarah Chen &middot; Oct 25</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CODA ═══ -->
+  <div class="coda">
+    <p class="coda-quote">&ldquo;Having everything in one conversation made it so easy to stay on top of things.&rdquo;</p>
+    <p class="coda-attribution">&mdash; Sarah Chen, on her hiring experience</p>
+    <p class="coda-note">The difference isn't the technology. It's that every person in the process &mdash; recruiter, hiring manager, interviewer, candidate &mdash; saw the context they needed, exactly when they needed it. Nothing was lost at the handoff. Nothing was asked twice.</p>
+  </div>
+
+</div>
