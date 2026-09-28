@@ -1,0 +1,846 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Connect Share</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --font-ui:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --font-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+    /* light */
+    --bg:#f4f5fb;
+    --surface:#ffffff;
+    --surface-2:#fafbff;
+    --border:#e6e8f3;
+    --border-strong:#d6d9ea;
+    --ink:#1c2033;
+    --ink-2:#3b4066;
+    --muted:#6b7192;
+    --faint:#9297b8;
+    --accent:#4f46e5;
+    --accent-hover:#4338ca;
+    --accent-soft:#eef1ff;
+    --accent-ink:#3730a3;
+    --teal:#0d9488;--teal-soft:#e6f6f4;
+    --violet:#7c3aed;--violet-soft:#f3ecfe;
+    --amber:#b45309;--amber-soft:#fdf2dd;--amber-border:#f0d9a8;
+    --green:#059669;--green-soft:#e7f7ef;
+    --shadow:0 1px 2px rgba(28,32,51,.05),0 12px 32px -8px rgba(28,32,51,.14);
+    --shadow-sm:0 1px 2px rgba(28,32,51,.06),0 4px 10px -4px rgba(28,32,51,.1);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1017;--surface:#171a24;--surface-2:#1c2030;--border:#2a2f42;
+      --border-strong:#363c54;--ink:#e9ebf7;--ink-2:#c3c7e0;--muted:#9298bd;
+      --faint:#6a7098;--accent:#818cf8;--accent-hover:#93a0ff;--accent-soft:#20233a;
+      --accent-ink:#c7ccff;--teal:#2dd4bf;--teal-soft:#122b2a;--violet:#a78bfa;
+      --violet-soft:#241a3a;--amber:#fbbf24;--amber-soft:#2b2110;--amber-border:#4a3a15;
+      --green:#34d399;--green-soft:#0f2a20;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -10px rgba(0,0,0,.6);
+      --shadow-sm:0 1px 2px rgba(0,0,0,.4),0 6px 14px -6px rgba(0,0,0,.5);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1017;--surface:#171a24;--surface-2:#1c2030;--border:#2a2f42;
+    --border-strong:#363c54;--ink:#e9ebf7;--ink-2:#c3c7e0;--muted:#9298bd;
+    --faint:#6a7098;--accent:#818cf8;--accent-hover:#93a0ff;--accent-soft:#20233a;
+    --accent-ink:#c7ccff;--teal:#2dd4bf;--teal-soft:#122b2a;--violet:#a78bfa;
+    --violet-soft:#241a3a;--amber:#fbbf24;--amber-soft:#2b2110;--amber-border:#4a3a15;
+    --green:#34d399;--green-soft:#0f2a20;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -10px rgba(0,0,0,.6);
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4),0 6px 14px -6px rgba(0,0,0,.5);
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);
+    -webkit-font-smoothing:antialiased;line-height:1.45}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea{font-family:inherit}
+  .mono{font-family:var(--font-mono)}
+
+  .wrap{max-width:1080px;margin:0 auto;padding-block:24px;padding-left:16px;padding-right:16px}
+
+  /* top bar */
+  .topbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.02em;font-size:16px}
+  .brand .mk{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--accent),#8b5cf6);
+    display:grid;place-items:center;color:#fff;flex:0 0 auto}
+  .brand .mk svg{width:15px;height:15px}
+  .brand small{font-weight:500;color:var(--faint);font-size:11px;margin-left:-3px;letter-spacing:0}
+  .topbar .spacer{flex:1}
+  .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--faint)}
+  .themebtn{border:1px solid var(--border);background:var(--surface);border-radius:9px;
+    padding:7px 11px;font-size:12.5px;font-weight:600;color:var(--muted);display:inline-flex;gap:6px;align-items:center}
+  .themebtn:hover{border-color:var(--border-strong);color:var(--ink-2)}
+
+  .lead{max-width:64ch;margin:0 0 22px}
+  .lead h1{font-size:23px;line-height:1.2;letter-spacing:-.02em;margin:0 0 6px;text-wrap:balance}
+  .lead p{margin:0;color:var(--muted);font-size:14px}
+
+  /* candidate context panel (base surface) */
+  .stage{display:grid;grid-template-columns:1fr;gap:16px}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-sm)}
+  .cand-head{display:flex;gap:14px;align-items:flex-start;padding:18px 18px 14px}
+  .avatar{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;font-weight:700;
+    font-size:18px;color:#fff;flex:0 0 auto}
+  .avatar.sm{width:30px;height:30px;border-radius:8px;font-size:12px}
+  .avatar.xs{width:22px;height:22px;border-radius:6px;font-size:10px}
+  .cand-head .who{flex:1;min-width:0}
+  .cand-head h2{margin:0;font-size:18px;letter-spacing:-.01em}
+  .cand-head .role{color:var(--muted);font-size:13.5px;margin-top:1px}
+  .metarow{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+    padding:3px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--border);color:var(--ink-2)}
+  .chip svg{width:12px;height:12px;opacity:.7}
+  .status-dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+  .cand-head .actions{display:flex;gap:8px;flex:0 0 auto;align-items:center}
+  .btn{border-radius:10px;padding:9px 14px;font-size:13.5px;font-weight:700;display:inline-flex;
+    align-items:center;gap:7px;border:1px solid transparent;transition:.14s;white-space:nowrap}
+  .btn svg{width:15px;height:15px}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.primary:hover{background:var(--accent-hover)}
+  .btn.ghost{background:var(--surface);border-color:var(--border-strong);color:var(--ink-2)}
+  .btn.ghost:hover{border-color:var(--faint);color:var(--ink)}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .cand-fields{border-top:1px solid var(--border);padding:14px 18px;display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px 20px}
+  .fld{min-width:0}
+  .fld .k{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--faint);display:flex;align-items:center;gap:5px}
+  .fld .k svg{width:11px;height:11px}
+  .fld .v{font-size:13.5px;font-weight:600;margin-top:3px;color:var(--ink-2)}
+  .fld.protected .v{color:var(--muted)}
+  .lockpill{font-size:9.5px;font-weight:700;color:var(--amber);background:var(--amber-soft);
+    border:1px solid var(--amber-border);padding:1px 5px;border-radius:5px;letter-spacing:.02em}
+
+  .hint{font-size:12px;color:var(--faint);margin-top:14px;display:flex;align-items:center;gap:6px}
+  .hint svg{width:13px;height:13px}
+
+  /* ===== modal ===== */
+  .scrim{position:fixed;inset:0;background:rgba(20,22,38,.5);backdrop-filter:blur(3px);
+    display:none;align-items:flex-start;justify-content:center;padding:5vh 16px 16px;z-index:50;overflow:auto}
+  .scrim.open{display:flex}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:18px;width:100%;
+    max-width:520px;box-shadow:var(--shadow);overflow:hidden;animation:pop .18s ease}
+  @keyframes pop{from{transform:translateY(8px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+  @media (prefers-reduced-motion:reduce){.modal{animation:none}}
+  .m-head{display:flex;align-items:center;gap:11px;padding:15px 16px;border-bottom:1px solid var(--border)}
+  .m-head .obj{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+  .m-head .obj .t{min-width:0}
+  .m-head .obj .t .l{font-size:14.5px;font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .m-head .obj .t .s{font-size:11.5px;color:var(--muted)}
+  .xbtn{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:var(--muted);flex:0 0 auto}
+  .xbtn:hover{background:var(--surface-2);color:var(--ink)}
+  .xbtn svg{width:16px;height:16px}
+
+  .tabs{display:flex;gap:2px;padding:6px 10px 0;border-bottom:1px solid var(--border)}
+  .tab{position:relative;padding:9px 12px 12px;font-size:13px;font-weight:700;color:var(--muted);
+    display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+  .tab svg{width:15px;height:15px}
+  .tab .sub{font-weight:500;font-size:10.5px;color:var(--faint);display:block}
+  .tab:hover{color:var(--ink-2)}
+  .tab.on{color:var(--accent)}
+  .tab.on::after{content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:2.5px;
+    background:var(--accent);border-radius:2px}
+
+  .m-body{padding:16px;max-height:64vh;overflow:auto}
+  .field-label{font-size:12px;font-weight:700;color:var(--ink-2);margin:0 0 7px;display:flex;
+    align-items:center;justify-content:space-between}
+  .field-label .opt{font-weight:500;color:var(--faint);font-size:11px}
+
+  /* recipient input */
+  .rcp{border:1.5px solid var(--border-strong);border-radius:12px;padding:6px;display:flex;
+    flex-wrap:wrap;gap:6px;align-items:center;background:var(--surface-2);transition:.14s}
+  .rcp:focus-within{border-color:var(--accent);background:var(--surface)}
+  .rcp input{flex:1;min-width:120px;border:none;background:none;outline:none;font-size:13.5px;
+    color:var(--ink);padding:6px 6px}
+  .tok{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);
+    border-radius:999px;padding:3px 4px 3px 4px;font-size:12.5px;font-weight:600;box-shadow:var(--shadow-sm)}
+  .tok .x{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;color:var(--faint)}
+  .tok .x:hover{background:var(--surface-2);color:var(--ink)}
+  .tok .x svg{width:10px;height:10px}
+  .tok .ext{font-size:9px;font-weight:800;color:var(--amber);background:var(--amber-soft);
+    padding:1px 4px;border-radius:4px;letter-spacing:.03em}
+
+  .drop{position:relative}
+  .menu{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--surface);
+    border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);z-index:5;overflow:hidden;
+    max-height:270px;overflow-y:auto}
+  .menu .grp{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--faint);padding:9px 12px 4px}
+  .opt-row{display:flex;align-items:center;gap:10px;padding:8px 12px;width:100%;text-align:left}
+  .opt-row:hover,.opt-row.hl{background:var(--accent-soft)}
+  .opt-row .t{flex:1;min-width:0}
+  .opt-row .t .n{font-size:13.5px;font-weight:600;line-height:1.2}
+  .opt-row .t .d{font-size:11.5px;color:var(--muted)}
+  .badge{font-size:9.5px;font-weight:800;letter-spacing:.03em;padding:2px 6px;border-radius:5px;text-transform:uppercase;flex:0 0 auto}
+  .b-team{color:var(--accent);background:var(--accent-soft)}
+  .b-contact{color:var(--teal);background:var(--teal-soft)}
+  .b-cand{color:var(--violet);background:var(--violet-soft)}
+  .nores{padding:12px;font-size:12.5px;color:var(--muted)}
+
+  /* recipient detail rows */
+  .rlist{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+  .rrow{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border);
+    border-radius:10px;background:var(--surface-2)}
+  .rrow .t{flex:1;min-width:0}
+  .rrow .t .n{font-size:13px;font-weight:600}
+  .rrow .t .cando{font-size:11px;color:var(--muted);margin-top:1px;display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+  .cando b{font-weight:700;color:var(--ink-2)}
+  .rrow .x{color:var(--faint);width:24px;height:24px;border-radius:6px;display:grid;place-items:center;flex:0 0 auto}
+  .rrow .x:hover{background:var(--border);color:var(--ink)}
+  .rrow .x svg{width:13px;height:13px}
+
+  /* send mode toggle */
+  .seg{display:flex;background:var(--surface-2);border:1px solid var(--border);border-radius:11px;padding:4px;gap:4px}
+  .seg button{flex:1;padding:9px 8px;border-radius:8px;font-size:12.5px;font-weight:700;color:var(--muted);
+    text-align:center;line-height:1.25}
+  .seg button .d{display:block;font-weight:500;font-size:10.5px;color:var(--faint);margin-top:1px}
+  .seg button.on{background:var(--surface);color:var(--accent);box-shadow:var(--shadow-sm)}
+  .seg button.on .d{color:var(--muted)}
+
+  .block{margin-top:16px}
+  .block:first-child{margin-top:0}
+
+  /* context tag picker */
+  .ctx{display:flex;flex-wrap:wrap;gap:6px}
+  .ctx button{font-size:12.5px;font-weight:600;padding:6px 11px;border-radius:999px;border:1px solid var(--border-strong);
+    background:var(--surface);color:var(--ink-2);display:inline-flex;align-items:center;gap:6px}
+  .ctx button svg{width:13px;height:13px;opacity:.65}
+  .ctx button.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink)}
+  .ctx button.on svg{opacity:1;color:var(--accent)}
+
+  textarea.note{width:100%;border:1.5px solid var(--border-strong);border-radius:12px;padding:10px 12px;
+    font-size:13.5px;color:var(--ink);background:var(--surface-2);resize:vertical;min-height:60px;outline:none}
+  textarea.note:focus{border-color:var(--accent);background:var(--surface)}
+
+  /* PII guard */
+  .guard{border-radius:13px;padding:13px;border:1px solid;margin-top:16px}
+  .guard.ext{background:var(--amber-soft);border-color:var(--amber-border)}
+  .guard.int{background:var(--green-soft);border-color:transparent}
+  .guard .gh{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:700}
+  .guard.ext .gh{color:var(--amber)}
+  .guard.int .gh{color:var(--green)}
+  .guard .gh svg{width:16px;height:16px;flex:0 0 auto}
+  .guard .gsub{font-size:11.5px;color:var(--muted);margin:5px 0 0;padding-left:25px}
+  .guard.ext .gsub{color:var(--amber)}
+  .protgrid{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0 25px}
+  .pf{font-size:11px;font-weight:600;padding:4px 9px;border-radius:8px;display:inline-flex;align-items:center;gap:5px;
+    background:var(--surface);border:1px solid var(--border)}
+  .pf svg{width:11px;height:11px}
+  .pf.off{color:var(--faint);text-decoration:line-through;text-decoration-thickness:1px;opacity:.85}
+  .pf.on{color:var(--green)}
+  .pf.off svg{color:var(--amber)}
+
+  /* link share */
+  .linkrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;
+    padding:11px 13px;border:1px dashed var(--border-strong);border-radius:12px}
+  .linkrow .lt{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+  .linkrow .lt svg{width:15px;height:15px;color:var(--muted)}
+  .switch{width:38px;height:22px;border-radius:999px;background:var(--border-strong);position:relative;transition:.16s;flex:0 0 auto}
+  .switch::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;
+    background:#fff;transition:.16s;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+  .switch.on{background:var(--accent)}
+  .switch.on::after{left:18px}
+  .linkbox{margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}
+  .linkbox .lb-row{display:flex;align-items:center;gap:8px;margin-top:9px}
+  .linkbox .lb-row:first-child{margin-top:0}
+  .sel{flex:1;border:1px solid var(--border-strong);border-radius:9px;padding:8px 10px;font-size:12.5px;
+    font-weight:600;background:var(--surface);color:var(--ink-2)}
+  .urlfield{display:flex;align-items:center;gap:8px;margin-top:10px;background:var(--surface);
+    border:1px solid var(--border-strong);border-radius:9px;padding:4px 4px 4px 11px}
+  .urlfield code{flex:1;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .copybtn{font-size:11.5px;font-weight:700;color:var(--accent);padding:6px 10px;border-radius:7px;background:var(--accent-soft)}
+  .copybtn.done{color:var(--green);background:var(--green-soft)}
+
+  /* footer */
+  .m-foot{display:flex;align-items:center;gap:10px;padding:13px 16px;border-top:1px solid var(--border);
+    background:var(--surface-2)}
+  .m-foot .fnote{flex:1;font-size:11.5px;color:var(--muted);line-height:1.35}
+  .m-foot .fnote b{color:var(--ink-2)}
+
+  /* Discuss tab */
+  .disc-opt{display:flex;gap:11px;padding:12px;border:1.5px solid var(--border);border-radius:12px;
+    cursor:pointer;background:var(--surface-2);align-items:flex-start}
+  .disc-opt.on{border-color:var(--accent);background:var(--accent-soft)}
+  .disc-opt .radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--border-strong);flex:0 0 auto;margin-top:1px;position:relative}
+  .disc-opt.on .radio{border-color:var(--accent)}
+  .disc-opt.on .radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--accent)}
+  .disc-opt .t .n{font-size:13.5px;font-weight:700}
+  .disc-opt .t .d{font-size:12px;color:var(--muted);margin-top:2px}
+  .threadlist{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+  .thread{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid var(--border);
+    border-radius:10px;width:100%;text-align:left;background:var(--surface)}
+  .thread:hover{border-color:var(--border-strong)}
+  .thread.on{border-color:var(--accent);background:var(--accent-soft)}
+  .thread .t{flex:1;min-width:0}
+  .thread .t .n{font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px}
+  .thread .t .d{font-size:11.5px;color:var(--muted)}
+  .kind{font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 5px;
+    border-radius:4px;background:var(--surface-2);border:1px solid var(--border);color:var(--muted)}
+  .thread .check{color:var(--accent);opacity:0}
+  .thread.on .check{opacity:1}
+  .thread .check svg{width:16px;height:16px}
+
+  /* Add member tab */
+  .roles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .role{border:1.5px solid var(--border);border-radius:11px;padding:11px;text-align:left;background:var(--surface-2)}
+  .role.on{border-color:var(--accent);background:var(--accent-soft)}
+  .role .n{font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between}
+  .role .n .tick{color:var(--accent);opacity:0}
+  .role.on .n .tick{opacity:1}
+  .role .n .tick svg{width:15px;height:15px}
+  .role .d{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.35}
+  .caps{margin-top:14px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .cap{display:flex;align-items:center;gap:10px;padding:10px 12px;border-top:1px solid var(--border);font-size:12.5px}
+  .cap:first-child{border-top:none}
+  .cap .ci{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex:0 0 auto;
+    background:var(--surface-2);color:var(--muted)}
+  .cap .ci svg{width:14px;height:14px}
+  .cap .cn{flex:1;font-weight:600}
+  .cap .cn .warn{display:block;font-weight:600;font-size:10.5px;color:var(--amber);margin-top:1px}
+  .cap .cv{font-weight:700;font-size:11.5px}
+  .cap .cv.yes{color:var(--green)}
+  .cap .cv.no{color:var(--faint)}
+
+  /* success / outcome */
+  .success{padding:22px 18px 6px;text-align:center}
+  .success .tick-big{width:52px;height:52px;border-radius:50%;background:var(--green-soft);color:var(--green);
+    display:grid;place-items:center;margin:0 auto 12px}
+  .success .tick-big svg{width:26px;height:26px}
+  .success h3{margin:0;font-size:17px;letter-spacing:-.01em}
+  .success p{margin:5px 0 0;font-size:13px;color:var(--muted)}
+  .convo{margin:16px;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface-2)}
+  .convo-head{display:flex;align-items:center;gap:9px;padding:11px 13px;border-bottom:1px solid var(--border);background:var(--surface)}
+  .convo-head .n{font-size:13px;font-weight:700;flex:1}
+  .convo-body{padding:14px 13px;display:flex;flex-direction:column;gap:10px}
+  .bubble{align-self:flex-end;max-width:82%;background:var(--accent);color:#fff;padding:8px 12px;
+    border-radius:14px 14px 4px 14px;font-size:12.5px;font-weight:500}
+  .sharecard{align-self:flex-end;max-width:88%;background:var(--surface);border:1px solid var(--border);
+    border-radius:14px 14px 4px 14px;overflow:hidden;box-shadow:var(--shadow-sm)}
+  .sharecard .sc-top{display:flex;gap:10px;padding:11px;align-items:center}
+  .sharecard .sc-top .t{flex:1;min-width:0}
+  .sharecard .sc-top .t .n{font-size:13px;font-weight:700}
+  .sharecard .sc-top .t .r{font-size:11.5px;color:var(--muted)}
+  .sc-ctx{font-size:10.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);
+    padding:2px 7px;border-radius:5px;display:inline-flex;align-items:center;gap:4px}
+  .sc-ctx svg{width:10px;height:10px}
+  .sc-actions{display:flex;border-top:1px solid var(--border)}
+  .sc-actions button{flex:1;padding:9px;font-size:12px;font-weight:700;color:var(--accent);
+    border-right:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:5px}
+  .sc-actions button:last-child{border-right:none}
+  .sc-actions button svg{width:13px;height:13px}
+  .sc-actions button:hover{background:var(--accent-soft)}
+  .sc-actions button.muted{color:var(--muted)}
+  .sc-guardline{font-size:10.5px;color:var(--amber);background:var(--amber-soft);padding:6px 11px;
+    display:flex;align-items:center;gap:6px;border-top:1px solid var(--amber-border)}
+  .sc-guardline svg{width:11px;height:11px}
+
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:var(--surface);padding:11px 16px;border-radius:11px;font-size:13px;
+    font-weight:600;box-shadow:var(--shadow);opacity:0;transition:.22s;z-index:80;pointer-events:none;
+    display:flex;align-items:center;gap:9px}
+  .toast svg{width:15px;height:15px;color:var(--green)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .legend .li{font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">
+      <span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      Connect <small>by&nbsp;Leoforce</small>
+    </div>
+    <div class="spacer"></div>
+    <span class="eyebrow">Share&nbsp;·&nbsp;Prototype</span>
+    <button class="themebtn" id="themeBtn"><svg id="themeIco" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span id="themeLbl">Dark</span></button>
+  </div>
+
+  <div class="lead">
+    <h1>Sharing in Connect</h1>
+    <p>One sheet, three outcomes — <b>Share</b> an object, <b>Discuss</b> it in a conversation, or <b>Add</b> someone to the work. Open the sheet from Sarah's profile to try each path, including the external PII guard and the individual-vs-group fork.</p>
+  </div>
+
+  <div class="stage">
+    <div class="panel">
+      <div class="cand-head">
+        <div class="avatar" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">SC</div>
+        <div class="who">
+          <h2>Sarah Chen</h2>
+          <div class="role">Staff Product Designer · San Francisco, CA</div>
+          <div class="metarow">
+            <span class="chip"><span class="status-dot"></span>Open to the right opportunity</span>
+            <span class="chip badge-cand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Screened</span>
+            <span class="chip">9 yrs · ex-Figma</span>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn ghost" id="msgBtn" title="Message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+          <button class="btn primary" id="openShare">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
+            Share
+          </button>
+        </div>
+      </div>
+      <div class="cand-fields">
+        <div class="fld"><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Match score</div><div class="v">92% · Staff Designer</div></div>
+        <div class="fld protected"><div class="k">Salary expectation <span class="lockpill">PROTECTED</span></div><div class="v">$245k base</div></div>
+        <div class="fld protected"><div class="k">Recruiter note <span class="lockpill">PROTECTED</span></div><div class="v">Prefers late-stage startups</div></div>
+        <div class="fld protected"><div class="k">Interviewer feedback <span class="lockpill">PROTECTED</span></div><div class="v">Strong systems thinker</div></div>
+        <div class="fld"><div class="k">Source</div><div class="v">Career site · 6 days ago</div></div>
+        <div class="fld"><div class="k">Availability</div><div class="v">2 weeks notice</div></div>
+      </div>
+    </div>
+
+    <div class="hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      Fields marked <b>&nbsp;PROTECTED&nbsp;</b> are automatically hidden when a recipient is external.
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="scrim" id="scrim">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Share Sarah Chen">
+    <div class="m-head">
+      <div class="obj">
+        <div class="avatar sm" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">SC</div>
+        <div class="t">
+          <div class="l">Sarah Chen</div>
+          <div class="s">Candidate · Staff Product Designer</div>
+        </div>
+      </div>
+      <button class="xbtn" id="closeShare" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-tab="share">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
+        <span>Share<span class="sub">send an object</span></span>
+      </button>
+      <button class="tab" data-tab="discuss">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>Discuss<span class="sub">talk about it</span></span>
+      </button>
+      <button class="tab" data-tab="add">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+        <span>Add member<span class="sub">give access</span></span>
+      </button>
+    </div>
+
+    <div class="m-body" id="mbody"><!-- rendered by JS --></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span id="toastMsg"></span></div>
+
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)};
+  /* ---------- data ---------- */
+  var DIR=[
+    {id:'shrimoi',name:'Shrimoi Sen',type:'team',desc:'Recruiter · your team',initials:'SS',color:'#4f46e5',ext:false},
+    {id:'madhu',name:'Madhu Rao',type:'team',desc:'Hiring Manager · your team',initials:'MR',color:'#2563eb',ext:false},
+    {id:'alex',name:'Alex Park',type:'team',desc:'Coordinator · your team',initials:'AP',color:'#0891b2',ext:false},
+    {id:'priya',name:'Priya Nair',type:'contact',desc:'Talent Partner · Northwind',initials:'PN',color:'#0d9488',ext:false},
+    {id:'daniel',name:'Daniel Cole',type:'contact',desc:'Client HM · Acme (external)',initials:'DC',color:'#b45309',ext:true},
+    {id:'jules',name:'Jules Vero',type:'contact',desc:'Client · Vero Labs (external)',initials:'JV',color:'#be185d',ext:true},
+    {id:'marcus',name:'Marcus Webb',type:'cand',desc:'Candidate · Product Designer',initials:'MW',color:'#7c3aed',ext:false},
+    {id:'lena',name:'Lena Ortiz',type:'cand',desc:'Candidate · Design Systems',initials:'LO',color:'#9333ea',ext:false}
+  ];
+  var THREADS=[
+    {id:'t1',name:'Shrimoi Sen',desc:'1-1 · you exchanged 4 messages',kind:'1-1'},
+    {id:'t2',name:'Interview Panel',desc:'Group · Staff Designer role · 5 people',kind:'group · in job'},
+    {id:'t3',name:'Madhu Rao',desc:'1-1 · Hiring Manager',kind:'1-1'}
+  ];
+  var PROT=[
+    {n:'Internal notes',ic:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M9 13h6 M9 17h4'},
+    {n:'Salary expectation',ic:'M12 1v22 M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'},
+    {n:'Interviewer feedback',ic:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'},
+    {n:'Recruiter comments',ic:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'}
+  ];
+  var ROLES=[
+    {id:'recruiter',n:'Recruiter',d:'Full access — source, message, move stages.'},
+    {id:'coord',n:'Coordinator',d:'Schedule & message. No hiring decisions.'},
+    {id:'viewer',n:'Viewer',d:'Read pipeline. Cannot contact candidates.'},
+    {id:'guest',n:'Client guest',d:'External. Sees only shortlisted, redacted profiles.'}
+  ];
+  var CAPS={
+    recruiter:[['View pipeline','yes'],['Message candidates','yes'],['See salary & notes','yes','Sensitive'],['Move / reject','yes','Affects candidates']],
+    coord:[['View pipeline','yes'],['Message candidates','yes'],['See salary & notes','no'],['Move / reject','no']],
+    viewer:[['View pipeline','yes'],['Message candidates','no'],['See salary & notes','no'],['Move / reject','no']],
+    guest:[['View shortlisted only','yes'],['Message candidates','no'],['See salary & notes','no','Always hidden'],['Move / reject','no']]
+  };
+
+  /* ---------- state ---------- */
+  var state={tab:'share',recipients:[],mode:'individual',ctx:'staff',note:'',link:false,
+    linkAudience:'chosen',discMode:'new',discThread:null,discPeople:[],role:'recruiter',query:''};
+
+  var icons={
+    x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>',
+    check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>',
+    lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+    eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>',
+    shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+    link:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>',
+    brief:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+    msg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>',
+    save:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>'
+  };
+  function initial(p){return p.initials}
+  function badgeClass(t){return t==='team'?'b-team':t==='contact'?'b-contact':'b-cand'}
+  function typeLabel(t){return t==='team'?'Team':t==='contact'?'Contact':'Candidate'}
+  function hasExternal(){return state.recipients.some(function(r){return r.ext})}
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+
+  /* ---------- renderers ---------- */
+  var mbody=$('#mbody');
+
+  function render(){
+    if(state.tab==='share') renderShare();
+    else if(state.tab==='discuss') renderDiscuss();
+    else renderAdd();
+  }
+
+  function recipientInputHTML(){
+    var toks=state.recipients.map(function(r){
+      return '<span class="tok"><span class="avatar xs" style="background:'+r.color+'">'+initial(r)+'</span>'+esc(r.name)+
+        (r.ext?'<span class="ext">EXT</span>':'')+
+        '<button class="x" data-remove="'+r.id+'" aria-label="Remove">'+icons.x+'</button></span>';
+    }).join('');
+    return '<div class="rcp" id="rcp">'+toks+
+      '<input id="search" autocomplete="off" placeholder="'+(state.recipients.length?'Add more…':'Search teammates, contacts, candidates…')+'"></div>'+
+      '<div class="drop"><div id="menu"></div></div>';
+  }
+
+  function recipientRows(){
+    if(!state.recipients.length) return '';
+    var rows=state.recipients.map(function(r){
+      var can = r.type==='team'
+          ? 'Gets a <b>message in context</b>'
+          : r.ext
+            ? 'Can <b>view</b> (redacted) · reply by link'
+            : 'Can <b>message</b> · <b>call</b> · <b>save contact</b>';
+      return '<div class="rrow"><span class="avatar xs" style="background:'+r.color+'">'+initial(r)+'</span>'+
+        '<div class="t"><div class="n">'+esc(r.name)+' <span class="badge '+badgeClass(r.type)+'">'+typeLabel(r.type)+'</span></div>'+
+        '<div class="cando">'+can+'</div></div>'+
+        '<button class="x" data-remove="'+r.id+'" aria-label="Remove">'+icons.x+'</button></div>';
+    }).join('');
+    return '<div class="rlist">'+rows+'</div>';
+  }
+
+  function sendModeHTML(){
+    if(state.recipients.length<2) return '';
+    return '<div class="block"><div class="field-label">This is '+state.recipients.length+' people — how should it go out?</div>'+
+      '<div class="seg" id="seg">'+
+      '<button data-mode="individual" class="'+(state.mode==='individual'?'on':'')+'">Send individually<span class="d">'+state.recipients.length+' private shares</span></button>'+
+      '<button data-mode="group" class="'+(state.mode==='group'?'on':'')+'">Start a group<span class="d">one shared discussion</span></button>'+
+      '</div></div>';
+  }
+
+  function guardHTML(){
+    if(hasExternal()){
+      var pf=PROT.map(function(p){return '<span class="pf off">'+icons.lock+esc(p.n)+'</span>'}).join('');
+      return '<div class="guard ext"><div class="gh">'+icons.shield+'External recipient — sensitive info removed</div>'+
+        '<p class="gsub">Daniel &amp; other client contacts see the profile without these fields. You don\'t manage permissions — Connect strips them.</p>'+
+        '<div class="protgrid">'+pf+'</div></div>';
+    }
+    var pf2=PROT.map(function(p){return '<span class="pf on">'+icons.eye+esc(p.n)+'</span>'}).join('');
+    return '<div class="guard int"><div class="gh">'+icons.eye+'Internal share — full profile visible</div>'+
+      '<p class="gsub">Everyone here is on your team, so notes, salary and feedback stay attached.</p>'+
+      '<div class="protgrid">'+pf2+'</div></div>';
+  }
+
+  function linkHTML(){
+    var box = state.link ? (
+      '<div class="linkbox"><div class="lb-row"><span style="font-size:12px;font-weight:700;color:var(--ink-2)">Who can open the link</span></div>'+
+      '<div class="lb-row"><select class="sel" id="linkAud">'+
+        '<option value="anyone"'+(state.linkAudience==='anyone'?' selected':'')+'>Anyone with the link (redacted)</option>'+
+        '<option value="chosen"'+(state.linkAudience==='chosen'?' selected':'')+'>Only people you choose</option>'+
+        '<option value="existing"'+(state.linkAudience==='existing'?' selected':'')+'>People with existing access</option>'+
+      '</select><select class="sel" style="flex:0 0 auto"><option>Expires in 7 days</option><option>30 days</option><option>No expiry</option></select></div>'+
+      '<div class="urlfield"><code>connect.leoforce.com/c/sarah-chen?s=9fa2…</code><button class="copybtn" id="copyLink">Copy</button></div></div>'
+    ):'';
+    return '<div class="linkrow"><span class="lt">'+icons.link+'Also create a share link <span style="color:var(--faint);font-weight:500">— for people not yet in Connect</span></span>'+
+      '<button class="switch '+(state.link?'on':'')+'" id="linkSwitch" role="switch" aria-checked="'+state.link+'"></button></div>'+box;
+  }
+
+  function ctaText(){
+    if(!state.recipients.length) return 'Add someone to share with';
+    if(hasExternal()) return 'Share protected profile';
+    if(state.recipients.length>=2 && state.mode==='group') return 'Share & start group';
+    return 'Share';
+  }
+
+  function renderShare(){
+    var html='';
+    html+='<div class="block"><div class="field-label">To</div>'+recipientInputHTML()+recipientRows()+'</div>';
+    html+=sendModeHTML();
+    html+='<div class="block"><div class="field-label">About <span class="opt">optional context</span></div>'+
+      '<div class="ctx" id="ctx">'+
+        '<button data-ctx="staff" class="'+(state.ctx==='staff'?'on':'')+'">'+icons.brief+'Staff Product Designer</button>'+
+        '<button data-ctx="ds" class="'+(state.ctx==='ds'?'on':'')+'">'+icons.brief+'Design Systems Lead</button>'+
+        '<button data-ctx="none" class="'+(state.ctx==='none'?'on':'')+'">No job — just the profile</button>'+
+      '</div></div>';
+    html+='<div class="block"><div class="field-label">Message <span class="opt">optional</span></div>'+
+      '<textarea class="note" id="note" placeholder="e.g. Can you reach out to Sarah for the Staff role?">'+esc(state.note)+'</textarea></div>';
+    html+=guardHTML();
+    html+=linkHTML();
+    html+='<div style="height:2px"></div>';
+    mbody.innerHTML=html+footHTML(ctaText(),!state.recipients.length,
+      hasExternal()?'<b>Protected fields removed.</b> Recipients get a redacted profile card.'
+                   :'Recipients get Sarah\'s card in a '+(state.recipients.length>=2&&state.mode==='group'?'shared group':'1-1')+' conversation.');
+    wireShare();
+  }
+
+  function renderDiscuss(){
+    var html='';
+    html+='<p style="margin:0 0 14px;font-size:12.5px;color:var(--muted)">Start a conversation <b>about Sarah</b>. She becomes a card inside the thread — the people don\'t join a project.</p>';
+    html+='<div class="block" style="display:flex;flex-direction:column;gap:8px">'+
+      '<div class="disc-opt '+(state.discMode==='new'?'on':'')+'" data-disc="new"><span class="radio"></span><div class="t"><div class="n">Start a new discussion</div><div class="d">A fresh Sarah-context thread with people you pick.</div></div></div>'+
+      '<div class="disc-opt '+(state.discMode==='existing'?'on':'')+'" data-disc="existing"><span class="radio"></span><div class="t"><div class="n">Add to an existing conversation</div><div class="d">Drop Sarah\'s card into a chat you already have.</div></div></div>'+
+    '</div>';
+    if(state.discMode==='new'){
+      html+='<div class="block"><div class="field-label">With</div>'+recipientInputHTML()+recipientRows()+'</div>';
+    }else{
+      var tl=THREADS.map(function(t){
+        return '<button class="thread '+(state.discThread===t.id?'on':'')+'" data-thread="'+t.id+'">'+
+          '<span class="avatar xs" style="background:linear-gradient(135deg,#4f46e5,#8b5cf6)">'+t.name.split(' ').map(function(w){return w[0]}).join('').slice(0,2)+'</span>'+
+          '<div class="t"><div class="n">'+esc(t.name)+' <span class="kind">'+t.kind+'</span></div><div class="d">'+esc(t.desc)+'</div></div>'+
+          '<span class="check">'+icons.check+'</span></button>';
+      }).join('');
+      html+='<div class="block"><div class="field-label">Pick a conversation</div><div class="threadlist">'+tl+'</div></div>';
+    }
+    html+='<div class="block"><div class="field-label">Message <span class="opt">optional</span></div>'+
+      '<textarea class="note" id="note" placeholder="What do you want to say about Sarah?">'+esc(state.note)+'</textarea></div>';
+    var ready = state.discMode==='new' ? state.recipients.length>0 : !!state.discThread;
+    mbody.innerHTML=html+footHTML(state.discMode==='new'?'Start discussion':'Add to conversation',!ready,
+      'Sarah\'s card appears in the '+(state.discMode==='existing'?'chosen thread':'new thread')+'. Internal — full profile stays visible.');
+    wireDiscuss();
+  }
+
+  function renderAdd(){
+    var html='';
+    html+='<p style="margin:0 0 14px;font-size:12.5px;color:var(--muted)">Give someone <b>responsibility</b> on the <b>Staff Product Designer</b> job. This is access to the work — kept separate from sharing a profile.</p>';
+    html+='<div class="block"><div class="field-label">Add</div>'+recipientInputHTML()+'</div>';
+    html+='<div class="block"><div class="field-label">Role on this job</div><div class="roles" id="roles">'+
+      ROLES.map(function(r){
+        return '<button class="role '+(state.role===r.id?'on':'')+'" data-role="'+r.id+'"><div class="n">'+r.n+'<span class="tick">'+icons.check+'</span></div><div class="d">'+r.d+'</div></button>';
+      }).join('')+'</div></div>';
+    var caps=CAPS[state.role].map(function(c){
+      var yes=c[1]==='yes';
+      return '<div class="cap"><span class="ci">'+icons.shield+'</span><span class="cn">'+c[0]+
+        (c[2]?'<span class="warn">⚠ '+c[2]+'</span>':'')+'</span>'+
+        '<span class="cv '+(yes?'yes':'no')+'">'+(yes?'Allowed':'—')+'</span></div>';
+    }).join('');
+    html+='<div class="block"><div class="field-label">What this role can do</div><div class="caps">'+caps+'</div></div>';
+    mbody.innerHTML=html+footHTML('Add to project',!state.recipients.length,
+      '<b>'+ROLES.filter(function(r){return r.id===state.role})[0].n+'</b> access is granted immediately. They can be removed anytime.');
+    wireAdd();
+  }
+
+  function footHTML(cta,disabled,note){
+    return '<div class="m-foot"><div class="fnote">'+note+'</div>'+
+      '<button class="btn primary" id="sendBtn"'+(disabled?' disabled':'')+'>'+cta+'</button></div>';
+  }
+
+  /* ---------- menu / search ---------- */
+  function renderMenu(){
+    var menu=$('#menu'); if(!menu) return;
+    var q=state.query.trim().toLowerCase();
+    var chosen=state.recipients.map(function(r){return r.id});
+    var pool=DIR.filter(function(p){return chosen.indexOf(p.id)<0});
+    if(state.tab==='add') pool=pool.filter(function(p){return p.type!=='cand'});
+    var matches=pool.filter(function(p){return !q||p.name.toLowerCase().indexOf(q)>=0||p.desc.toLowerCase().indexOf(q)>=0});
+    if(!q && document.activeElement && document.activeElement.id!=='search'){menu.innerHTML='';return;}
+    if(!matches.length){menu.innerHTML='<div class="menu"><div class="nores">No matches. In the real app you could invite by email.</div></div>';return;}
+    var groups={team:[],contact:[],cand:[]};
+    matches.forEach(function(p){groups[p.type].push(p)});
+    var order=[['team','Teammates'],['contact','Contacts'],['cand','Candidates']];
+    var html='<div class="menu">';
+    order.forEach(function(g){
+      if(!groups[g[0]].length) return;
+      html+='<div class="grp">'+g[1]+'</div>';
+      groups[g[0]].forEach(function(p){
+        html+='<button class="opt-row" data-add="'+p.id+'"><span class="avatar xs" style="background:'+p.color+'">'+p.initials+'</span>'+
+          '<span class="t"><span class="n">'+esc(p.name)+(p.ext?' <span class="tok" style="padding:0 5px;box-shadow:none"><span class="ext">EXT</span></span>':'')+'</span><span class="d">'+esc(p.desc)+'</span></span>'+
+          '<span class="badge '+badgeClass(p.type)+'">'+typeLabel(p.type)+'</span></button>';
+      });
+    });
+    html+='</div>';
+    menu.innerHTML=html;
+    menu.querySelectorAll('[data-add]').forEach(function(b){
+      b.addEventListener('mousedown',function(e){e.preventDefault();addRecipient(b.getAttribute('data-add'));});
+    });
+  }
+  function addRecipient(id){
+    var p=DIR.filter(function(x){return x.id===id})[0];
+    if(!p) return;
+    state.recipients.push(p);state.query='';
+    render();
+    var s=$('#search'); if(s) s.focus();
+  }
+
+  /* ---------- wiring ---------- */
+  function wireCommon(){
+    mbody.querySelectorAll('[data-remove]').forEach(function(b){
+      b.addEventListener('click',function(){
+        var id=b.getAttribute('data-remove');
+        state.recipients=state.recipients.filter(function(r){return r.id!==id});
+        render();
+      });
+    });
+    var s=$('#search');
+    if(s){
+      s.addEventListener('input',function(){state.query=s.value;renderMenu();});
+      s.addEventListener('focus',renderMenu);
+      s.addEventListener('blur',function(){setTimeout(function(){var m=$('#menu');if(m)m.innerHTML='';},120);});
+      s.addEventListener('keydown',function(e){
+        if(e.key==='Backspace'&&!s.value&&state.recipients.length){
+          state.recipients.pop();render();var n=$('#search');if(n)n.focus();
+        }
+      });
+    }
+    var note=$('#note'); if(note) note.addEventListener('input',function(){state.note=note.value});
+    var send=$('#sendBtn'); if(send) send.addEventListener('click',doSend);
+  }
+  function wireShare(){
+    wireCommon();
+    var seg=$('#seg');
+    if(seg) seg.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){state.mode=b.getAttribute('data-mode');render();});});
+    var ctx=$('#ctx');
+    if(ctx) ctx.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){state.ctx=b.getAttribute('data-ctx');render();});});
+    var sw=$('#linkSwitch'); if(sw) sw.addEventListener('click',function(){state.link=!state.link;render();});
+    var aud=$('#linkAud'); if(aud) aud.addEventListener('change',function(){state.linkAudience=aud.value});
+    var cp=$('#copyLink');
+    if(cp) cp.addEventListener('click',function(){
+      var url='connect.leoforce.com/c/sarah-chen?s=9fa2';
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(ok,ok);}else ok();
+      function ok(){cp.textContent='Copied';cp.classList.add('done');setTimeout(function(){cp.textContent='Copy';cp.classList.remove('done')},1400);}
+    });
+    renderMenu();
+  }
+  function wireDiscuss(){
+    wireCommon();
+    mbody.querySelectorAll('[data-disc]').forEach(function(b){b.addEventListener('click',function(){state.discMode=b.getAttribute('data-disc');render();});});
+    mbody.querySelectorAll('[data-thread]').forEach(function(b){b.addEventListener('click',function(){state.discThread=b.getAttribute('data-thread');render();});});
+    renderMenu();
+  }
+  function wireAdd(){
+    wireCommon();
+    mbody.querySelectorAll('[data-role]').forEach(function(b){b.addEventListener('click',function(){state.role=b.getAttribute('data-role');render();});});
+    renderMenu();
+  }
+
+  /* ---------- send / outcome ---------- */
+  function doSend(){
+    if(state.tab==='add'){
+      var role=ROLES.filter(function(r){return r.id===state.role})[0].n;
+      closeModal();
+      toast(state.recipients.map(function(r){return r.name.split(' ')[0]}).join(', ')+' added as '+role);
+      return;
+    }
+    renderSuccess();
+  }
+
+  function renderSuccess(){
+    var n=state.recipients.length;
+    var group = state.tab==='discuss' ? state.discMode==='existing'
+              : n>=2 && state.mode==='group';
+    var ext=hasExternal() && state.tab==='share';
+    var title, sub, convName;
+    if(state.tab==='discuss'){
+      if(state.discMode==='existing'){
+        var t=THREADS.filter(function(x){return x.id===state.discThread})[0];
+        title='Added to '+t.name; sub='Sarah\'s card is now in this conversation.'; convName=t.name;
+      }else{
+        title='Discussion started'; sub='A new Sarah-context thread with '+n+' '+(n===1?'person':'people')+'.';
+        convName=n===1?state.recipients[0].name:'New group · '+n+' people';
+      }
+    }else{
+      title = group ? 'Shared to a group' : (n>1?'Shared with '+n+' people':'Shared');
+      sub = ext ? 'Redacted profile sent — protected fields removed.'
+                : (group?'One shared discussion created.':n>1?'Sent as '+n+' individual conversations.':'Sent to '+state.recipients[0].name+'.');
+      convName = group ? 'New group · '+n+' people' : (state.recipients[0]?state.recipients[0].name:'Conversation');
+    }
+    var msg = state.note || (state.tab==='discuss'?'Sharing Sarah for the Staff Designer role — thoughts?':'Sharing Sarah\'s profile.');
+    var ctxLabel = state.ctx==='staff'?'Staff Product Designer':state.ctx==='ds'?'Design Systems Lead':null;
+    if(state.tab==='discuss') ctxLabel='Staff Product Designer';
+
+    var actions = ext
+      ? '<button class="muted">'+icons.eye+'View (redacted)</button><button>'+icons.msg+'Reply</button>'
+      : '<button>'+icons.msg+'Message</button><button>'+icons.phone+'Call</button><button>'+icons.save+'Save</button>';
+
+    var guardline = ext ? '<div class="sc-guardline">'+icons.lock+'Salary, notes &amp; feedback hidden from external recipient</div>' : '';
+    var ctxHTML = ctxLabel ? '<span class="sc-ctx">'+icons.brief+esc(ctxLabel)+'</span>' : '';
+
+    mbody.innerHTML =
+      '<div class="success"><div class="tick-big">'+icons.check+'</div><h3>'+esc(title)+'</h3><p>'+esc(sub)+'</p></div>'+
+      '<div class="convo"><div class="convo-head"><span class="avatar xs" style="background:linear-gradient(135deg,#4f46e5,#8b5cf6)">'+
+        convName.split(' ').map(function(w){return w[0]}).join('').slice(0,2)+'</span><span class="n">'+esc(convName)+'</span>'+
+        (group?'<span class="kind">group'+(ctxLabel?' · in job':'')+'</span>':'<span class="kind">1-1'+(ctxLabel?' · in job':'')+'</span>')+'</div>'+
+      '<div class="convo-body">'+
+        '<div class="sharecard"><div class="sc-top"><span class="avatar sm" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">SC</span>'+
+          '<div class="t"><div class="n">Sarah Chen</div><div class="r">Staff Product Designer · 92% match</div></div>'+ctxHTML+'</div>'+
+          guardline+
+          '<div class="sc-actions">'+actions+'</div></div>'+
+        '<div class="bubble">'+esc(msg)+'</div>'+
+      '</div></div>'+
+      '<div class="m-foot"><div class="fnote">This is how the shared card appears in the recipient\'s inbox.</div>'+
+      '<button class="btn ghost" id="againBtn">Share again</button>'+
+      '<button class="btn primary" id="doneBtn">Open conversation</button></div>';
+
+    $('#doneBtn').addEventListener('click',function(){closeModal();toast('Opening conversation with Sarah');});
+    $('#againBtn').addEventListener('click',function(){resetState();render();});
+  }
+
+  /* ---------- modal open/close ---------- */
+  var scrim=$('#scrim');
+  function openModal(){resetState();scrim.classList.add('open');render();setTimeout(function(){var s=$('#search');if(s)s.focus();},60);}
+  function closeModal(){scrim.classList.remove('open');}
+  function resetState(){state.tab='share';state.recipients=[];state.mode='individual';state.ctx='staff';
+    state.note='';state.link=false;state.linkAudience='chosen';state.discMode='new';state.discThread=null;state.role='recruiter';state.query='';
+    setTab('share');}
+  function setTab(t){state.tab=t;
+    $('#tabs').querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-tab')===t);});
+    // clear recipients when switching to keep contexts clean
+  }
+
+  $('#openShare').addEventListener('click',openModal);
+  $('#msgBtn').addEventListener('click',function(){toast('Opening 1-1 with Sarah Chen');});
+  $('#closeShare').addEventListener('click',closeModal);
+  scrim.addEventListener('click',function(e){if(e.target===scrim)closeModal();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&scrim.classList.contains('open'))closeModal();});
+  $('#tabs').querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){state.recipients=[];state.query='';setTab(b.getAttribute('data-tab'));render();});
+  });
+
+  /* ---------- toast ---------- */
+  var toastEl=$('#toast'),tmr;
+  function toast(m){$('#toastMsg').textContent=m;toastEl.classList.add('show');clearTimeout(tmr);tmr=setTimeout(function(){toastEl.classList.remove('show')},2200);}
+
+  /* ---------- theme ---------- */
+  var tb=$('#themeBtn');
+  function sysDark(){return window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;}
+  var manual=null;
+  function applyTheme(){
+    var dark = manual===null?sysDark():manual==='dark';
+    if(manual===null) document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme',manual);
+    $('#themeLbl').textContent=dark?'Light':'Dark';
+    $('#themeIco').innerHTML = dark
+      ? '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>'
+      : '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  }
+  tb.addEventListener('click',function(){var d=manual===null?sysDark():manual==='dark';manual=d?'light':'dark';applyTheme();});
+  if(window.matchMedia){window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(){if(manual===null)applyTheme();});}
+  applyTheme();
+})();
+</script>
+
+</body></html>
