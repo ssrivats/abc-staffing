@@ -13,9 +13,31 @@ three apps separately.
   as a Claude Artifact. Opened inside Claude, it reads the prescription with the viewer's own
   Claude account (the `sample` capability with images) — no API key, no backend. Supports photo
   uploads (PNG/JPG/WebP); for a PDF, screenshot the page and upload the image.
-- **Self-hosted server (your own key):** the Node app below (`server.js` + `src/` + `public/`)
-  uses **Sarvam AI** for OCR + structuring. Run it with your `SARVAM_API_KEY`. This path also
-  handles PDFs directly and returns per-line image crops for the review step.
+- **Self-hosted server (your own key) — this is the one that auto-checks stock.** The Node app
+  (`server.js` + `src/` + `public/`) uses **Sarvam AI** for OCR + structuring, handles PDFs
+  directly, shows per-line image crops, and — unlike the hosted page — **automatically checks
+  Blinkit, Zepto and Instamart availability** for you (see below). The hosted page can't check
+  stock because the stores block in-browser calls; automation needs this server.
+
+## Automated availability check (3 stores)
+
+No quick-commerce platform offers an authorized stock API, so there's no clean way to read stock
+without loading the stores' own pages. This app does that the honest way: for each medicine it
+opens each store's **real search** in a headless browser (`src/availability.js`, Playwright) with
+your **Hyderabad geolocation** spoofed so results match your area, reads the rendered result, and
+uses the LLM to judge whether that exact medicine is orderable. The grid fills automatically; you
+only tap a cell to override.
+
+- **Available / Out of stock / Couldn't search** are set for you. A page it can't read (location
+  prompt, block, markup change) comes back **"Couldn't search" with the link — never a fake
+  "in stock."**
+- **Run it on your own machine** (your Hyderabad IP + location give the best results, and it's your
+  own authorized browsing). A datacenter IP is more likely to be blocked by the stores.
+- It needs the Playwright browser: `npx playwright install chromium` after `npm install`.
+- Set precise coordinates for your locality (serviceability varies by area); the default is central
+  Hyderabad. Adjust `HYD` in `server.js` or pass `lat`/`lon` to `POST /api/availability`.
+- This uses the platforms' own pages and may break if a store changes things or rate-limits you;
+  treat it as best-effort for personal use.
 
 ## What it does
 

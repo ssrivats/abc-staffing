@@ -214,6 +214,52 @@ function goStores() {
   renderGrid();
   renderRecommendation();
   showStage('stores');
+  runAutoCheck();
+}
+
+let checking = false;
+async function runAutoCheck() {
+  if (checking) return;
+  checking = true;
+  const status = $('#checkStatus');
+  status.hidden = false; status.classList.remove('done');
+  status.innerHTML = `<span class="spinner"></span> Checking Blinkit, Zepto &amp; Instamart for your area… this takes ~30–60s.`;
+  // Show every cell as "checking".
+  document.querySelectorAll('#storeGrid .state-btn').forEach((b) => { b.textContent = 'Checking…'; b.className = 'state-btn checking'; });
+
+  try {
+    const payload = {
+      medicines: state.medicines.map((m) => ({ id: m.id, name: m.name, strength: m.strength, form: m.form })),
+    };
+    const res = await fetch('/api/availability', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
+    });
+    const body = await res.json();
+    if (!res.ok) throw new Error(body.error || 'Check failed');
+
+    let failed = 0, checked = 0;
+    for (const m of state.medicines) {
+      const row = body.results?.[m.id] || {};
+      for (const s of STORES) {
+        const r = row[s.id];
+        const st = r && ['available', 'oos', 'failed'].includes(r.status) ? r.status : 'failed';
+        state.marks[m.id][s.id] = st;
+        checked++; if (st === 'failed') failed++;
+      }
+    }
+    saveMarks(signature(state.medicines), state.marks);
+    renderGrid(); renderRecommendation(); markMissingRows();
+    status.classList.add('done');
+    status.innerHTML = failed === 0
+      ? `✓ Checked all three apps. Tap any cell to correct it.`
+      : `✓ Checked. ${failed} of ${checked} could not be read (shown as “Couldn't search”) — open those with the link, or tap to set them.`;
+  } catch (e) {
+    renderGrid();
+    status.classList.add('done');
+    status.innerHTML = `Automated check unavailable (${esc(e.message)}). Tap each cell to mark availability, using the store links.`;
+  } finally {
+    checking = false;
+  }
 }
 
 function renderLegend() {
@@ -335,6 +381,7 @@ function init() {
   $('#toStoresBtn').addEventListener('click', goStores);
   $('#backToUpload').addEventListener('click', () => location.reload());
   $('#backToReview').addEventListener('click', () => showStage('review'));
+  $('#recheckBtn').addEventListener('click', () => runAutoCheck());
   $('#resetMarks').addEventListener('click', () => {
     if (!confirm('Clear all availability marks?')) return;
     state.marks = {}; for (const m of state.medicines) state.marks[m.id] = {};

@@ -95,8 +95,9 @@
       </div>
 
       <div class="verify-banner" id="verifyBanner">
-        ⚠️ <b>Manual verification needed.</b> No platform offers an authorized live stock feed, so availability is what <i>you</i> confirm. Nothing here is auto-filled or guessed.
+        🤖 <b>Checking the three apps for you</b> by opening each store's real search at your location. This is best-effort — correct anything by tapping a cell. A store that can't be read shows “Couldn't search” with a link, never a fake result.
       </div>
+      <div class="check-status" id="checkStatus" hidden></div>
 
       <div id="recommendation" class="reco"></div>
 
@@ -111,7 +112,10 @@
 
       <div class="row between sticky-actions">
         <button class="btn text" id="backToReview">← Back to list</button>
-        <button class="btn ghost" id="resetMarks">Reset marks</button>
+        <div class="row gap">
+          <button class="btn ghost" id="recheckBtn">↻ Re-check</button>
+          <button class="btn ghost" id="resetMarks">Reset marks</button>
+        </div>
       </div>
     </section>
   </main>

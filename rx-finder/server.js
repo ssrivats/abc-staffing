@@ -12,6 +12,7 @@ import { dirname, join } from 'node:path';
 
 import { parseDocument, blocksFromParse } from './src/sarvam.js';
 import { extractMedicines } from './src/extract.js';
+import { checkAvailability } from './src/availability.js';
 
 loadEnv();
 
@@ -66,6 +67,29 @@ app.post('/api/extract', upload.single('file'), async (req, res) => {
     // Log only the error message, never the prescription content.
     console.error('[extract] failed:', err.message);
     res.status(502).json({ error: 'Could not read the prescription. Please try a clearer photo or a PDF.' });
+  }
+});
+
+// Default to central Hyderabad; override with precise coordinates for your locality.
+const HYD = { lat: 17.4486, lon: 78.3908 };
+
+app.post('/api/availability', express.json({ limit: '256kb' }), async (req, res) => {
+  try {
+    const { medicines, lat, lon } = req.body || {};
+    if (!Array.isArray(medicines) || medicines.length === 0) {
+      return res.status(400).json({ error: 'No medicines to check.' });
+    }
+    const meds = medicines
+      .filter((m) => m && m.name)
+      .map((m) => ({ id: String(m.id), name: String(m.name), strength: m.strength || null, form: m.form || null }));
+    const results = await checkAvailability(meds, {
+      lat: Number.isFinite(lat) ? lat : HYD.lat,
+      lon: Number.isFinite(lon) ? lon : HYD.lon,
+    });
+    res.json({ results });
+  } catch (err) {
+    console.error('[availability] failed:', err.message);
+    res.status(502).json({ error: 'Automated check failed. You can still mark availability yourself.' });
   }
 });
 
