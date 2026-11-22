@@ -198,14 +198,15 @@
       <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
       <div class="dz-inner">
         <div class="dz-icon">📄</div>
-        <div class="dz-main">Drag a photo here, or <span class="dz-link">browse</span></div>
-        <div class="dz-sub">A clear photo of the prescription — PNG, JPG or WebP</div>
+        <div class="dz-main">Tap to pick from your gallery, or <span class="dz-link">browse</span></div>
+        <div class="dz-sub">Choose a photo, or paste a copied image · PNG, JPG, WebP</div>
       </div>
     </label>
 
     <p class="privacy">🔒 The photo is read by Claude in <b>your own</b> account and is not stored on any server or shared with the stores. It stays in this browser tab.</p>
 
-    <div class="center-actions">
+    <div class="center-actions" style="flex-direction:column;gap:8px">
+      <button class="btn ghost" id="pasteBtn">📋 Paste a copied image</button>
       <button class="btn text" id="manualBtn">or enter the medicines myself →</button>
     </div>
 
@@ -552,6 +553,26 @@ fi.onchange = ()=> fi.files[0] && handleFile(fi.files[0]);
 ['dragleave','drop'].forEach(ev=> dz.addEventListener(ev, e=>{ e.preventDefault(); dz.classList.remove('drag'); }));
 dz.addEventListener('drop', e=>{ const f=e.dataTransfer.files[0]; if(f) handleFile(f); });
 
+// Paste a copied image (iPhone: long-press the image → Copy, then tap Paste here)
+async function handlePaste(){
+  $('#uploadError').hidden = true;
+  try {
+    const items = await navigator.clipboard.read();
+    for (const it of items){
+      const type = it.types.find(t=>t.startsWith('image/'));
+      if (type){ const blob = await it.getType(type); return handleFile(new File([blob], 'pasted.'+(type.split('/')[1]||'png'), { type })); }
+    }
+    showError('No image on the clipboard. Copy a prescription image first, then tap Paste.');
+  } catch {
+    showError('Couldn’t read the clipboard. Copy the image (long-press → Copy), then tap Paste — or use the gallery.');
+  }
+}
+$('#pasteBtn').onclick = handlePaste;
+document.addEventListener('paste', e=>{
+  const item = [...(e.clipboardData?.items||[])].find(i=>i.type.startsWith('image/'));
+  const blob = item?.getAsFile();
+  if (blob) handleFile(blob);
+});
 $('#manualBtn').onclick = ()=> enterManual();
 $('#addRowBtn').onclick = ()=>{ addMed(); renderRows(); $('#medsBody').lastChild?.querySelector('input')?.focus(); };
 $('#toStoresBtn').onclick = goStores;
