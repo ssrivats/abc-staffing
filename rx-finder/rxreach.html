@@ -1,0 +1,567 @@
+<title>RxReach</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+  /* Layout: a single centered column; three stages (upload → review → check stores) swap in place.
+     Color: clinical teal accent on warm grey-teal neutrals; green/amber/red reserved for stock state. */
+  :root {
+    --bg: #f1f5f6; --surface: #ffffff; --surface-2: #f7fafa;
+    --ink: #15242b; --muted: #5f7079; --line: #e2e8ea;
+    --accent: #0f7a8c; --accent-dark: #0b5c69; --accent-soft: #e2f1f3;
+    --ok: #157a4a; --ok-soft: #e3f4ea; --ok-line:#b9e2cb;
+    --bad: #b23b3b; --bad-soft: #fbe7e7; --bad-line:#e9c3c3;
+    --warn: #9a6a12; --warn-bg: #fff6e6; --warn-line: #f0d08a;
+    --shadow: 0 1px 2px rgba(16,40,48,.06), 0 8px 24px rgba(16,40,48,.07);
+    --radius: 14px;
+    --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --display: "Space Grotesk", var(--font);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:#0e1619; --surface:#15232a; --surface-2:#122027; --ink:#eaf1f3; --muted:#9db0b8; --line:#26383f;
+      --accent:#43b9cb; --accent-dark:#64cfe0; --accent-soft:#173139;
+      --ok:#5fcf93; --ok-soft:#113021; --ok-line:#1f4d34; --bad:#ef8d8d; --bad-soft:#331717; --bad-line:#50282a;
+      --warn:#e4b765; --warn-bg:#2c2513; --warn-line:#564721;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#0e1619; --surface:#15232a; --surface-2:#122027; --ink:#eaf1f3; --muted:#9db0b8; --line:#26383f;
+    --accent:#43b9cb; --accent-dark:#64cfe0; --accent-soft:#173139;
+    --ok:#5fcf93; --ok-soft:#113021; --ok-line:#1f4d34; --bad:#ef8d8d; --bad-soft:#331717; --bad-line:#50282a;
+    --warn:#e4b765; --warn-bg:#2c2513; --warn-line:#564721;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink); font-family: var(--font); line-height: 1.5;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { width: 100%; max-width: 820px; margin: 0 auto; }
+  h1 { font-family: var(--display); font-size: clamp(22px, 5vw, 28px); margin: 10px 0 6px; text-wrap: balance; letter-spacing: -.01em; }
+  h2 { font-family: var(--display); font-size: 17px; margin: 22px 0 8px; }
+  .lede { color: var(--muted); font-size: 15px; margin: 0 0 18px; max-width: 60ch; }
+  .muted { color: var(--muted); font-size: 13px; }
+  a { color: var(--accent-dark); }
+  [hidden] { display: none !important; }
+
+  /* Header */
+  header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 16px 6px; }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .logo { font-family: var(--display); font-weight: 700; font-size: 26px; color: var(--accent); line-height: 1; }
+  .brand-name { font-family: var(--display); font-weight: 700; font-size: 18px; }
+  .brand-sub { font-size: 11.5px; color: var(--muted); }
+  .pin { background: var(--accent-soft); color: var(--accent-dark); font-weight: 600; font-size: 12.5px; padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+
+  /* Steps */
+  ol.steps { display: flex; gap: 8px; list-style: none; padding: 0; margin: 14px 0 6px; counter-reset: s; }
+  ol.steps li { flex: 1; font-size: 12.5px; color: var(--muted); padding: 7px 8px 7px 30px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); position: relative; min-width: 0; }
+  ol.steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 7px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; border-radius: 50%; background: var(--line); color: var(--muted); display: grid; place-items: center; font-weight: 700; font-size: 11px; }
+  ol.steps li.active { color: var(--accent-dark); border-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+  ol.steps li.active::before { background: var(--accent); color: #fff; }
+  ol.steps li.done::before { content: "✓"; background: var(--ok); color: #fff; }
+
+  section.stage { padding-bottom: 96px; }
+
+  /* Upload */
+  .dropzone { display: block; border: 2px dashed var(--line); border-radius: var(--radius); background: var(--surface); cursor: pointer; transition: border-color .15s, background .15s; }
+  .dropzone:hover, .dropzone.drag { border-color: var(--accent); background: var(--accent-soft); }
+  .dz-inner { padding: 44px 20px; text-align: center; }
+  .dz-icon { font-size: 36px; }
+  .dz-main { font-size: 16px; margin-top: 10px; }
+  .dz-sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .dz-link { color: var(--accent-dark); text-decoration: underline; }
+  .privacy { background: var(--accent-soft); color: var(--accent-dark); border-radius: 10px; padding: 12px 14px; font-size: 13px; margin-top: 16px; }
+  .center-actions { display: flex; justify-content: center; margin-top: 14px; }
+
+  .busy { display: flex; align-items: center; gap: 11px; margin-top: 18px; font-weight: 600; color: var(--accent-dark); }
+  .spinner { width: 18px; height: 18px; border: 3px solid var(--accent-soft); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; flex: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2s; } }
+  .error { background: var(--bad-soft); color: var(--bad); border: 1px solid var(--bad-line); border-radius: 10px; padding: 12px 14px; margin-top: 14px; font-size: 14px; }
+  .note { background: var(--accent-soft); color: var(--accent-dark); border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-top: 10px; }
+
+  /* Buttons */
+  .btn { font: inherit; border: 1px solid transparent; border-radius: 10px; padding: 11px 16px; cursor: pointer; font-weight: 600; }
+  .btn.primary { background: var(--accent); color: #fff; }
+  .btn.primary:hover { background: var(--accent-dark); }
+  .btn.ghost { background: var(--surface); border-color: var(--line); color: var(--ink); }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent-dark); }
+  .btn.text { background: none; color: var(--muted); padding-left: 2px; }
+  .btn.text:hover { color: var(--ink); }
+  .btn:focus-visible, .state-btn:focus-visible, .icon-btn:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Review */
+  .review-grid { display: grid; grid-template-columns: 260px 1fr; gap: 16px; align-items: start; }
+  @media (max-width: 680px) { .review-grid { grid-template-columns: 1fr; } }
+  .rx-panel { position: sticky; top: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; box-shadow: var(--shadow); }
+  .rx-panel img { width: 100%; border-radius: 8px; display: block; cursor: zoom-in; }
+  .rx-panel .cap { font-size: 12px; color: var(--muted); margin-top: 8px; text-align: center; }
+  @media (max-width: 680px) { .rx-panel { position: static; } }
+
+  .src-note { font-size: 12.5px; color: var(--muted); margin: 0 0 10px; }
+  .uncertain-wrap { background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 14px; }
+  .uncertain-wrap h2 { margin-top: 2px; }
+
+  .table-scroll { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--line); }
+  table.meds { width: 100%; border-collapse: collapse; background: var(--surface); font-variant-numeric: tabular-nums; }
+  table.meds th, table.meds td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  table.meds th { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  table.meds tr:last-child td { border-bottom: none; }
+  table.meds input { width: 100%; min-width: 70px; font: inherit; border: 1px solid transparent; background: transparent; border-radius: 8px; padding: 7px 8px; color: var(--ink); }
+  table.meds input:hover { border-color: var(--line); }
+  table.meds input:focus { border-color: var(--accent); outline: none; background: var(--surface); }
+  .name-cell { font-weight: 600; min-width: 120px; }
+  .conf { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 999px; margin-left: 6px; vertical-align: middle; text-transform: lowercase; }
+  .conf.high { background: var(--ok-soft); color: var(--ok); }
+  .conf.medium { background: var(--warn-bg); color: var(--warn); }
+  .conf.low { background: var(--bad-soft); color: var(--bad); }
+  .icon-btn { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 15px; padding: 6px; border-radius: 8px; }
+  .icon-btn:hover { background: var(--bad-soft); color: var(--bad); }
+  .flex { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  /* Sticky action bar */
+  .actions { position: sticky; bottom: 0; display: flex; justify-content: space-between; gap: 10px; background: linear-gradient(transparent, var(--bg) 34%); padding: 16px 0 calc(8px + env(safe-area-inset-bottom, 0px)); margin-top: 22px; flex-wrap: wrap; }
+
+  /* Stores */
+  .addr label { display: block; font-size: 12.5px; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+  .addr input { font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); min-width: 210px; }
+  .verify { background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 12px; padding: 12px 14px; font-size: 13px; margin: 14px 0; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 10px 0 12px; font-size: 12.5px; color: var(--muted); }
+  .legend .lg { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 13px; height: 13px; border-radius: 4px; display: inline-block; border: 1px solid transparent; }
+  table.grid { width: 100%; border-collapse: collapse; background: var(--surface); }
+  table.grid th, table.grid td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: center; }
+  table.grid th:first-child, table.grid td:first-child { text-align: left; }
+  table.grid tr:last-child td { border-bottom: none; }
+  .store-chip { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; display: inline-block; }
+  .med-name { font-weight: 600; }
+  .med-sub { font-size: 12px; color: var(--muted); }
+  .cell { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+  .open-link { font-size: 12px; font-weight: 600; text-decoration: none; padding: 5px 9px; border-radius: 8px; border: 1px solid var(--line); color: var(--accent-dark); white-space: nowrap; }
+  .open-link:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .state-btn { font: inherit; font-size: 12px; font-weight: 700; border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; cursor: pointer; width: 100%; min-width: 84px; }
+  .st-unchecked { background: var(--surface); color: var(--muted); }
+  .st-available { background: var(--ok-soft); color: var(--ok); border-color: var(--ok-line); }
+  .st-oos { background: var(--bad-soft); color: var(--bad); border-color: var(--bad-line); }
+  .st-failed { background: var(--warn-bg); color: var(--warn); border-color: var(--warn-line); }
+  .row-missing td { background: var(--bad-soft); }
+
+  .reco { border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); padding: 16px; margin: 6px 0 14px; box-shadow: var(--shadow); }
+  .reco.allfound { border-color: var(--ok-line); }
+  .reco h3 { margin: 0 0 6px; font-size: 15px; font-family: var(--display); }
+  .reco .big { font-size: 17px; font-weight: 700; }
+  .pill-store { display: inline-block; padding: 3px 10px; border-radius: 999px; font-weight: 700; font-size: 13px; margin: 0 1px; }
+  .reco .missing { margin-top: 10px; font-size: 13px; color: var(--bad); }
+  .reco .sub { color: var(--muted); font-size: 13px; margin-top: 6px; }
+
+  /* Modal */
+  .modal { position: fixed; inset: 0; background: rgba(8,18,22,.75); display: grid; place-items: center; z-index: 50; padding: 18px; }
+  .modal-box { background: var(--surface); border-radius: 14px; max-width: 760px; max-height: 90vh; overflow: auto; padding: 14px; position: relative; }
+  .modal-box img { max-width: 100%; display: block; border-radius: 8px; }
+  .modal-close { position: absolute; top: 10px; right: 10px; border: none; background: var(--bg); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 15px; color: var(--ink); }
+
+  footer.foot { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 22px 0 36px; color: var(--muted); font-size: 12px; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <span class="logo">℞</span>
+      <div>
+        <div class="brand-name">RxReach</div>
+        <div class="brand-sub">Prescription → Blinkit · Zepto · Instamart</div>
+      </div>
+    </div>
+    <span class="pin" id="cityPill">📍 Hyderabad</span>
+  </header>
+
+  <ol class="steps" id="steps">
+    <li data-step="upload" class="active">Upload</li>
+    <li data-step="review">Review</li>
+    <li data-step="stores">Check stores</li>
+  </ol>
+
+  <!-- STAGE 1 -->
+  <section class="stage" id="stage-upload">
+    <h1>Upload your prescription once</h1>
+    <p class="lede">Claude reads it and lists the prescribed medicines — including handwritten entries and brand names without a strength — leaving out patient, clinic, and dosage details. You review before searching.</p>
+
+    <label class="dropzone" id="dropzone" for="fileInput">
+      <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+      <div class="dz-inner">
+        <div class="dz-icon">📄</div>
+        <div class="dz-main">Drag a photo here, or <span class="dz-link">browse</span></div>
+        <div class="dz-sub">A clear photo of the prescription — PNG, JPG or WebP</div>
+      </div>
+    </label>
+
+    <p class="privacy">🔒 The photo is read by Claude in <b>your own</b> account and is not stored on any server or shared with the stores. It stays in this browser tab.</p>
+
+    <div class="center-actions">
+      <button class="btn text" id="manualBtn">or enter the medicines myself →</button>
+    </div>
+
+    <div class="error" id="uploadError" hidden></div>
+    <div class="busy" id="uploadBusy" hidden><span class="spinner"></span> <span id="busyText">Reading your prescription…</span></div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section class="stage" id="stage-review" hidden>
+    <h1>Review the medicines</h1>
+    <p class="lede" id="reviewLede"></p>
+    <p class="src-note" id="srcNote" hidden></p>
+
+    <div class="review-grid">
+      <aside class="rx-panel" id="rxPanel" hidden>
+        <img id="rxThumb" alt="Your prescription — tap to enlarge">
+        <div class="cap">Tap to zoom and check any entry</div>
+      </aside>
+      <div>
+        <div class="uncertain-wrap" id="uncertainWrap" hidden>
+          <h2>Please verify these <span id="uncertainCount"></span></h2>
+          <p class="muted">Handwritten or unclear entries. Check them against the image; blanks are left for you to fill.</p>
+        </div>
+        <h2>All medicines</h2>
+        <div class="table-scroll">
+          <table class="meds">
+            <thead><tr><th>Medicine name</th><th>Strength</th><th>Form</th><th></th></tr></thead>
+            <tbody id="medsBody"></tbody>
+          </table>
+        </div>
+        <div class="flex" style="margin-top:12px">
+          <button class="btn ghost" id="addRowBtn">+ Add a medicine</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn text" id="restartBtn">↵ Start over</button>
+      <button class="btn primary" id="toStoresBtn">Confirm list &amp; check all 3 stores →</button>
+    </div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section class="stage" id="stage-stores" hidden>
+    <h1>Check availability</h1>
+    <div class="addr">
+      <label for="addrInput">Delivery area</label>
+      <input id="addrInput" type="text" value="Hyderabad">
+    </div>
+    <p class="muted" style="margin-top:8px">Tap a store to open its real search for that medicine. Set your exact Hyderabad address inside each app, then mark what you find.</p>
+
+    <div class="verify">⚠️ <b>Manual verification needed.</b> No quick-commerce platform offers an authorized live stock feed, so availability is what <i>you</i> confirm here. Nothing is auto-filled or guessed.</div>
+
+    <div class="reco" id="reco"></div>
+    <div class="legend" id="legend"></div>
+
+    <div class="table-scroll">
+      <table class="grid" id="storeGrid"><thead><tr><th>Medicine</th></tr></thead><tbody></tbody></table>
+    </div>
+
+    <div class="actions">
+      <button class="btn text" id="backToReview">← Back to list</button>
+      <button class="btn ghost" id="resetMarks">Reset marks</button>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>RxReach · built for Hyderabad quick-commerce</span>
+    <span>Never substitutes a different medicine, strength, or form.</span>
+  </footer>
+</div>
+
+<div class="modal" id="rxModal" hidden>
+  <div class="modal-box">
+    <button class="modal-close" id="rxModalClose" aria-label="Close">✕</button>
+    <img id="rxFull" alt="Your prescription">
+  </div>
+</div>
+
+<script>
+/* ---------- Stores: deep-links + coverage (runs entirely in the browser) ---------- */
+const STORES = [
+  { id:'blinkit',  name:'Blinkit',          color:'#f8cb46', ink:'#1a1a1a', search:q=>`https://blinkit.com/s/?q=${q}` },
+  { id:'zepto',    name:'Zepto',            color:'#7b2d8e', ink:'#ffffff', search:q=>`https://www.zeptonow.com/search?query=${q}` },
+  { id:'instamart',name:'Swiggy Instamart', color:'#f25c2a', ink:'#ffffff', search:q=>`https://www.swiggy.com/instamart/search?custom_back=true&query=${q}` },
+];
+const STATES = {
+  unchecked:{ label:'Not checked', cls:'st-unchecked' },
+  available:{ label:'Available',   cls:'st-available' },
+  oos:      { label:'Out of stock',cls:'st-oos' },
+  failed:   { label:"Couldn't search", cls:'st-failed' },
+};
+const STATE_CYCLE = ['unchecked','available','oos','failed'];
+const medQuery = m => encodeURIComponent([m.name, m.strength].filter(Boolean).join(' '));
+const storeLink = (s,m) => s.search(medQuery(m));
+
+function computeCoverage(meds, marks){
+  const ids = meds.map(m=>m.id);
+  const perStore = {};
+  for (const s of STORES){
+    const covered = ids.filter(id => (marks[id]&&marks[id][s.id])==='available');
+    perStore[s.id] = { covered, count: covered.length };
+  }
+  let single = null;
+  for (const s of STORES) if (ids.length && perStore[s.id].count===ids.length){ single=s.id; break; }
+  let best = { ids:[], covered:new Set(), size:0 };
+  for (let mask=1; mask<(1<<STORES.length); mask++){
+    const chosen=[]; const cov=new Set();
+    for (let i=0;i<STORES.length;i++) if (mask&(1<<i)){ chosen.push(STORES[i].id); for (const id of perStore[STORES[i].id].covered) cov.add(id); }
+    if (cov.size>best.covered.size || (cov.size===best.covered.size && chosen.length<best.size)) best={ids:chosen,covered:cov,size:chosen.length};
+  }
+  const missing = ids.filter(id => !STORES.some(s => (marks[id]&&marks[id][s.id])==='available'));
+  return { single, combo:best.ids, coveredByCombo:best.covered, missing, perStore };
+}
+
+/* ---------- App ---------- */
+const state = { meds: [], marks: {}, imgURL: null };
+let idSeq = 1;
+const $ = s => document.querySelector(s);
+const el = (t,c,h)=>{ const e=document.createElement(t); if(c)e.className=c; if(h!=null)e.innerHTML=h; return e; };
+const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function showStage(name){
+  for (const s of ['upload','review','stores']) $('#stage-'+s).hidden = (s!==name);
+  const order=['upload','review','stores'], cur=order.indexOf(name);
+  document.querySelectorAll('#steps li').forEach(li=>{
+    const i=order.indexOf(li.dataset.step);
+    li.classList.toggle('active', li.dataset.step===name);
+    li.classList.toggle('done', i<cur);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ----- Upload / scan ----- */
+const EXTRACT_PROMPT =
+`You are reading a photo of a doctor's prescription. Identify ONLY the medicines the doctor prescribed.
+
+Reply with ONLY a JSON object of this shape:
+{"medicines":[{"name":string,"strength":string|null,"form":string|null,"raw":string,"confidence":"high"|"medium"|"low","uncertain":boolean}]}
+
+INCLUDE handwritten entries and brand names written without a strength.
+EXCLUDE: patient name/age/sex, doctor/clinic name/address/phone/registration, dates, diagnosis, vitals, dosage directions and schedules (e.g. "1-0-1", "after food", "x 5 days", "SOS", "tsp", "twice daily"), general advice.
+
+For each medicine, fill a field ONLY if it is actually readable; otherwise use null. NEVER guess or invent.
+- name: the drug/brand as written, without the form prefix ("Tab.", "Cap.", "Syp.", "Inj.") and without directions.
+- strength: e.g. "500 mg", "625", "650" if written; null otherwise. Do not treat a pack size like "100 ml" as strength.
+- form: only from an explicit cue — Tab/Tablet, Cap/Capsule, Syp/Syrup, Inj/Injection, drops, ointment/cream/gel, inhaler, sachet, respule; else null.
+- raw: the original text for that line.
+- confidence: "high" clear print, "medium" slightly unclear, "low" handwritten/ambiguous.
+- uncertain: true for handwritten, partially readable, or not clearly a medicine.
+If you cannot read any medicines, return {"medicines":[]}.`;
+
+async function handleFile(file){
+  $('#uploadError').hidden = true;
+  if (!/^image\/(png|jpe?g|webp)$/i.test(file.type)){
+    if (file.type === 'application/pdf'){
+      showError('This page reads photos, not PDFs. Open the PDF, take a screenshot, and upload that image.');
+    } else {
+      showError('Please upload an image of the prescription (PNG, JPG or WebP).');
+    }
+    return;
+  }
+  if (state.imgURL) URL.revokeObjectURL(state.imgURL);
+  state.imgURL = URL.createObjectURL(file);
+
+  const sample = await (window.claude?.use ? claude.use('sample') : Promise.resolve(null));
+  if (!sample){
+    showError('Open this page inside Claude to read prescriptions automatically. You can still add the medicines yourself below.');
+    enterManual();
+    return;
+  }
+  let limits = null;
+  try { limits = await sample.limits(); } catch {}
+  if (!limits || !limits.images){
+    showError('Image reading is not available in this view. You can add the medicines yourself below.');
+    enterManual();
+    return;
+  }
+
+  $('#dropzone').hidden = true;
+  $('#manualBtn').hidden = true;
+  $('#uploadBusy').hidden = false;
+  $('#busyText').textContent = 'Reading your prescription… this takes a few seconds.';
+  try {
+    const data = await sample.json(EXTRACT_PROMPT, { images:[file], modelTier:'default' });
+    const list = Array.isArray(data?.medicines) ? data.medicines : [];
+    state.meds = list.map(normalize).filter(m=>m && m.name).map(m=>({ ...m, id:'m'+idSeq++ }));
+    state.marks = {};
+    buildReview(true);
+    showStage('review');
+  } catch (e){
+    $('#dropzone').hidden = false;
+    $('#manualBtn').hidden = false;
+    showError(sampleErrorText(e));
+  } finally {
+    $('#uploadBusy').hidden = true;
+  }
+}
+
+function sampleErrorText(e){
+  const code = e && e.code;
+  if (code==='not_granted' || code==='sampling_disabled') return 'Claude access was declined, so the prescription could not be read. You can add the medicines yourself below.';
+  if (code==='rate_limited') return 'Too many requests right now. Wait a moment and try again, or add the medicines yourself.';
+  if (code==='image_rejected') return 'That image could not be read. Try a clearer, well-lit photo.';
+  if (code==='invalid_json' || code==='empty_completion' || code==='refused') return 'The prescription could not be read clearly. Try a sharper photo, or add the medicines yourself below.';
+  return 'Something went wrong reading the prescription. Try again, or add the medicines yourself below.';
+}
+function showError(msg){ const e=$('#uploadError'); e.textContent=msg; e.hidden=false; }
+
+function normalize(m){
+  if (!m || typeof m!=='object') return null;
+  const clean = v => { if(v==null) return null; const s=String(v).replace(/\s+/g,' ').trim(); return /^(null|none|n\/?a|-|—|)$/i.test(s)?null:s; };
+  const name = clean(m.name); if (!name) return null;
+  let confidence = ['high','medium','low'].includes(m.confidence)?m.confidence:'medium';
+  let uncertain = Boolean(m.uncertain) || confidence!=='high';
+  return { name, strength:clean(m.strength), form:clean(m.form), raw:clean(m.raw)||name, confidence, uncertain };
+}
+
+function enterManual(){
+  state.meds = state.meds.length ? state.meds : [];
+  if (!state.meds.length) addMed();
+  buildReview(false);
+  showStage('review');
+}
+
+/* ----- Review ----- */
+function buildReview(fromScan){
+  const n = state.meds.length;
+  $('#reviewLede').textContent = n
+    ? `Found ${n} medicine${n>1?'s':''}. Edit anything, and add or remove entries before searching.`
+    : 'Add the prescribed medicines below, then check the three stores.';
+
+  const src = $('#srcNote');
+  if (fromScan && n){ src.hidden=false; src.textContent='Read by Claude from your photo. Please check each entry — especially handwritten ones.'; }
+  else src.hidden = true;
+
+  const panel = $('#rxPanel');
+  if (state.imgURL){ $('#rxThumb').src = state.imgURL; $('#rxFull').src = state.imgURL; panel.hidden=false; }
+  else panel.hidden = true;
+
+  const uncertain = state.meds.filter(m=>m.uncertain);
+  $('#uncertainWrap').hidden = uncertain.length===0;
+  $('#uncertainCount').textContent = `(${uncertain.length})`;
+  renderRows();
+}
+
+function renderRows(){
+  const body = $('#medsBody'); body.innerHTML='';
+  for (const m of state.meds) body.appendChild(medRow(m));
+}
+function medRow(m){
+  const tr = el('tr');
+  const nameTd = el('td','name-cell');
+  nameTd.appendChild(input(m,'name','e.g. Dolo'));
+  if (m.confidence) nameTd.insertAdjacentHTML('beforeend', `<span class="conf ${m.confidence}">${m.confidence}</span>`);
+  const strTd = el('td'); strTd.appendChild(input(m,'strength','—'));
+  const formTd = el('td'); formTd.appendChild(input(m,'form','—'));
+  const delTd = el('td'); const del = el('button','icon-btn','🗑'); del.title='Remove'; del.setAttribute('aria-label','Remove medicine');
+  del.onclick = ()=>{ state.meds = state.meds.filter(x=>x!==m); buildReview(false); };
+  delTd.appendChild(del);
+  tr.append(nameTd, strTd, formTd, delTd);
+  return tr;
+}
+function input(m,key,ph){
+  const i = el('input'); i.value = m[key]||''; i.placeholder = ph; i.setAttribute('aria-label', key);
+  i.oninput = ()=>{ m[key] = i.value.trim()||null; };
+  return i;
+}
+function addMed(){ state.meds.push({ id:'m'+idSeq++, name:'', strength:null, form:null, confidence:null, uncertain:false, raw:'' }); }
+
+/* ----- Stores ----- */
+function goStores(){
+  state.meds = state.meds.filter(m=>m.name && m.name.trim());
+  if (!state.meds.length){ showStage('review'); return; }
+  state.marks = loadMarks(sig()) || {};
+  for (const m of state.meds) state.marks[m.id] = state.marks[m.id] || {};
+  renderLegend(); renderGrid(); renderReco(); markMissing();
+  showStage('stores');
+}
+function renderLegend(){
+  const lg = $('#legend'); lg.innerHTML='';
+  for (const k of STATE_CYCLE){ const s=STATES[k]; lg.insertAdjacentHTML('beforeend', `<span class="lg"><span class="dot ${s.cls}"></span>${esc(s.label)}</span>`); }
+}
+function renderGrid(){
+  const t = $('#storeGrid'); const head = t.querySelector('thead tr');
+  head.innerHTML = '<th>Medicine</th>';
+  for (const s of STORES) head.insertAdjacentHTML('beforeend', `<th><span class="store-chip" style="background:${s.color};color:${s.ink}">${esc(s.name)}</span></th>`);
+  const body = t.querySelector('tbody'); body.innerHTML='';
+  for (const m of state.meds){
+    const tr = el('tr'); tr.dataset.med = m.id;
+    const sub = [m.strength,m.form].filter(Boolean).join(' · ');
+    tr.appendChild(el('td', '', `<div class="med-name">${esc(m.name)}</div>${sub?`<div class="med-sub">${esc(sub)}</div>`:''}`));
+    for (const s of STORES) tr.appendChild(cell(m,s));
+    body.appendChild(tr);
+  }
+}
+function cell(m,store){
+  const td = el('td'); const c = el('div','cell');
+  const link = el('a','open-link','Open ↗'); link.href = storeLink(store,m); link.target='_blank'; link.rel='noopener';
+  const cur = state.marks[m.id]?.[store.id] || 'unchecked';
+  const btn = el('button','state-btn '+STATES[cur].cls, STATES[cur].label);
+  btn.onclick = ()=>{
+    const nx = STATE_CYCLE[(STATE_CYCLE.indexOf(state.marks[m.id][store.id]||'unchecked')+1)%STATE_CYCLE.length];
+    state.marks[m.id][store.id] = nx;
+    btn.className = 'state-btn '+STATES[nx].cls; btn.textContent = STATES[nx].label;
+    saveMarks(sig(), state.marks); renderReco(); markMissing();
+  };
+  c.append(link, btn); td.appendChild(c); return td;
+}
+function markMissing(){
+  const { missing } = computeCoverage(state.meds, state.marks); const miss = new Set(missing);
+  document.querySelectorAll('#storeGrid tbody tr').forEach(tr=>{
+    const m = state.meds.find(x=>x.id===tr.dataset.med);
+    const allMarked = STORES.every(s => (state.marks[m.id]?.[s.id]||'unchecked')!=='unchecked');
+    tr.classList.toggle('row-missing', allMarked && miss.has(m.id));
+  });
+}
+function renderReco(){
+  const box = $('#reco'); box.className='reco';
+  const { single, combo, coveredByCombo, missing } = computeCoverage(state.meds, state.marks);
+  const total = state.meds.length;
+  const anyMarked = state.meds.some(m => STORES.some(s => (state.marks[m.id]?.[s.id]||'unchecked')!=='unchecked'));
+  const chip = id => { const s=STORES.find(x=>x.id===id); return `<span class="pill-store" style="background:${s.color};color:${s.ink}">${esc(s.name)}</span>`; };
+  if (!anyMarked){ box.innerHTML = `<h3>Where can you get everything?</h3><p class="sub">Open each store and mark what you find. We’ll work out the fewest stores that cover your whole list.</p>`; return; }
+  if (single){ box.classList.add('allfound'); box.innerHTML = `<h3>✅ One store has everything</h3><div class="big">${chip(single)} covers all ${total} medicines.</div><p class="sub">Order it all in one place.</p>`; return; }
+  let html = `<h3>Smallest combination of stores</h3>`;
+  html += combo.length ? `<div class="big">${combo.map(chip).join(' + ')} covers ${coveredByCombo.size} of ${total} medicines.</div>` : `<div class="big">No availability marked yet.</div>`;
+  if (missing.length){
+    const names = missing.map(id=>state.meds.find(m=>m.id===id)?.name).filter(Boolean);
+    html += `<div class="missing">⚠️ Still missing (not marked available anywhere): ${names.map(esc).join(', ')}</div>`;
+  } else if (combo.length){ html += `<p class="sub">This combination covers your whole list.</p>`; }
+  box.innerHTML = html;
+}
+
+/* ----- Persistence (per-viewer convenience only) ----- */
+function sig(){ return 'rxreach:'+state.meds.map(m=>(m.name||'').toLowerCase()+'|'+(m.strength||'')).sort().join('~'); }
+function saveMarks(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} }
+function loadMarks(k){ try{ return JSON.parse(localStorage.getItem(k)||'{}'); }catch{ return {}; } }
+
+/* ----- Wire up ----- */
+const dz = $('#dropzone'), fi = $('#fileInput');
+fi.onchange = ()=> fi.files[0] && handleFile(fi.files[0]);
+['dragenter','dragover'].forEach(ev=> dz.addEventListener(ev, e=>{ e.preventDefault(); dz.classList.add('drag'); }));
+['dragleave','drop'].forEach(ev=> dz.addEventListener(ev, e=>{ e.preventDefault(); dz.classList.remove('drag'); }));
+dz.addEventListener('drop', e=>{ const f=e.dataTransfer.files[0]; if(f) handleFile(f); });
+
+$('#manualBtn').onclick = ()=> enterManual();
+$('#addRowBtn').onclick = ()=>{ addMed(); renderRows(); $('#medsBody').lastChild?.querySelector('input')?.focus(); };
+$('#toStoresBtn').onclick = goStores;
+$('#restartBtn').onclick = ()=> location.reload();
+$('#backToReview').onclick = ()=> showStage('review');
+$('#resetMarks').onclick = ()=>{ state.marks={}; for(const m of state.meds) state.marks[m.id]={}; saveMarks(sig(),state.marks); renderGrid(); renderReco(); markMissing(); };
+$('#addrInput').oninput = e=>{ $('#cityPill').textContent = '📍 '+(e.target.value.trim()||'Hyderabad'); };
+
+$('#rxThumb').onclick = ()=> $('#rxModal').hidden=false;
+$('#rxModalClose').onclick = ()=> $('#rxModal').hidden=true;
+$('#rxModal').onclick = e=>{ if(e.target.id==='rxModal') $('#rxModal').hidden=true; };
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') $('#rxModal').hidden=true; });
+</script>

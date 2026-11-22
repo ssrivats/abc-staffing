@@ -1,0 +1,17 @@
+# Render Blueprint — one-click deploy for RxReach.
+# In Render: New → Blueprint → pick this repo. Render reads this file, provisions the
+# service, and prompts you to paste SARVAM_API_KEY. You get a public https URL.
+services:
+  - type: web
+    name: rx-finder
+    runtime: node
+    rootDir: rx-finder
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: SARVAM_API_KEY
+        sync: false          # you enter this in the Render dashboard (kept secret)
+      - key: NODE_VERSION
+        value: "22"

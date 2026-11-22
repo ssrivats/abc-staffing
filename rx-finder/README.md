@@ -7,6 +7,16 @@ flow → see the **smallest set of stores** that covers your whole list.
 Built for the real problem: reading a prescription by hand and retyping each medicine into
 three apps separately.
 
+## Two ways to run it
+
+- **Hosted page (no setup, no key):** `rxreach.html` is a single self-contained page published
+  as a Claude Artifact. Opened inside Claude, it reads the prescription with the viewer's own
+  Claude account (the `sample` capability with images) — no API key, no backend. Supports photo
+  uploads (PNG/JPG/WebP); for a PDF, screenshot the page and upload the image.
+- **Self-hosted server (your own key):** the Node app below (`server.js` + `src/` + `public/`)
+  uses **Sarvam AI** for OCR + structuring. Run it with your `SARVAM_API_KEY`. This path also
+  handles PDFs directly and returns per-line image crops for the review step.
+
 ## What it does
 
 1. **Upload once.** Photo or PDF. The backend runs **Sarvam AI** document OCR (built for
