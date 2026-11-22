@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap');
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Georgia, "Times New Roman", serif; color:#111; }
+  .page { width: 800px; min-height: 1050px; margin:0 auto; background:#fffdf8; padding:38px 44px; }
+  .top { display:flex; justify-content:space-between; border-bottom:3px solid #16607a; padding-bottom:10px; }
+  .clinic { font-size:22px; font-weight:bold; color:#16607a; }
+  .sub { font-size:13px; color:#444; }
+  .doc { text-align:right; font-size:13px; color:#333; }
+  .patient { display:flex; justify-content:space-between; font-size:14px; margin:14px 0 6px; border-bottom:1px dashed #999; padding-bottom:8px;}
+  .rx { font-size:40px; color:#16607a; font-weight:bold; margin:10px 0 4px; }
+  table { width:100%; border-collapse:collapse; font-size:15px; }
+  td { padding:9px 6px; vertical-align:top; border-bottom:1px solid #eee; }
+  .num { width:26px; color:#16607a; font-weight:bold; }
+  .dir { color:#555; font-size:13px; }
+  .hand { font-family:'Caveat', cursive; font-size:26px; color:#1a2a6c; }
+  .advice { margin-top:22px; font-size:13px; color:#555; }
+  .sign { margin-top:46px; text-align:right; }
+  .sign .l { font-family:'Caveat', cursive; font-size:30px; color:#15306b; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="top">
+      <div>
+        <div class="clinic">Sunrise Multi-Speciality Clinic</div>
+        <div class="sub">Road No. 12, Banjara Hills, Hyderabad - 500034</div>
+        <div class="sub">Ph: 040-2355 1200</div>
+      </div>
+      <div class="doc">
+        <div style="font-weight:bold;">Dr. A. Venkat Rao</div>
+        <div>MBBS, MD (Gen. Medicine)</div>
+        <div>Reg. No: TSMC/41822</div>
+      </div>
+    </div>
+
+    <div class="patient">
+      <div>Patient: <b>Ramesh Kumar</b></div>
+      <div>Age/Sex: 45 / M</div>
+      <div>Date: 21/11/2026</div>
+    </div>
+    <div style="font-size:14px; margin-bottom:6px;">Diagnosis: Acute bronchitis with acidity</div>
+
+    <div class="rx">&#8478;</div>
+
+    <table>
+      <tr><td class="num">1.</td><td>Tab. Augmentin 625 Duo<div class="dir">1-0-1, after food &times; 5 days</div></td></tr>
+      <tr><td class="num">2.</td><td>Tab. Pantop 40<div class="dir">1-0-0, before breakfast &times; 10 days</div></td></tr>
+      <tr><td class="num">3.</td><td>Cap. Becosules<div class="dir">0-0-1, after dinner</div></td></tr>
+      <tr><td class="num">4.</td><td>Syp. Grilinctus 100 ml<div class="dir">2 tsp three times a day (SOS cough)</div></td></tr>
+      <tr><td class="num">5.</td><td><span class="hand">Dolo 650</span><div class="dir">1 tab if fever &gt; 100&deg;F (SOS)</div></td></tr>
+      <tr><td class="num">6.</td><td><span class="hand">Shelcal - OS</span><div class="dir">0-0-1 after food x 30 days</div></td></tr>
+    </table>
+
+    <div class="advice">
+      Advice: Steam inhalation twice daily. Drink plenty of warm fluids. Avoid cold &amp; oily food.
+      Review after 5 days if symptoms persist.
+    </div>
+
+    <div class="sign">
+      <div class="l">A.V. Rao</div>
+      <div style="font-size:12px; color:#444;">Dr. A. Venkat Rao</div>
+    </div>
+  </div>
+</body>
+</html>

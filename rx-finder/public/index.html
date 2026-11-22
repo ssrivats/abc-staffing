@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RxReach — prescription to quick-commerce</title>
+  <meta name="description" content="Upload a prescription, identify the prescribed medicines, and check Blinkit, Zepto and Swiggy Instamart availability for your Hyderabad address." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site">
+    <div class="wrap row">
+      <div class="brand">
+        <span class="logo">℞</span>
+        <div>
+          <div class="brand-name">RxReach</div>
+          <div class="brand-sub">Prescription → Blinkit · Zepto · Instamart</div>
+        </div>
+      </div>
+      <span class="pin" id="cityPill">📍 Hyderabad</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- STEP indicator -->
+    <ol class="steps" id="steps">
+      <li data-step="upload" class="active">Upload</li>
+      <li data-step="review">Review</li>
+      <li data-step="stores">Check stores</li>
+    </ol>
+
+    <!-- STAGE 1: UPLOAD -->
+    <section id="stage-upload" class="stage">
+      <h1>Upload your prescription once</h1>
+      <p class="lede">We’ll identify the prescribed medicines — including handwritten entries and brand names without a strength — and leave out patient, clinic, and dosage details.</p>
+
+      <label id="dropzone" class="dropzone" for="fileInput">
+        <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp,application/pdf" hidden />
+        <div class="dz-inner">
+          <div class="dz-icon">📄</div>
+          <div class="dz-main">Drag a photo or PDF here, or <span class="link">browse</span></div>
+          <div class="dz-sub">PNG · JPG · PDF — up to 20 MB</div>
+        </div>
+      </label>
+
+      <p class="privacy">🔒 Your prescription is processed in memory and sent only to the OCR provider (Sarvam). It is never stored on disk or logged, and nothing is shared with the stores.</p>
+
+      <div id="uploadError" class="error hidden"></div>
+      <div id="uploadBusy" class="busy hidden">
+        <span class="spinner"></span> Reading your prescription…
+      </div>
+    </section>
+
+    <!-- STAGE 2: REVIEW -->
+    <section id="stage-review" class="stage hidden">
+      <h1>Review the medicines</h1>
+      <p class="lede" id="reviewLede"></p>
+      <div id="sourceNote" class="note hidden"></div>
+
+      <div id="uncertainWrap" class="uncertain-wrap hidden">
+        <h2>Please verify these <span id="uncertainCount"></span></h2>
+        <p class="muted">Handwritten or unclear entries, shown with the matching part of your prescription. Blanks are left for you to fill.</p>
+        <div id="uncertainList" class="uncertain-list"></div>
+      </div>
+
+      <h2>All medicines</h2>
+      <div class="table-scroll">
+        <table class="meds" id="medsTable">
+          <thead>
+            <tr><th>Medicine name</th><th>Strength</th><th>Form</th><th></th></tr>
+          </thead>
+          <tbody id="medsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="row gap wrap-actions">
+        <button class="btn ghost" id="addRowBtn">+ Add a medicine</button>
+        <button class="btn ghost" id="viewRxBtn">View full prescription</button>
+      </div>
+
+      <div class="row between sticky-actions">
+        <button class="btn text" id="backToUpload">↵ Start over</button>
+        <button class="btn primary" id="toStoresBtn">Confirm list &amp; check all 3 stores →</button>
+      </div>
+    </section>
+
+    <!-- STAGE 3: STORES -->
+    <section id="stage-stores" class="stage hidden">
+      <h1>Check availability</h1>
+      <div class="addr-row">
+        <label>Delivery area
+          <input id="addrInput" type="text" value="Hyderabad" />
+        </label>
+        <p class="muted">Tap a store to open its real search for that medicine. Set your exact Hyderabad address inside each app, then mark what you find.</p>
+      </div>
+
+      <div class="verify-banner" id="verifyBanner">
+        ⚠️ <b>Manual verification needed.</b> No platform offers an authorized live stock feed, so availability is what <i>you</i> confirm. Nothing here is auto-filled or guessed.
+      </div>
+
+      <div id="recommendation" class="reco"></div>
+
+      <div class="legend" id="legend"></div>
+
+      <div class="table-scroll">
+        <table class="grid" id="storeGrid">
+          <thead><tr><th>Medicine</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="row between sticky-actions">
+        <button class="btn text" id="backToReview">← Back to list</button>
+        <button class="btn ghost" id="resetMarks">Reset marks</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Full prescription modal -->
+  <div id="rxModal" class="modal hidden">
+    <div class="modal-box">
+      <button class="modal-close" id="rxModalClose">✕</button>
+      <img id="rxFull" alt="Your prescription" />
+      <p id="rxPdfNote" class="muted hidden">PDF uploaded — <a id="rxPdfLink" href="#" target="_blank" rel="noopener">open it in a new tab</a>.</p>
+    </div>
+  </div>
+
+  <footer class="site-foot wrap">
+    <span>RxReach · built for Hyderabad quick-commerce</span>
+    <span class="muted">Never substitutes a different medicine, strength, or form.</span>
+  </footer>
+
+  <script src="stores.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
