@@ -162,6 +162,28 @@
   .reco .missing { margin-top: 10px; font-size: 13px; color: var(--bad); }
   .reco .sub { color: var(--muted); font-size: 13px; margin-top: 6px; }
 
+  /* Phone-first store cards */
+  .med-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 12px; box-shadow: var(--shadow); }
+  .med-head h3 { font-family: var(--display); font-size: 16px; margin: 0; }
+  .med-head .med-sub { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  .med-badge { float: right; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; margin-left: 8px; }
+  .badge-ok { background: var(--ok-soft); color: var(--ok); }
+  .badge-no { background: var(--bad-soft); color: var(--bad); }
+  .badge-wait { background: var(--accent-soft); color: var(--accent-dark); }
+  .store-rows { margin-top: 10px; display: flex; flex-direction: column; }
+  .store-row { display: flex; flex-direction: column; gap: 7px; padding: 10px 0; border-top: 1px solid var(--line); }
+  .store-row:first-child { border-top: none; }
+  .open-big { display: flex; align-items: center; gap: 9px; min-height: 46px; padding: 0 13px; border: 1px solid var(--line); border-radius: 11px; text-decoration: none; color: var(--ink); font-weight: 600; background: var(--surface-2); }
+  .open-big:active { background: var(--accent-soft); }
+  .open-big .chip { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 999px; }
+  .open-big .ol { font-size: 14px; }
+  .open-big .go { margin-left: auto; color: var(--accent-dark); font-weight: 700; }
+  .yn { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .yn-btn { min-height: 46px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; color: var(--muted); }
+  .yn-btn.active-yes { background: var(--ok-soft); color: var(--ok); border-color: var(--ok-line); }
+  .yn-btn.active-no { background: var(--bad-soft); color: var(--bad); border-color: var(--bad-line); }
+  #resumeBar { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+
   /* Modal */
   .modal { position: fixed; inset: 0; background: rgba(8,18,22,.75); display: grid; place-items: center; z-index: 50; padding: 18px; }
   .modal-box { background: var(--surface); border-radius: 14px; max-width: 760px; max-height: 90vh; overflow: auto; padding: 14px; position: relative; }
@@ -193,6 +215,8 @@
   <section class="stage" id="stage-upload">
     <h1>Upload your prescription once</h1>
     <p class="lede">Claude reads it and lists the prescribed medicines — including handwritten entries and brand names without a strength — leaving out patient, clinic, and dosage details. You review before searching.</p>
+
+    <div class="note" id="resumeBar" hidden></div>
 
     <label class="dropzone" id="dropzone" for="fileInput">
       <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
@@ -251,25 +275,15 @@
 
   <!-- STAGE 3 -->
   <section class="stage" id="stage-stores" hidden>
-    <h1>Check availability</h1>
-    <div class="addr">
-      <label for="addrInput">Delivery area</label>
-      <input id="addrInput" type="text" value="Hyderabad">
-    </div>
-    <p class="muted" style="margin-top:8px">Tap a store to open its real search for that medicine. Set your exact Hyderabad address inside each app, then mark what you find.</p>
-
-    <div class="verify">⚠️ <b>Manual verification needed.</b> No quick-commerce platform offers an authorized live stock feed, so availability is what <i>you</i> confirm here. Nothing is auto-filled or guessed.</div>
+    <h1>Where to get them</h1>
+    <p class="muted" style="margin:0 0 4px">Tap a store to open its search, set your Hyderabad address in the app, then mark ✓ or ✕. Your answers are saved on this phone.</p>
 
     <div class="reco" id="reco"></div>
-    <div class="legend" id="legend"></div>
-
-    <div class="table-scroll">
-      <table class="grid" id="storeGrid"><thead><tr><th>Medicine</th></tr></thead><tbody></tbody></table>
-    </div>
+    <div id="storeCards"></div>
 
     <div class="actions">
       <button class="btn text" id="backToReview">← Back to list</button>
-      <button class="btn ghost" id="resetMarks">Reset marks</button>
+      <button class="btn ghost" id="resetMarks">Reset answers</button>
     </div>
   </section>
 
@@ -477,52 +491,57 @@ function input(m,key,ph){
 }
 function addMed(){ state.meds.push({ id:'m'+idSeq++, name:'', strength:null, form:null, confidence:null, uncertain:false, raw:'' }); }
 
-/* ----- Stores ----- */
+/* ----- Stores (phone-first cards) ----- */
 function goStores(){
   state.meds = state.meds.filter(m=>m.name && m.name.trim());
   if (!state.meds.length){ showStage('review'); return; }
-  state.marks = loadMarks(sig()) || {};
   for (const m of state.meds) state.marks[m.id] = state.marks[m.id] || {};
-  renderLegend(); renderGrid(); renderReco(); markMissing();
+  saveSession();
+  renderCards(); renderReco();
   showStage('stores');
 }
-function renderLegend(){
-  const lg = $('#legend'); lg.innerHTML='';
-  for (const k of STATE_CYCLE){ const s=STATES[k]; lg.insertAdjacentHTML('beforeend', `<span class="lg"><span class="dot ${s.cls}"></span>${esc(s.label)}</span>`); }
+function renderCards(){
+  const wrap = $('#storeCards'); wrap.innerHTML='';
+  for (const m of state.meds) wrap.appendChild(medCard(m));
 }
-function renderGrid(){
-  const t = $('#storeGrid'); const head = t.querySelector('thead tr');
-  head.innerHTML = '<th>Medicine</th>';
-  for (const s of STORES) head.insertAdjacentHTML('beforeend', `<th><span class="store-chip" style="background:${s.color};color:${s.ink}">${esc(s.name)}</span></th>`);
-  const body = t.querySelector('tbody'); body.innerHTML='';
-  for (const m of state.meds){
-    const tr = el('tr'); tr.dataset.med = m.id;
-    const sub = [m.strength,m.form].filter(Boolean).join(' · ');
-    tr.appendChild(el('td', '', `<div class="med-name">${esc(m.name)}</div>${sub?`<div class="med-sub">${esc(sub)}</div>`:''}`));
-    for (const s of STORES) tr.appendChild(cell(m,s));
-    body.appendChild(tr);
-  }
+function medCard(m){
+  const card = el('div','med-card');
+  const sub = [m.strength,m.form].filter(Boolean).join(' · ');
+  const b = medBadge(m);
+  const head = el('div','med-head');
+  head.innerHTML = `<span class="med-badge ${b.cls}">${esc(b.label)}</span><h3>${esc(m.name)}</h3>${sub?`<div class="med-sub">${esc(sub)}</div>`:''}`;
+  const rows = el('div','store-rows');
+  for (const s of STORES) rows.appendChild(storeRow(m,s));
+  card.append(head, rows);
+  return card;
 }
-function cell(m,store){
-  const td = el('td'); const c = el('div','cell');
-  const link = el('a','open-link','Open ↗'); link.href = storeLink(store,m); link.target='_blank'; link.rel='noopener';
+function storeRow(m,store){
+  const row = el('div','store-row');
+  const open = el('a','open-big');
+  open.href = storeLink(store,m); open.target='_blank'; open.rel='noopener';
+  open.innerHTML = `<span class="chip" style="background:${store.color};color:${store.ink}">${esc(store.name)}</span><span class="ol">Open search</span><span class="go">↗</span>`;
+  const yn = el('div','yn');
   const cur = state.marks[m.id]?.[store.id] || 'unchecked';
-  const btn = el('button','state-btn '+STATES[cur].cls, STATES[cur].label);
-  btn.onclick = ()=>{
-    const nx = STATE_CYCLE[(STATE_CYCLE.indexOf(state.marks[m.id][store.id]||'unchecked')+1)%STATE_CYCLE.length];
-    state.marks[m.id][store.id] = nx;
-    btn.className = 'state-btn '+STATES[nx].cls; btn.textContent = STATES[nx].label;
-    saveMarks(sig(), state.marks); renderReco(); markMissing();
-  };
-  c.append(link, btn); td.appendChild(c); return td;
+  const yes = el('button','yn-btn'+(cur==='available'?' active-yes':''),'✓ In stock');
+  const no  = el('button','yn-btn'+(cur==='oos'?' active-no':''),'✕ Not there');
+  yes.onclick = ()=> setMark(m,store,'available');
+  no.onclick  = ()=> setMark(m,store,'oos');
+  yn.append(yes,no);
+  row.append(open,yn);
+  return row;
 }
-function markMissing(){
-  const { missing } = computeCoverage(state.meds, state.marks); const miss = new Set(missing);
-  document.querySelectorAll('#storeGrid tbody tr').forEach(tr=>{
-    const m = state.meds.find(x=>x.id===tr.dataset.med);
-    const allMarked = STORES.every(s => (state.marks[m.id]?.[s.id]||'unchecked')!=='unchecked');
-    tr.classList.toggle('row-missing', allMarked && miss.has(m.id));
-  });
+function setMark(m,store,val){
+  const cur = state.marks[m.id][store.id];
+  state.marks[m.id][store.id] = (cur===val) ? 'unchecked' : val; // tap the active one again to clear
+  saveSession();
+  renderCards(); renderReco();
+}
+function medBadge(m){
+  const avail = STORES.filter(s=> state.marks[m.id]?.[s.id]==='available');
+  if (avail.length) return { cls:'badge-ok', label:'✓ '+avail.map(s=>s.name).join(', ') };
+  const anyMarked = STORES.some(s=> ['available','oos'].includes(state.marks[m.id]?.[s.id]));
+  if (anyMarked) return { cls:'badge-no', label:'Not found yet' };
+  return { cls:'badge-wait', label:'Check stores' };
 }
 function renderReco(){
   const box = $('#reco'); box.className='reco';
@@ -530,21 +549,29 @@ function renderReco(){
   const total = state.meds.length;
   const anyMarked = state.meds.some(m => STORES.some(s => (state.marks[m.id]?.[s.id]||'unchecked')!=='unchecked'));
   const chip = id => { const s=STORES.find(x=>x.id===id); return `<span class="pill-store" style="background:${s.color};color:${s.ink}">${esc(s.name)}</span>`; };
-  if (!anyMarked){ box.innerHTML = `<h3>Where can you get everything?</h3><p class="sub">Open each store and mark what you find. We’ll work out the fewest stores that cover your whole list.</p>`; return; }
-  if (single){ box.classList.add('allfound'); box.innerHTML = `<h3>✅ One store has everything</h3><div class="big">${chip(single)} covers all ${total} medicines.</div><p class="sub">Order it all in one place.</p>`; return; }
-  let html = `<h3>Smallest combination of stores</h3>`;
-  html += combo.length ? `<div class="big">${combo.map(chip).join(' + ')} covers ${coveredByCombo.size} of ${total} medicines.</div>` : `<div class="big">No availability marked yet.</div>`;
+  if (!anyMarked){ box.innerHTML = `<h3>Where can you get them?</h3><p class="sub">Tap a store to open its search, then mark ✓ or ✕. We’ll work out the fewest stores that cover your whole list.</p>`; return; }
+  if (single){ box.classList.add('allfound'); box.innerHTML = `<h3>✅ One store has everything</h3><div class="big">${chip(single)} covers all ${total}.</div><p class="sub">Order it all in one place.</p>`; return; }
+  let html = `<h3>Fewest stores for your list</h3>`;
+  html += combo.length ? `<div class="big">${combo.map(chip).join(' + ')} covers ${coveredByCombo.size} of ${total}.</div>` : `<div class="big">Mark what you find below.</div>`;
   if (missing.length){
     const names = missing.map(id=>state.meds.find(m=>m.id===id)?.name).filter(Boolean);
-    html += `<div class="missing">⚠️ Still missing (not marked available anywhere): ${names.map(esc).join(', ')}</div>`;
-  } else if (combo.length){ html += `<p class="sub">This combination covers your whole list.</p>`; }
+    html += `<div class="missing">Still missing: ${names.map(esc).join(', ')}</div>`;
+  } else if (combo.length){ html += `<p class="sub">This covers your whole list.</p>`; }
   box.innerHTML = html;
 }
 
-/* ----- Persistence (per-viewer convenience only) ----- */
-function sig(){ return 'rxreach:'+state.meds.map(m=>(m.name||'').toLowerCase()+'|'+(m.strength||'')).sort().join('~'); }
-function saveMarks(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} }
-function loadMarks(k){ try{ return JSON.parse(localStorage.getItem(k)||'{}'); }catch{ return {}; } }
+/* ----- Session memory (saved on this phone) ----- */
+const SESSION_KEY = 'rxreach:session';
+function saveSession(){ try{ localStorage.setItem(SESSION_KEY, JSON.stringify({ meds: state.meds, marks: state.marks, ts: Date.now() })); }catch{} }
+function loadSession(){ try{ return JSON.parse(localStorage.getItem(SESSION_KEY)||'null'); }catch{ return null; } }
+function clearSession(){ try{ localStorage.removeItem(SESSION_KEY); }catch{} }
+function resumeSession(saved){
+  state.meds = (saved.meds||[]).map(m=>({ ...m, id: m.id || ('m'+idSeq++) }));
+  for (const m of state.meds){ const n = parseInt(String(m.id).slice(1)); if (Number.isFinite(n)) idSeq = Math.max(idSeq, n+1); }
+  state.marks = saved.marks || {};
+  for (const m of state.meds) state.marks[m.id] = state.marks[m.id] || {};
+  renderCards(); renderReco(); showStage('stores');
+}
 
 /* ----- Wire up ----- */
 const dz = $('#dropzone'), fi = $('#fileInput');
@@ -578,8 +605,20 @@ $('#addRowBtn').onclick = ()=>{ addMed(); renderRows(); $('#medsBody').lastChild
 $('#toStoresBtn').onclick = goStores;
 $('#restartBtn').onclick = ()=> location.reload();
 $('#backToReview').onclick = ()=> showStage('review');
-$('#resetMarks').onclick = ()=>{ state.marks={}; for(const m of state.meds) state.marks[m.id]={}; saveMarks(sig(),state.marks); renderGrid(); renderReco(); markMissing(); };
-$('#addrInput').oninput = e=>{ $('#cityPill').textContent = '📍 '+(e.target.value.trim()||'Hyderabad'); };
+$('#resetMarks').onclick = ()=>{ state.marks={}; for(const m of state.meds) state.marks[m.id]={}; saveSession(); renderCards(); renderReco(); };
+
+// Resume the last list saved on this phone
+(function(){
+  const saved = loadSession();
+  if (saved && Array.isArray(saved.meds) && saved.meds.length){
+    const rb = $('#resumeBar');
+    if (!rb) return;
+    rb.hidden = false;
+    rb.innerHTML = `↩︎ You have a saved list of ${saved.meds.length} medicine${saved.meds.length>1?'s':''}. <button class="btn text" id="resumeBtn" style="padding:0 4px">Resume</button> · <button class="btn text" id="clearBtn" style="padding:0 4px">Clear</button>`;
+    $('#resumeBtn').onclick = ()=> resumeSession(saved);
+    $('#clearBtn').onclick = ()=>{ clearSession(); rb.hidden = true; };
+  }
+})();
 
 $('#rxThumb').onclick = ()=> $('#rxModal').hidden=false;
 $('#rxModalClose').onclick = ()=> $('#rxModal').hidden=true;
